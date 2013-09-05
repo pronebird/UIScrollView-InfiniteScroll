@@ -195,13 +195,10 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 }
 
 - (void)pb_setScrollViewContentInset:(UIEdgeInsets)contentInset completion:(void(^)(BOOL finished))completion {
-	[UIView animateWithDuration:.35f
-						  delay:0
-						options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+	[UIView animateWithDuration:.35f delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
 					 animations:^{
 						 self.contentInset = contentInset;
-					 }
-					 completion:^(BOOL finished) {
+					 } completion:^(BOOL finished) {
 						 if(completion != nil) {
 							 completion(finished);
 						 }
