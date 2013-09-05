@@ -198,10 +198,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	[UIView animateWithDuration:.35f delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
 					 animations:^{
 						 self.contentInset = contentInset;
-					 } completion:^(BOOL finished) {
-						 if(completion != nil) {
-							 completion(finished);
-						 }
+					 }
+					 completion:^(BOOL finished) {
+						 if(completion != nil) { completion(finished); }
 					 }];
 }
 
