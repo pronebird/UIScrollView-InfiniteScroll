@@ -23,6 +23,7 @@ const CGFloat kPBInfiniteScrollIndicatorViewHeight = 44.0f;
 static const void* kPBInfiniteScrollHandlerKey = &kPBInfiniteScrollHandlerKey;
 static const void* kPBInfiniteScrollIndicatorViewKey = &kPBInfiniteScrollIndicatorViewKey;
 static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
+static const void* kPBInfiniteScrollInitKey = &kPBInfiniteScrollInitKey;
 
 typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	PBInfiniteScrollStateNone,
@@ -34,24 +35,38 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 #pragma mark - Public methods
 
 - (void)addInfiniteScrollWithHandler:(pb_infinite_scroll_handler_t)handler {
+	NSAssert([self pb_isInfiniteScrollInitialized] == NO, @"InfiniteScroll is already initialized for this view. You must call -(void)removeInfiniteScroll before setting the new one.");
+	
 	[self pb_setInfiniteScrollHandler:handler];
 	
 	[self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
 	[self addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+	
+	[self pb_setInfiniteScrollInitialized:YES];
 }
 
 - (void)removeInfiniteScroll {
+	// ignore multiple calls to remove infinite scroll
+	if(![self pb_isInfiniteScrollInitialized]) {
+		return;
+	}
+	
 	[self removeObserver:self forKeyPath:@"contentOffset"];
 	[self removeObserver:self forKeyPath:@"contentSize"];
 	
 	[self pb_removeActivityIndicator];
+	[self pb_setInfiniteScrollInitialized:NO];
 }
 
 - (void)finishInfiniteScroll {
+	[self finishInfiniteScrollWithCompletion:nil];
+}
+
+- (void)finishInfiniteScrollWithCompletion:(pb_infinite_scroll_completion_t)handler {
 	if([self pb_infiniteScrollState] == PBInfiniteScrollStateLoading) {
 		// give it some time, too fast animations start and end animations look weird
 		// this trick has a nice side effect, it seems that performSelector queue stucks when user drags the view
-		[self performSelector:@selector(pb_stopAnimatingInfiniteScroll) withObject:nil afterDelay:1.0f];
+		[self performSelector:@selector(pb_stopAnimatingInfiniteScrollWithCompletion:) withObject:handler afterDelay:1.0f];
 	}
 }
 
@@ -63,6 +78,18 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	} else if([keyPath isEqualToString:@"contentSize"]) {
 		[self pb_positionInfiniteScrollIndicatorWithContentSize:[[change valueForKey:NSKeyValueChangeNewKey] CGSizeValue]];
 	}
+}
+
+- (BOOL)pb_isInfiniteScrollInitialized {
+	NSNumber* number = objc_getAssociatedObject(self, kPBInfiniteScrollInitKey);
+	if(number != nil) {
+		return [number boolValue];
+	}
+	return NO;
+}
+
+- (void)pb_setInfiniteScrollInitialized:(BOOL)flag {
+	objc_setAssociatedObject(self, kPBInfiniteScrollInitKey, @(flag), OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)pb_triggerInfiniteScrollHandler {
@@ -153,7 +180,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	contentInset.bottom += kPBInfiniteScrollIndicatorViewHeight;
 	
 	[self pb_setInfiniteScrollState:PBInfiniteScrollStateLoading];
-	[self pb_setScrollViewContentInset:contentInset completion:^(BOOL finished) {
+	[self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
 		if(finished) {
 			[self pb_scrollToInfiniteIndicatorIfNeeded];
 		}
@@ -161,14 +188,22 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	TRACE(@"pb_startAnimatingInfiniteScroll");
 }
 
-- (void)pb_stopAnimatingInfiniteScroll {
-	UIActivityIndicatorView* activityIndicator = [self pb_getOrCreateActivityIndicatorView];
+- (void)pb_stopAnimatingInfiniteScrollWithCompletion:(pb_infinite_scroll_completion_t)handler {
+	UIActivityIndicatorView* activityIndicator = [self pb_activityIndicatorView];
 	UIEdgeInsets contentInset = self.contentInset;
+	
+	// activity indicator can be already destroyed at this point
+	// so do not animate any contentInset changes to avoid table view crash
+	BOOL animated = (activityIndicator != nil);
+	
 	contentInset.bottom -= kPBInfiniteScrollIndicatorViewHeight;
 	
-	[self pb_setScrollViewContentInset:contentInset completion:^(BOOL finished) {
-		[activityIndicator stopAnimating];
-		[activityIndicator setHidden:YES];
+	[self pb_setScrollViewContentInset:contentInset animated:animated completion:^(BOOL finished) {
+		if(activityIndicator != nil) {
+			[activityIndicator stopAnimating];
+			[activityIndicator setHidden:YES];
+		}
+		
 		[self pb_setInfiniteScrollState:PBInfiniteScrollStateNone];
 		
 		// Initiate scroll to the bottom if due to user interaction contentOffset.y
@@ -180,6 +215,11 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 				[self setContentOffset:CGPointMake(0, newY) animated:YES];
 				TRACE(@"pb_stopAnimatingInfiniteScroll::scrollToBottom");
 			}
+		}
+		
+		// call completion handler
+		if(handler != nil) {
+			handler();
 		}
 	}];
 	
@@ -214,15 +254,22 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	}
 }
 
-- (void)pb_setScrollViewContentInset:(UIEdgeInsets)contentInset completion:(void(^)(BOOL finished))completion {
-	[UIView animateWithDuration:.35f delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
-					 animations:^{
-						 self.contentInset = contentInset;
-					 } completion:^(BOOL finished) {
-						 if(completion != nil) {
-							 completion(finished);
-						 }
-					 }];
+- (void)pb_setScrollViewContentInset:(UIEdgeInsets)contentInset animated:(BOOL)animated completion:(void(^)(BOOL finished))completion {
+	if(animated) {
+		[UIView animateWithDuration:.35f delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+						 animations:^{
+							 self.contentInset = contentInset;
+						 } completion:^(BOOL finished) {
+							 if(completion != nil) {
+								 completion(finished);
+							 }
+						 }];
+	} else {
+		self.contentInset = contentInset;
+		if(completion != nil) {
+			completion(YES);
+		}
+	}
 }
 
 @end
