@@ -24,6 +24,7 @@ static const void* kPBInfiniteScrollHandlerKey = &kPBInfiniteScrollHandlerKey;
 static const void* kPBInfiniteScrollIndicatorViewKey = &kPBInfiniteScrollIndicatorViewKey;
 static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 static const void* kPBInfiniteScrollInitKey = &kPBInfiniteScrollInitKey;
+static const void* kPBInfiniteScrollOriginalInsetsKey = &kPBInfiniteScrollOriginalInsetsKey;
 
 typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	PBInfiniteScrollStateNone,
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	NSAssert([self pb_isInfiniteScrollInitialized] == NO, @"InfiniteScroll is already initialized for this view. You must call -(void)removeInfiniteScroll before setting the new one.");
 	
 	[self pb_setInfiniteScrollHandler:handler];
+	[self pb_setInfiniteScrollOriginalInsets:self.contentInset];
 	
 	[self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
 	[self addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
@@ -78,6 +80,20 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	} else if([keyPath isEqualToString:@"contentSize"]) {
 		[self pb_positionInfiniteScrollIndicatorWithContentSize:[[change valueForKey:NSKeyValueChangeNewKey] CGSizeValue]];
 	}
+}
+
+- (void)pb_setInfiniteScrollOriginalInsets:(UIEdgeInsets)insets {
+	objc_setAssociatedObject(self, kPBInfiniteScrollOriginalInsetsKey, [NSValue valueWithUIEdgeInsets:insets], OBJC_ASSOCIATION_RETAIN);
+}
+
+- (UIEdgeInsets)pb_infiniteScrollOriginalInsets {
+	NSValue* insetsValue = objc_getAssociatedObject(self, kPBInfiniteScrollOriginalInsetsKey);
+	
+	if(insetsValue == nil) {
+		return UIEdgeInsetsZero;
+	}
+	
+	return [insetsValue UIEdgeInsetsValue];
 }
 
 - (BOOL)pb_isInfiniteScrollInitialized {
@@ -209,7 +225,8 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 		// Initiate scroll to the bottom if due to user interaction contentOffset.y
 		// stuck somewhere between last cell and activity indicator
 		if(finished) {
-			CGFloat newY = self.contentSize.height - self.bounds.size.height;
+			UIEdgeInsets originalInsets = [self pb_infiniteScrollOriginalInsets];
+			CGFloat newY = self.contentSize.height - self.bounds.size.height + originalInsets.bottom;
 			
 			if(self.contentOffset.y > newY) {
 				[self setContentOffset:CGPointMake(0, newY) animated:YES];
