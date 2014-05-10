@@ -1,7 +1,7 @@
 UIScrollView+InfiniteScroll
 ===========================
 
-UIScrollView infinite scroll category, that shows a nice spinner when user reaches the bottom of scroll view. It can be useful to organize a message stream loaded in chunks from server like for instance in twitter app.
+Infinite scroll category helps to organize an infinite stream of content. It tracks user's position in scroll view and when user gets to the bottom of it, it shows the activity indicator and triggers a handler block to load more content.
 
 <p align="center"><img src="InfiniteScrollScreenshot.jpg" /></p>
 
