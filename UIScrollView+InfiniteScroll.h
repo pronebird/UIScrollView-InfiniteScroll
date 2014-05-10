@@ -9,20 +9,36 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^pb_infinite_scroll_handler_t)(void);
-typedef void(^pb_infinite_scroll_completion_t)(void);
-
 @interface UIScrollView (PBInfiniteScroll)
 
-// Setup infinite scroll handler
-- (void)addInfiniteScrollWithHandler:(pb_infinite_scroll_handler_t)handler;
+/**
+ *  Setup infinite scroll handler
+ *
+ *  @param handler a handler block
+ */
+- (void)addInfiniteScrollWithHandler:(void(^)(UIScrollView* scrollView))handler;
 
-// Unregister infinite scroll
+/**
+ *  Unregister infinite scroll
+ */
 - (void)removeInfiniteScroll;
 
-// You must call this method from your handler to finish
-// all animations properly and reset infinite scroll state
-- (void)finishInfiniteScrollWithCompletion:(pb_infinite_scroll_completion_t)handler;
+/**
+ *  Finish infinite scroll animations
+ *
+ *  You must call this method from your infinite scroll handler to finish all
+ *  animations properly and reset infinite scroll state
+ *
+ *  @param handler a completion block handler called when animation finished
+ */
+- (void)finishInfiniteScrollWithCompletion:(void(^)(UIScrollView* scrollView))handler;
+
+/**
+ *  Finish infinite scroll animations
+ *
+ *  You must call this method from your infinite scroll handler to finish all
+ *  animations properly and reset infinite scroll state
+ */
 - (void)finishInfiniteScroll;
 
 @end
