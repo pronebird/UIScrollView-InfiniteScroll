@@ -7,8 +7,6 @@ Infinite scroll category helps to organize an infinite stream of content. It tra
 
 # Usage
 
-So usually because scroll view or table view can be destroyed in modern storyboard flow when user navigates to another controller, I suggest to use `viewDidAppear` and `viewDidDisappear` to setup and remove infinite scroll. Here below the example for table view:
-
 ```objc
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
