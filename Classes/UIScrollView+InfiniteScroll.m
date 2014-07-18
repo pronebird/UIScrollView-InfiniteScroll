@@ -38,6 +38,7 @@ static const CGFloat kPBInfiniteScrollIndicatorViewHeight = 44.0f;
 // Keys for values in associated dictionary
 static const void* kPBInfiniteScrollHandlerKey = &kPBInfiniteScrollHandlerKey;
 static const void* kPBInfiniteScrollIndicatorViewKey = &kPBInfiniteScrollIndicatorViewKey;
+static const void* kPBInfiniteScrollIndicatorStyleKey = &kPBInfiniteScrollIndicatorStyleKey;
 static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 static const void* kPBInfiniteScrollInitKey = &kPBInfiniteScrollInitKey;
 static const void* kPBInfiniteScrollOriginalInsetsKey = &kPBInfiniteScrollOriginalInsetsKey;
@@ -92,6 +93,18 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	if([self pb_infiniteScrollState] == PBInfiniteScrollStateLoading) {
 		[self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
 	}
+}
+
+- (void)setInfiniteScrollIndicatorStyle:(UIActivityIndicatorViewStyle)infiniteScrollIndicatorStyle {
+	objc_setAssociatedObject(self, kPBInfiniteScrollIndicatorStyleKey, @(infiniteScrollIndicatorStyle), OBJC_ASSOCIATION_ASSIGN);
+	
+	[[self pb_activityIndicatorView] setActivityIndicatorViewStyle:infiniteScrollIndicatorStyle];
+}
+
+- (UIActivityIndicatorViewStyle)infiniteScrollIndicatorStyle {
+	NSNumber* indicatorStyle = objc_getAssociatedObject(self, kPBInfiniteScrollIndicatorStyleKey);
+	
+	return indicatorStyle ? [indicatorStyle integerValue] : UIActivityIndicatorViewStyleGray;
 }
 
 #pragma mark - Private methods
@@ -172,7 +185,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	UIActivityIndicatorView* activityIndicator = [self pb_activityIndicatorView];
 	
 	if(!activityIndicator) {
-		activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
 		activityIndicator.hidesWhenStopped = YES;
 		
 		[self addSubview:activityIndicator];

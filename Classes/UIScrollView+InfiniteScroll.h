@@ -12,6 +12,11 @@
 @interface UIScrollView (InfiniteScroll)
 
 /**
+ *  Infinite scroll activity indicator style (default: UIActivityIndicatorViewStyleGray)
+ */
+@property (nonatomic) UIActivityIndicatorViewStyle infiniteScrollIndicatorStyle;
+
+/**
  *  Setup infinite scroll handler
  *
  *  @param handler a handler block
