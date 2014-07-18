@@ -30,43 +30,61 @@ static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_
 	NSURLRequest* request = [NSURLRequest requestWithURL:url];
 	
 	NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-		if(error)
-		{
-			[[[UIAlertView alloc] initWithTitle:@"Error loading data"
-										message:[NSString stringWithFormat:@"%@", error]
-									   delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-		}
-		else
-		{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			// Check for network errors
+			if(error) {
+				[[[UIAlertView alloc] initWithTitle:@"Error loading data"
+											message:[NSString stringWithFormat:@"%@", error]
+										   delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+				
+				if(completionHandler) {
+					completionHandler();
+				}
+				
+				return;
+			}
+			
+			// Unserialize JSON
 			NSError* jsonError;
 			NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-
-			if(jsonError)
-			{
+			
+			if(jsonError) {
 				[[[UIAlertView alloc] initWithTitle:@"Error parsing data"
 											message:[NSString stringWithFormat:@"%@", error]
 										   delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+				
+				if(completionHandler) {
+					completionHandler();
+				}
+				
+				return;
 			}
-			else
-			{
+
+			// Create new items on background queue
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				__block NSMutableArray* newItems = [NSMutableArray new];
+				
+				for(NSDictionary* item in responseDict[@"hits"]) {
+					@autoreleasepool {
+						[newItems addObject:[ItemModel itemWithDictionary:item]];
+					}
+				}
+				
+				// Append new data on main thread and reload table
 				dispatch_async(dispatch_get_main_queue(), ^{
 					self.numPages = [responseDict[@"nbPages"] integerValue];
 					self.currentPage++;
 					
-					for(NSDictionary* item in responseDict[@"hits"]) {
-						[self.items addObject:[ItemModel itemWithDictionary:item]];
-					}
+					[self.items addObjectsFromArray:newItems];
 					
 					[self.tableView reloadData];
+					
+					if(completionHandler) {
+						completionHandler();
+					}
 				});
-			}
-			
-			if(completionHandler) {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					completionHandler();
-				});
-			}
-		}
+			});
+		});
 	}];
 
 	[task resume];
@@ -83,14 +101,12 @@ static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_
 	[self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
 		__strong typeof(weakSelf) strongSelf = weakSelf;
 		
-		if(strongSelf) {
-			// My network is too fast
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				[strongSelf loadRemoteDataWithCompletionHandler:^{
-					[scrollView finishInfiniteScroll];
-				}];
-			});
-		}
+		// My network is too fast
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[strongSelf loadRemoteDataWithCompletionHandler:^{
+				[scrollView finishInfiniteScroll];
+			}];
+		});
 	}];
 	
 	[self loadRemoteDataWithCompletionHandler:nil];
