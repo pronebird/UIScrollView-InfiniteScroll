@@ -2,14 +2,14 @@
 
 Infinite scroll implementation as a category for UIScrollView.
 
-![GIF Image](README%20images/InfiniteScroll.gif)
+![GIF Image](README images/InfiniteScroll.gif)
 
 ### CocoaPods
 
-This repo has podspec so you can use it in your Podfile. I'll take an effort to put it on CocoaPods some time later.
+Just add the following line in your Podfile:
 
 ```ruby
-pod 'UIScrollView-InfiniteScroll', :git => 'https://github.com/pronebird/UIScrollView-InfiniteScroll.git'
+pod 'UIScrollView-InfiniteScroll', '~> 0.2'
 ```
 
 ### Example
