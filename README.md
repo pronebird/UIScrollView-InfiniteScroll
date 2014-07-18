@@ -1,11 +1,20 @@
-UIScrollView+InfiniteScroll
-===========================
+## UIScrollView+InfiniteScroll
 
 Infinite scroll category helps to organize an infinite stream of content. It tracks user's position in scroll view and when user gets to the bottom of it, it shows the activity indicator and triggers a handler block to load more content.
 
 <p align="center"><img src="InfiniteScrollScreenshot.jpg" /></p>
 
-# Usage
+### CocoaPods
+
+This repo has podspec so you can use it in your Podfile. I'll take an effort to put it on CocoaPods some time later.
+
+```
+pod 'UIScrollView-InfiniteScroll', :git => 'https://github.com/pronebird/UIScrollView-InfiniteScroll.git'
+```
+
+or 
+
+### Example
 
 ```objc
 - (void)viewDidAppear:(BOOL)animated {
