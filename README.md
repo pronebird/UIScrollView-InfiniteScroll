@@ -15,6 +15,11 @@ pod 'UIScrollView-InfiniteScroll', '~> 0.2'
 ### Example
 
 ```objc
+// Somewhere in your implementation file
+#import <UIScrollView+InfiniteScroll.h>
+
+// ...
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
