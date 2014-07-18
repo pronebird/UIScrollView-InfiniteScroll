@@ -12,8 +12,6 @@ This repo has podspec so you can use it in your Podfile. I'll take an effort to 
 pod 'UIScrollView-InfiniteScroll', :git => 'https://github.com/pronebird/UIScrollView-InfiniteScroll.git'
 ```
 
-or 
-
 ### Example
 
 ```objc
