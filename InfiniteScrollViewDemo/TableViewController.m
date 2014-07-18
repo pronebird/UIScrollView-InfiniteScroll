@@ -79,16 +79,10 @@ static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_
 	self.numPages = 0;
 	self.items = [NSMutableArray new];
 	
-	[self loadRemoteDataWithCompletionHandler:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	
 	__weak typeof(self) weakSelf = self;
 	[self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
-		__strong typeof(self) strongSelf = weakSelf;
-	
+		__strong typeof(weakSelf) strongSelf = weakSelf;
+		
 		if(strongSelf) {
 			// My network is too fast
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -98,12 +92,8 @@ static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_
 			});
 		}
 	}];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
 	
-	[self.tableView removeInfiniteScroll];
+	[self loadRemoteDataWithCompletionHandler:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

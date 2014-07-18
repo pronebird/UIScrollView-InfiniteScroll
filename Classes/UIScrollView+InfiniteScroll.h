@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIScrollView (PBInfiniteScroll)
+@interface UIScrollView (InfiniteScroll)
 
 /**
  *  Setup infinite scroll handler

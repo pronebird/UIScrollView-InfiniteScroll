@@ -2,7 +2,7 @@
 
 Infinite scroll implementation as a category for UIScrollView.
 
-<p align="center"><img src="README%20images/InfiniteScroll.gif" /></p>
+![GIF Image](README%20images/InfiniteScroll.gif)
 
 ### CocoaPods
 
@@ -15,8 +15,8 @@ pod 'UIScrollView-InfiniteScroll', :git => 'https://github.com/pronebird/UIScrol
 ### Example
 
 ```objc
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
     // setup infinite scroll
     [self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
@@ -28,12 +28,5 @@ pod 'UIScrollView-InfiniteScroll', :git => 'https://github.com/pronebird/UIScrol
         // finish infinite scroll animation
         [scrollView finishInfiniteScroll];
     }];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-
-    // remove infinite scroll
-    [self.tableView removeInfiniteScroll];
 }
 ```
