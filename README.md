@@ -2,7 +2,7 @@
 
 Infinite scroll implementation as a category for UIScrollView.
 
-<p align="center"><img src="InfiniteScrollScreenshot.jpg" /></p>
+<p align="center"><img src="README%20images/InfiniteScroll.gif" /></p>
 
 ### CocoaPods
 
