@@ -8,7 +8,7 @@ Infinite scroll implementation as a category for UIScrollView.
 
 This repo has podspec so you can use it in your Podfile. I'll take an effort to put it on CocoaPods some time later.
 
-```
+```ruby
 pod 'UIScrollView-InfiniteScroll', :git => 'https://github.com/pronebird/UIScrollView-InfiniteScroll.git'
 ```
 
