@@ -1,6 +1,6 @@
 ## UIScrollView+InfiniteScroll
 
-Infinite scroll category helps to organize an infinite stream of content. It tracks user's position in scroll view and when user gets to the bottom of it, it shows the activity indicator and triggers a handler block to load more content.
+Infinite scroll implementation as a category for UIScrollView.
 
 <p align="center"><img src="InfiniteScrollScreenshot.jpg" /></p>
 
