@@ -69,13 +69,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kR5-Pr-fg5">
+                            <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kR5-Pr-fg5">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="c6h-PQ-VdU" id="Nrz-gd-Ke2"/>
+                                </connections>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="kR5-Pr-fg5" secondAttribute="trailing" id="OXT-Zb-bsR"/>
+                            <constraint firstItem="kR5-Pr-fg5" firstAttribute="leading" secondItem="Mir-SK-ew9" secondAttribute="leading" id="WQf-hQ-RYx"/>
+                            <constraint firstItem="kR5-Pr-fg5" firstAttribute="top" secondItem="Mir-SK-ew9" secondAttribute="top" id="pf1-7n-lHk"/>
+                            <constraint firstAttribute="bottom" secondItem="kR5-Pr-fg5" secondAttribute="bottom" id="vQ4-PZ-YgO"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Browser" id="Mnj-ht-Tpp"/>
                     <connections>

@@ -10,7 +10,7 @@
 
 @class ItemModel;
 
-@interface BrowserViewController : UIViewController
+@interface BrowserViewController : UIViewController<UIWebViewDelegate, UIAlertViewDelegate>
 
 @property (weak) IBOutlet UIWebView* webView;
 @property (strong) ItemModel* itemModel;

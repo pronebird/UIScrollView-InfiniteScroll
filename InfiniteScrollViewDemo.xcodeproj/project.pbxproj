@@ -14,6 +14,8 @@
 		5848152F191D5D290019C583 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5848152E191D5D290019C583 /* main.m */; };
 		58481533191D5D290019C583 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58481532191D5D290019C583 /* AppDelegate.m */; };
 		58481535191D5D290019C583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58481534191D5D290019C583 /* Images.xcassets */; };
+		5865765A197D6ED300E7AF20 /* Storyboard-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58657659197D6ED300E7AF20 /* Storyboard-iPad.storyboard */; };
+		5865765D197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */; };
 		5874FD7B191D5E080041FBF8 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5874FD7A191D5E080041FBF8 /* Storyboard.storyboard */; };
 		5874FD7E191D5E6E0041FBF8 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD7D191D5E6E0041FBF8 /* TableViewController.m */; };
 		5874FD81191E752B0041FBF8 /* ItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD80191E752B0041FBF8 /* ItemModel.m */; };
@@ -35,6 +37,9 @@
 		58481532191D5D290019C583 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		58481534191D5D290019C583 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5848153B191D5D290019C583 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		58657659197D6ED300E7AF20 /* Storyboard-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Storyboard-iPad.storyboard"; sourceTree = "<group>"; };
+		5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+NetworkIndicator.h"; sourceTree = "<group>"; };
+		5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+NetworkIndicator.m"; sourceTree = "<group>"; };
 		5874FD7A191D5E080041FBF8 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		5874FD7C191D5E6E0041FBF8 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		5874FD7D191D5E6E0041FBF8 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
@@ -94,6 +99,9 @@
 			children = (
 				5874FD85191E7EB10041FBF8 /* Classes */,
 				5874FD7A191D5E080041FBF8 /* Storyboard.storyboard */,
+				58657659197D6ED300E7AF20 /* Storyboard-iPad.storyboard */,
+				5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */,
+				5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */,
 				58481531191D5D290019C583 /* AppDelegate.h */,
 				58481532191D5D290019C583 /* AppDelegate.m */,
 				5874FD7F191E752B0041FBF8 /* ItemModel.h */,
@@ -180,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5848152D191D5D290019C583 /* InfoPlist.strings in Resources */,
+				5865765A197D6ED300E7AF20 /* Storyboard-iPad.storyboard in Resources */,
 				58481535191D5D290019C583 /* Images.xcassets in Resources */,
 				5874FD7B191D5E080041FBF8 /* Storyboard.storyboard in Resources */,
 			);
@@ -195,6 +204,7 @@
 				58481533191D5D290019C583 /* AppDelegate.m in Sources */,
 				5874FD7E191D5E6E0041FBF8 /* TableViewController.m in Sources */,
 				5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */,
+				5865765D197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m in Sources */,
 				5874FD84191E75410041FBF8 /* BrowserViewController.m in Sources */,
 				5874FD81191E752B0041FBF8 /* ItemModel.m in Sources */,
 				5848152F191D5D290019C583 /* main.m in Sources */,
@@ -293,7 +303,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -306,7 +318,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
