@@ -9,7 +9,7 @@ Infinite scroll implementation as a category for UIScrollView.
 Just add the following line in your Podfile:
 
 ```ruby
-pod 'UIScrollView-InfiniteScroll', '~> 0.2'
+pod 'UIScrollView-InfiniteScroll'
 ```
 
 ### Example
@@ -22,6 +22,9 @@ pod 'UIScrollView-InfiniteScroll', '~> 0.2'
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // change indicator view style to white
+    self.tableView.infiniteScrollIndicatorStyle = UIActivityIndicatorViewStyleWhite;
 
     // setup infinite scroll
     [self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
