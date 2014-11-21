@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class ItemModel;
+@class StoryModel;
 
 @interface BrowserViewController : UIViewController<UIWebViewDelegate, UIAlertViewDelegate>
 
 @property (weak) IBOutlet UIWebView* webView;
-@property (strong) ItemModel* itemModel;
+@property (strong) StoryModel* story;
 
 @end

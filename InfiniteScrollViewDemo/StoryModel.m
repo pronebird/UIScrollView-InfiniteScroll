@@ -1,16 +1,16 @@
 //
-//  ItemModel.m
+//  StoryModel.m
 //  InfiniteScrollViewDemo
 //
 //  Created by pronebird on 10/05/14.
 //  Copyright (c) 2014 codeispoetry.ru. All rights reserved.
 //
 
-#import "ItemModel.h"
+#import "StoryModel.h"
 
-@implementation ItemModel
+@implementation StoryModel
 
-+ (instancetype)itemWithDictionary:(NSDictionary*)dictionary {
++ (instancetype)modelWithDictionary:(NSDictionary*)dictionary {
 	return [[self alloc] initWithDictionary:dictionary];
 }
 

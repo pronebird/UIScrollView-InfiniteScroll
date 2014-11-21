@@ -8,7 +8,7 @@
 
 #import "BrowserViewController.h"
 #import "UIApplication+NetworkIndicator.h"
-#import "ItemModel.h"
+#import "StoryModel.h"
 
 @implementation BrowserViewController
 
@@ -17,9 +17,9 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.navigationItem.title = self.itemModel.title;
+	self.navigationItem.title = self.story.title;
 	
-	[self.webView loadRequest:[NSURLRequest requestWithURL:self.itemModel.url]];
+	[self startLoading];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -33,6 +33,10 @@
 		
 		[[UIApplication sharedApplication] stopNetworkActivity];
 	}
+}
+
+- (void)startLoading {
+	[self.webView loadRequest:[NSURLRequest requestWithURL:self.story.url]];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -62,7 +66,7 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
 	if(buttonIndex == alertView.firstOtherButtonIndex) {
-		[self.webView reload];
+		[self startLoading];
 		return;
 	}
 	

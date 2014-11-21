@@ -1,5 +1,5 @@
 //
-//  ItemModel.h
+//  StoryModel.h
 //  InfiniteScrollViewDemo
 //
 //  Created by pronebird on 10/05/14.
@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ItemModel : NSObject
+@interface StoryModel : NSObject
 
 @property (strong) NSString* title;
 @property (strong) NSString* author;
 @property (strong) NSURL* url;
 
-+ (instancetype)itemWithDictionary:(NSDictionary*)dictionary;
++ (instancetype)modelWithDictionary:(NSDictionary*)dictionary;
 
 - (id)initWithDictionary:(NSDictionary*)dictionary;
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="SEo-9M-rz0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="SEo-9M-rz0">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6246"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller - InfiniteScroll Demo-->
+        <!--InfiniteScroll Demo-->
         <scene sceneID="O0v-nd-t7u">
             <objects>
                 <tableViewController id="xKS-uc-UjR" customClass="TableViewController" sceneMemberID="viewController">
@@ -57,7 +58,7 @@
             </objects>
             <point key="canvasLocation" x="433" y="37"/>
         </scene>
-        <!--Browser View Controller - Browser-->
+        <!--Browser-->
         <scene sceneID="S0b-Xx-Twf">
             <objects>
                 <viewController id="c6h-PQ-VdU" customClass="BrowserViewController" sceneMemberID="viewController">
@@ -71,7 +72,6 @@
                         <subviews>
                             <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kR5-Pr-fg5">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="c6h-PQ-VdU" id="Nrz-gd-Ke2"/>
