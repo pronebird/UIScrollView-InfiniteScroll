@@ -2,7 +2,15 @@
 
 Infinite scroll implementation as a category for UIScrollView.
 
-![GIF Image](README images/InfiniteScroll.gif)
+Be aware that this category swizzles `setContentOffset` and `setContentSize` on UIScrollView.
+
+Default indicator view
+
+![Standard indicator view](https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll1.gif)
+
+Custom indicator view
+
+![Custom indicator view](https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif)
 
 ### CocoaPods
 
@@ -12,7 +20,7 @@ Just add the following line in your Podfile:
 pod 'UIScrollView-InfiniteScroll'
 ```
 
-### Example
+### Basic usage
 
 ```objc
 // Somewhere in your implementation file
@@ -22,7 +30,7 @@ pod 'UIScrollView-InfiniteScroll'
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     // change indicator view style to white
     self.tableView.infiniteScrollIndicatorStyle = UIActivityIndicatorViewStyleWhite;
 
@@ -38,3 +46,28 @@ pod 'UIScrollView-InfiniteScroll'
     }];
 }
 ```
+
+### Custom indicator
+
+You can use custom indicator instead of default `UIActivityIndicatorView`.
+
+Custom indicator must be a subclass of `UIView` and implement the following methods:
+
+ * `- (void)startAnimating`
+ * `- (void)stopAnimating`
+
+```objc
+// optionally you can use custom indicator view
+UIImage *image = [UIImage imageNamed:@"activity_indicator"];
+CustomInfiniteIndicator *infiniteIndicator = [[CustomInfiniteIndicator alloc] initWithImage:image];
+
+[self.tableView setInfiniteIndicatorView:infiniteIndicator];
+```
+
+Please see example implementation of indicator view based on `UIImageView`:
+
+[InfiniteScrollViewDemo/CustomInfiniteIndicator.m](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemo/CustomInfiniteIndicator.m)
+
+### Contributors
+
+Thanks to Ivan Chirkov ([@nsleader](https://github.com/nsleader)) for adding custom indicators support.
