@@ -206,19 +206,21 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 
 - (UIView*)pb_getOrCreateActivityIndicatorView {
 	UIView* activityIndicator = [self pb_activityIndicatorView];
-	UIActivityIndicatorView* nativeActivityIndicator;
-	
+
 	if(!activityIndicator) {
-		nativeActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
+		UIActivityIndicatorView* nativeActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
 		nativeActivityIndicator.hidesWhenStopped = YES;
-		
-		[self addSubview:nativeActivityIndicator];
+		activityIndicator = nativeActivityIndicator;
+
 		[self pb_setActivityIndicatorView:nativeActivityIndicator];
-	} else {
+	}
+
+	// Add activity indicator into scroll view if needed
+	if(activityIndicator.superview != self) {
 		[self addSubview:activityIndicator];
 	}
 	
-	return activityIndicator ?: nativeActivityIndicator;
+	return activityIndicator;
 }
 
 - (void)pb_removeActivityIndicator {
