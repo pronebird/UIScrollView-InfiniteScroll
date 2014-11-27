@@ -73,3 +73,8 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
 ### Contributors
 
 Thanks to Ivan Chirkov ([@nsleader](https://github.com/nsleader)) for adding custom indicators support.
+
+### TODO
+
+- Dynamically calculate indicator height (drop `kPBInfiniteScrollIndicatorViewHeight`)
+- Add vertical margin option to tweak whitespace around indicator view
