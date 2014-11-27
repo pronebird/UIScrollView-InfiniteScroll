@@ -11,6 +11,7 @@
 #import "BrowserViewController.h"
 #import "StoryModel.h"
 
+#import "CustomInfiniteIndicator.h"
 #import "UIScrollView+InfiniteScroll.h"
 
 static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%ld&page=%ld";
@@ -139,14 +140,9 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 	
 	// Create custom indicator
 	UIImage *image = [UIImage imageNamed:@"activity_indicator"];
-	UIView *indicator = [[UIImageView alloc] initWithImage:image];
-	CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-	animation.fromValue = [NSNumber numberWithFloat:0.0f];
-	animation.toValue = [NSNumber numberWithFloat: 2*M_PI];
-	animation.duration = 1.0f;
-	animation.repeatCount = INFINITY;
-	[indicator.layer addAnimation:animation forKey:@"SpinAnimation"];
-	
+	CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithImage:image];
+
+	// Set custom indicator
 	[self.tableView setInfiniteIndicatorView:indicator];
 	
 	// Add infinite scroll handler

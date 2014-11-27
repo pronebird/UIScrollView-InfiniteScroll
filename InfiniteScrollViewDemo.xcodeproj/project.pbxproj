@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		583DCB9E1A2776E60049577B /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */; };
 		58481523191D5D290019C583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481522191D5D290019C583 /* Foundation.framework */; };
 		58481525191D5D290019C583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481524191D5D290019C583 /* CoreGraphics.framework */; };
 		58481527191D5D290019C583 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481526191D5D290019C583 /* UIKit.framework */; };
@@ -25,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		31E76BFBDEA2456E98943CE8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfiniteIndicator.h; sourceTree = "<group>"; };
+		583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfiniteIndicator.m; sourceTree = "<group>"; };
 		5848151F191D5D290019C583 /* InfiniteScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfiniteScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58481522191D5D290019C583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		58481524191D5D290019C583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -106,6 +109,8 @@
 				58481532191D5D290019C583 /* AppDelegate.m */,
 				5874FD7F191E752B0041FBF8 /* StoryModel.h */,
 				5874FD80191E752B0041FBF8 /* StoryModel.m */,
+				583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */,
+				583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */,
 				5874FD7C191D5E6E0041FBF8 /* TableViewController.h */,
 				5874FD7D191D5E6E0041FBF8 /* TableViewController.m */,
 				5874FD82191E75410041FBF8 /* BrowserViewController.h */,
@@ -203,6 +208,7 @@
 			files = (
 				58481533191D5D290019C583 /* AppDelegate.m in Sources */,
 				5874FD7E191D5E6E0041FBF8 /* TableViewController.m in Sources */,
+				583DCB9E1A2776E60049577B /* CustomInfiniteIndicator.m in Sources */,
 				5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */,
 				5865765D197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m in Sources */,
 				5874FD84191E75410041FBF8 /* BrowserViewController.m in Sources */,
