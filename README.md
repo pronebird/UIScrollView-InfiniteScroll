@@ -2,7 +2,7 @@
 
 Infinite scroll implementation as a category for UIScrollView.
 
-Be aware that this category swizzles `setContentOffset` and `setContentSize` on UIScrollView.
+Be aware that this category swizzles `setContentOffset` and `setContentSize` on `UIScrollView`.
 
 Default indicator view
 
@@ -67,6 +67,8 @@ CustomInfiniteIndicator *infiniteIndicator = [[CustomInfiniteIndicator alloc] in
 Please see example implementation of indicator view based on `UIImageView`:
 
 [InfiniteScrollViewDemo/CustomInfiniteIndicator.m](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemo/CustomInfiniteIndicator.m)
+
+At the moment InfiniteScroll uses indicator's frame directly so make sure you size custom indicator view beforehand. Such views as `UIImageView` or `UIActivityIndicatorView` will automatically resize themselves so no need to setup frame for them.
 
 ### Contributors
 
