@@ -231,6 +231,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 }
 
 - (void)pb_setActivityIndicatorView:(UIView*)view {
+	// make sure indicator is initially hidden
+	view.hidden = YES;
+
 	objc_setAssociatedObject(self, kPBInfiniteScrollIndicatorViewKey, view, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -265,8 +268,8 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	[self pb_positionInfiniteScrollIndicatorWithContentSize:self.contentSize];
 
 	if([activityIndicator respondsToSelector:@selector(startAnimating)]) {
-		[activityIndicator performSelector:@selector(startAnimating) withObject:nil];
 		activityIndicator.hidden = NO;
+		[activityIndicator performSelector:@selector(startAnimating) withObject:nil];
 	}
 
 	UIEdgeInsets contentInset = self.contentInset;
