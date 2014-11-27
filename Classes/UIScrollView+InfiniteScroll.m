@@ -267,8 +267,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	
 	[self pb_positionInfiniteScrollIndicatorWithContentSize:self.contentSize];
 
+	activityIndicator.hidden = NO;
+
 	if([activityIndicator respondsToSelector:@selector(startAnimating)]) {
-		activityIndicator.hidden = NO;
 		[activityIndicator performSelector:@selector(startAnimating) withObject:nil];
 	}
 
@@ -311,8 +312,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	[self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
 		if([activityIndicator respondsToSelector:@selector(stopAnimating)]) {
 			[activityIndicator performSelector:@selector(stopAnimating) withObject:nil];
-			activityIndicator.hidden = YES;
 		}
+
+		activityIndicator.hidden = YES;
 		
 		[self pb_setInfiniteScrollState:PBInfiniteScrollStateNone];
 		
