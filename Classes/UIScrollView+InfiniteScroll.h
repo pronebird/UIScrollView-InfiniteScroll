@@ -49,8 +49,15 @@
 /**
  *  Set custom infinite indicator view
  *
+ *  You may implement methods below to animate custom indicator:
+ *
+ *  * `- (void)startAnimating`
+ *  * `- (void)stopAnimating`
+ *
+ *  Infinite scroll will call implemented methods during user interaction.
+ *
  *  @param indicatorView a custom indicator view
  */
-- (void)setInfiniteIndicatorView:(UIView *)indicatorView;
+- (void)setInfiniteIndicatorView:(UIView*)indicatorView;
 
 @end

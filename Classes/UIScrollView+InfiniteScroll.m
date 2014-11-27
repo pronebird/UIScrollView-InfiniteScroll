@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	return indicatorStyle ? [indicatorStyle integerValue] : UIActivityIndicatorViewStyleGray;
 }
 
-- (void)setInfiniteIndicatorView:(UIView *)indicatorView {
+- (void)setInfiniteIndicatorView:(UIView*)indicatorView {
 	[self pb_setActivityIndicatorView:indicatorView];
 }
 
@@ -208,11 +208,8 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	UIView* activityIndicator = [self pb_activityIndicatorView];
 
 	if(!activityIndicator) {
-		UIActivityIndicatorView* nativeActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
-		nativeActivityIndicator.hidesWhenStopped = YES;
-		activityIndicator = nativeActivityIndicator;
-
-		[self pb_setActivityIndicatorView:nativeActivityIndicator];
+		activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
+		[self pb_setActivityIndicatorView:activityIndicator];
 	}
 
 	// Add activity indicator into scroll view if needed
@@ -263,12 +260,13 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 }
 
 - (void)pb_startAnimatingInfiniteScroll {
-	id activityIndicator = [self pb_getOrCreateActivityIndicatorView];
+	UIView* activityIndicator = [self pb_getOrCreateActivityIndicatorView];
 	
 	[self pb_positionInfiniteScrollIndicatorWithContentSize:self.contentSize];
 
-	if([activityIndicator isKindOfClass:[UIActivityIndicatorView class]]) {
-		[activityIndicator startAnimating];
+	if([activityIndicator respondsToSelector:@selector(startAnimating)]) {
+		[activityIndicator performSelector:@selector(startAnimating) withObject:nil];
+		activityIndicator.hidden = NO;
 	}
 
 	UIEdgeInsets contentInset = self.contentInset;
@@ -299,7 +297,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 }
 
 - (void)pb_stopAnimatingInfiniteScrollWithCompletion:(void(^)(UIScrollView* scrollView))handler {
-	id activityIndicator = [self pb_activityIndicatorView];
+	UIView* activityIndicator = [self pb_activityIndicatorView];
 	UIEdgeInsets contentInset = self.contentInset;
 	
 	contentInset.bottom -= kPBInfiniteScrollIndicatorViewHeight;
@@ -308,8 +306,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	contentInset.bottom -= [self pb_infiniteScrollExtraBottomInsetKey];
 	
 	[self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
-		if([activityIndicator isKindOfClass:[UIActivityIndicatorView class]]) {
-			[activityIndicator stopAnimating];
+		if([activityIndicator respondsToSelector:@selector(stopAnimating)]) {
+			[activityIndicator performSelector:@selector(stopAnimating) withObject:nil];
+			activityIndicator.hidden = YES;
 		}
 		
 		[self pb_setInfiniteScrollState:PBInfiniteScrollStateNone];
