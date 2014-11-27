@@ -46,9 +46,10 @@
  */
 - (void)finishInfiniteScroll;
 
-
 /**
- *  Setup custom infinite indicator view
+ *  Set custom infinite indicator view
+ *
+ *  @param indicatorView a custom indicator view
  */
 - (void)setInfiniteIndicatorView:(UIView *)indicatorView;
 

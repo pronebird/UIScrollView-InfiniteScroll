@@ -98,10 +98,10 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 
 - (void)setInfiniteScrollIndicatorStyle:(UIActivityIndicatorViewStyle)infiniteScrollIndicatorStyle {
 	objc_setAssociatedObject(self, kPBInfiniteScrollIndicatorStyleKey, @(infiniteScrollIndicatorStyle), OBJC_ASSOCIATION_ASSIGN);
-    id activityIndicatorView = [self pb_activityIndicatorView];
-    if ([activityIndicatorView isKindOfClass:[UIActivityIndicatorView class]]) {
-        [activityIndicatorView setActivityIndicatorViewStyle:infiniteScrollIndicatorStyle];
-    }
+	id activityIndicatorView = [self pb_activityIndicatorView];
+	if([activityIndicatorView isKindOfClass:[UIActivityIndicatorView class]]) {
+		[activityIndicatorView setActivityIndicatorViewStyle:infiniteScrollIndicatorStyle];
+	}
 }
 
 - (UIActivityIndicatorViewStyle)infiniteScrollIndicatorStyle {
@@ -110,9 +110,8 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	return indicatorStyle ? [indicatorStyle integerValue] : UIActivityIndicatorViewStyleGray;
 }
 
-- (void)setInfiniteIndicatorView:(UIView *)indicatorView
-{
-    [self pb_setActivityIndicatorView:indicatorView];
+- (void)setInfiniteIndicatorView:(UIView *)indicatorView {
+	[self pb_setActivityIndicatorView:indicatorView];
 }
 
 #pragma mark - Private methods
@@ -125,7 +124,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	});
 }
 
--(void)pb_handlePanGesture:(UITapGestureRecognizer*)gestureRecognizer {
+- (void)pb_handlePanGesture:(UITapGestureRecognizer*)gestureRecognizer {
 	if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
 		[self pb_scrollToInfiniteIndicatorIfNeeded];
 	}
@@ -207,19 +206,19 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 
 - (UIView*)pb_getOrCreateActivityIndicatorView {
 	UIView* activityIndicator = [self pb_activityIndicatorView];
-    UIActivityIndicatorView *nativeActivityIndicator = nil;
-    
+	UIActivityIndicatorView *nativeActivityIndicator = nil;
+	
 	if(!activityIndicator) {
 		nativeActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
 		nativeActivityIndicator.hidesWhenStopped = YES;
 		
 		[self addSubview:nativeActivityIndicator];
 		[self pb_setActivityIndicatorView:nativeActivityIndicator];
-    } else {
-        [self addSubview:activityIndicator];
-    }
+	} else {
+		[self addSubview:activityIndicator];
+	}
 	
-    return activityIndicator ?: nativeActivityIndicator;
+	return activityIndicator ?: nativeActivityIndicator;
 }
 
 - (void)pb_removeActivityIndicator {
@@ -266,9 +265,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	
 	[self pb_positionInfiniteScrollIndicatorWithContentSize:self.contentSize];
 
-    if ([activityIndicator isKindOfClass:[UIActivityIndicatorView class]]) {
-        [activityIndicator startAnimating];
-    }
+	if([activityIndicator isKindOfClass:[UIActivityIndicatorView class]]) {
+		[activityIndicator startAnimating];
+	}
 
 	UIEdgeInsets contentInset = self.contentInset;
 
@@ -307,9 +306,9 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 	contentInset.bottom -= [self pb_infiniteScrollExtraBottomInsetKey];
 	
 	[self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
-        if ([activityIndicator isKindOfClass:[UIActivityIndicatorView class]]) {
-            [activityIndicator stopAnimating];
-        }
+		if([activityIndicator isKindOfClass:[UIActivityIndicatorView class]]) {
+			[activityIndicator stopAnimating];
+		}
 		
 		[self pb_setInfiniteScrollState:PBInfiniteScrollStateNone];
 		
