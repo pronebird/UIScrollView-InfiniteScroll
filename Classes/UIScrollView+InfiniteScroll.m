@@ -206,7 +206,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 
 - (UIView*)pb_getOrCreateActivityIndicatorView {
 	UIView* activityIndicator = [self pb_activityIndicatorView];
-	UIActivityIndicatorView *nativeActivityIndicator = nil;
+	UIActivityIndicatorView* nativeActivityIndicator;
 	
 	if(!activityIndicator) {
 		nativeActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self infiniteScrollIndicatorStyle]];
