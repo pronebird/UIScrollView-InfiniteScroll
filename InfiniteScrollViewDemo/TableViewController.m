@@ -137,10 +137,23 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 	
 	__weak typeof(self) weakSelf = self;
 	
+    // Create custom indicator
+    UIImage *image = [UIImage imageNamed:@"activity_indicator"];
+    UIView *indicator = [[UIImageView alloc] initWithImage:image];
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    animation.fromValue = [NSNumber numberWithFloat:0.0f];
+    animation.toValue = [NSNumber numberWithFloat: 2*M_PI];
+    animation.duration = 1.0f;
+    animation.repeatCount = INFINITY;
+    [indicator.layer addAnimation:animation forKey:@"SpinAnimation"];
+    
+    [self.tableView setInfiniteIndicatorView:indicator];
+    
 	// Add infinite scroll handler
 	[self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
 		__strong typeof(weakSelf) strongSelf = weakSelf;
-		
+        
+        
 		[strongSelf loadRemoteDataWithDelay:YES completion:^{
 			// Finish infinite scroll animations
 			[scrollView finishInfiniteScroll];
