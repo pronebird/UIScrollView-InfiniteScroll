@@ -324,7 +324,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 			UIEdgeInsets originalInsets = [self pb_infiniteScrollOriginalInsets];
 			CGFloat newY = self.contentSize.height - self.bounds.size.height + originalInsets.bottom;
 			
-			if(self.contentOffset.y > newY) {
+			if(self.contentOffset.y > newY && newY>0) {
 				[self setContentOffset:CGPointMake(0, newY) animated:YES];
 				TRACE(@"pb_stopAnimatingInfiniteScroll::scrollToBottom");
 			}
