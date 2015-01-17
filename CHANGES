@@ -1,0 +1,4 @@
+= 0.5.2 (2015-01-17)
+
+* Don't change contentOffset on completion, if content is smaller than view bounds.
+Solves strange jumping bug. (Alex Shevchenko)
