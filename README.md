@@ -72,9 +72,16 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
 
 ### Contributors
 
-Thanks to Ivan Chirkov ([@nsleader](https://github.com/nsleader)) for adding custom indicators support.
+* Ivan Chirkov [@nsleader](https://github.com/nsleader)<br/>
+  Custom indicators support
+* Alex Shevchenko [@skeeet](https://github.com/skeeet)<br/>
+  Fix for bounce back glitch when content size is smaller than view bounds
 
-### TODO
+### Todo
 
 - Dynamically calculate indicator height (drop `kPBInfiniteScrollIndicatorViewHeight`)
 - Add vertical margin option to tweak whitespace around indicator view
+
+### Known bugs
+
+- Invalid content offset on bounce back when loading small number of items at a time (reproducible with 1 item per page on sample app).
