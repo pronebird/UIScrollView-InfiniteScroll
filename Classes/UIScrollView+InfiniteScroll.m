@@ -4,7 +4,7 @@
 //  UIScrollView infinite scroll category
 //
 //  Created by Andrej Mihajlov on 9/4/13.
-//  Copyright (c) 2013 Andrej Mihajlov. All rights reserved.
+//  Copyright (c) 2013-2015 Andrej Mihajlov. All rights reserved.
 //
 
 #import "UIScrollView+InfiniteScroll.h"
