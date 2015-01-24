@@ -43,9 +43,6 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 }
 
 - (void)handleAPIResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
-    // Hide network activity indicator
-    [[UIApplication sharedApplication] stopNetworkActivity];
-    
     // Check for network errors
     if(error) {
         [self showRetryAlertWithError:error];
@@ -110,6 +107,10 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self handleAPIResponse:response data:data error:error completion:completion];
+            
+            // Hide network activity indicator
+            [[UIApplication sharedApplication] stopNetworkActivity];
+            
         });
     }];
     
@@ -146,9 +147,7 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     
     // Add infinite scroll handler
     [self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        [strongSelf loadRemoteDataWithDelay:YES completion:^{
+        [weakSelf loadRemoteDataWithDelay:YES completion:^{
             // Finish infinite scroll animations
             [scrollView finishInfiniteScroll];
         }];

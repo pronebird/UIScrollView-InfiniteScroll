@@ -22,6 +22,8 @@
 		5874FD81191E752B0041FBF8 /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD80191E752B0041FBF8 /* StoryModel.m */; };
 		5874FD84191E75410041FBF8 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD83191E75410041FBF8 /* BrowserViewController.m */; };
 		5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */; };
+		58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A028691A741ECD00D79E2F /* CollectionViewController.m */; };
+		58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,10 @@
 		5874FD83191E75410041FBF8 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		5874FD86191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
+		58A028681A741ECD00D79E2F /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		58A028691A741ECD00D79E2F /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		58A0286B1A74305000D79E2F /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
+		58A0286C1A74305000D79E2F /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +119,12 @@
 				583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */,
 				5874FD7C191D5E6E0041FBF8 /* TableViewController.h */,
 				5874FD7D191D5E6E0041FBF8 /* TableViewController.m */,
+				58A028681A741ECD00D79E2F /* CollectionViewController.h */,
+				58A028691A741ECD00D79E2F /* CollectionViewController.m */,
 				5874FD82191E75410041FBF8 /* BrowserViewController.h */,
 				5874FD83191E75410041FBF8 /* BrowserViewController.m */,
+				58A0286B1A74305000D79E2F /* PhotoCell.h */,
+				58A0286C1A74305000D79E2F /* PhotoCell.m */,
 				58481534191D5D290019C583 /* Images.xcassets */,
 				58481529191D5D290019C583 /* Supporting Files */,
 			);
@@ -212,8 +222,10 @@
 				5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */,
 				5865765D197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m in Sources */,
 				5874FD84191E75410041FBF8 /* BrowserViewController.m in Sources */,
+				58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */,
 				5874FD81191E752B0041FBF8 /* StoryModel.m in Sources */,
 				5848152F191D5D290019C583 /* main.m in Sources */,
+				58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
