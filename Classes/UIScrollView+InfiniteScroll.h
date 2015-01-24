@@ -35,6 +35,11 @@
 @property (nonatomic) UIView* infiniteIndicatorView DEPRECATED_MSG_ATTRIBUTE("Use infiniteScrollIndicatorView instead.");
 
 /**
+ *  Vertical margin around indicator view (Default: 11)
+ */
+@property (nonatomic) CGFloat infiniteScrollIndicatorMargin;
+
+/**
  *  Setup infinite scroll handler
  *
  *  @param handler a handler block
