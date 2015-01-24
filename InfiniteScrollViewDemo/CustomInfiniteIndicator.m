@@ -43,12 +43,12 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
     self.circle.bounds = self.bounds;
     self.circle.path = bezierPath.CGPath;
     self.circle.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-
+    
     CABasicAnimation* scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     CABasicAnimation* opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     CAAnimationGroup* animationGroup = [CAAnimationGroup animation];
     
-	scaleAnimation.fromValue = @0.0;
+    scaleAnimation.fromValue = @0.0;
     scaleAnimation.toValue = @1.0;
     scaleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
@@ -59,12 +59,12 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
     animationGroup.duration = 1.0;
     animationGroup.repeatCount = INFINITY;
     animationGroup.animations = @[ scaleAnimation, opacityAnimation ];
-
-	[self.circle addAnimation:animationGroup forKey:kSpinAnimationKey];
+    
+    [self.circle addAnimation:animationGroup forKey:kSpinAnimationKey];
 }
 
 - (void)stopAnimating {
-	[self.circle removeAnimationForKey:kSpinAnimationKey];
+    [self.circle removeAnimationForKey:kSpinAnimationKey];
 }
 
 @end

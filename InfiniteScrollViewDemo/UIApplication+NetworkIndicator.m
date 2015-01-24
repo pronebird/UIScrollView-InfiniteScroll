@@ -13,17 +13,17 @@ static NSInteger networkActivityCount = 0;
 @implementation UIApplication (NetworkIndicator)
 
 - (void)startNetworkActivity {
-	networkActivityCount++;
-	
-	[self setNetworkActivityIndicatorVisible:YES];
+    networkActivityCount++;
+    
+    [self setNetworkActivityIndicatorVisible:YES];
 }
 
 - (void)stopNetworkActivity {
-	if(networkActivityCount > 0) {
-		networkActivityCount--;
-		
-		[self setNetworkActivityIndicatorVisible:NO];
-	}
+    if(networkActivityCount > 0) {
+        networkActivityCount--;
+        
+        [self setNetworkActivityIndicatorVisible:NO];
+    }
 }
 
 @end
