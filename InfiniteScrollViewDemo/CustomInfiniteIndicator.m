@@ -28,7 +28,7 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
 - (CAShapeLayer*)circle {
     if(!_circle) {
         _circle = [CAShapeLayer layer];
-        _circle.fillColor = [UIColor colorWithRed:0.153 green:0.682 blue:0.376 alpha:1].CGColor; /* #27ae60 */
+        _circle.fillColor = [UIColor colorWithRed:0.173 green:0.243 blue:0.314 alpha:1].CGColor; /*#2c3e50*/
         _circle.contentsScale = self.layer.contentsScale;
         [self.layer addSublayer:_circle];
     }
