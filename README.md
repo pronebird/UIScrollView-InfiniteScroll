@@ -58,10 +58,9 @@ Custom indicator must be a subclass of `UIView` and implement the following meth
 
 ```objc
 // optionally you can use custom indicator view
-UIImage *image = [UIImage imageNamed:@"activity_indicator"];
-CustomInfiniteIndicator *infiniteIndicator = [[CustomInfiniteIndicator alloc] initWithImage:image];
+CustomInfiniteIndicator *infiniteIndicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
 
-[self.tableView setInfiniteIndicatorView:infiniteIndicator];
+self.tableView.infiniteScrollIndicatorView = indicator;
 ```
 
 Please see example implementation of indicator view based on `UIImageView`:
@@ -76,11 +75,6 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
   Custom indicators support
 * Alex Shevchenko [@skeeet](https://github.com/skeeet)<br/>
   Fix for bounce back glitch when content size is smaller than view bounds
-
-### Todo
-
-- Dynamically calculate indicator height (drop `kPBInfiniteScrollIndicatorViewHeight`)
-- Add vertical margin option to tweak whitespace around indicator view
 
 ### Known bugs
 
