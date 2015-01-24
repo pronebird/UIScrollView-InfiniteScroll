@@ -128,7 +128,7 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 
 	// enable auto-sizing cells on iOS 8
 	if([self.tableView respondsToSelector:@selector(layoutMargins)]) {
-		self.tableView.estimatedRowHeight = 44.0;
+		self.tableView.estimatedRowHeight = 88.0;
 		self.tableView.rowHeight = UITableViewAutomaticDimension;
 	}
 	
