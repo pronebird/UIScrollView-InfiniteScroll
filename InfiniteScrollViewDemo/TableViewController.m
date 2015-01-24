@@ -142,8 +142,8 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 	CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
 
 	// Set custom indicator
-	[self.tableView setInfiniteIndicatorView:indicator];
-	
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    
 	// Add infinite scroll handler
 	[self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
 		__strong typeof(weakSelf) strongSelf = weakSelf;
