@@ -63,7 +63,7 @@ CustomInfiniteIndicator *infiniteIndicator = [[CustomInfiniteIndicator alloc] in
 self.tableView.infiniteScrollIndicatorView = indicator;
 ```
 
-Please see example implementation of indicator view based on `UIImageView`:
+Please see example implementation of indicator view:
 
 [InfiniteScrollViewDemo/CustomInfiniteIndicator.m](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemo/CustomInfiniteIndicator.m)
 
