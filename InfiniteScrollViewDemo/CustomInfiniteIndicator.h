@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomInfiniteIndicator : UIImageView
+@interface CustomInfiniteIndicator : UIView
 
 @end

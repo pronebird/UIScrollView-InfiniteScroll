@@ -139,8 +139,7 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 	__weak typeof(self) weakSelf = self;
 	
 	// Create custom indicator
-	UIImage *image = [UIImage imageNamed:@"activity_indicator"];
-	CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithImage:image];
+	CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
 
 	// Set custom indicator
 	[self.tableView setInfiniteIndicatorView:indicator];
