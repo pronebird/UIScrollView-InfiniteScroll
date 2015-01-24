@@ -38,7 +38,6 @@ static const void* kPBInfiniteScrollIndicatorViewKey = &kPBInfiniteScrollIndicat
 static const void* kPBInfiniteScrollIndicatorStyleKey = &kPBInfiniteScrollIndicatorStyleKey;
 static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 static const void* kPBInfiniteScrollInitKey = &kPBInfiniteScrollInitKey;
-static const void* kPBInfiniteScrollOriginalInsetsKey = &kPBInfiniteScrollOriginalInsetsKey;
 static const void* kPBInfiniteScrollExtraBottomInsetKey = &kPBInfiniteScrollExtraBottomInsetKey;
 static const void* kPBInfiniteScrollIndicatorMarginKey = &kPBInfiniteScrollIndicatorMarginKey;
 
@@ -63,10 +62,6 @@ PBInfiniteScrollState pb_infiniteScrollState;
 @property (nonatomic, setter=pb_setInfiniteScrollInitialized:, getter=pb_infiniteScrollInitialized)
 BOOL pb_infiniteScrollInitialized;
 
-// Original scroll insets
-@property (nonatomic, setter=pb_setInfiniteScrollOriginalInsets:, getter=pb_infiniteScrollOriginalInsets)
-UIEdgeInsets pb_infiniteScrollOriginalInsets;
-
 // Extra padding to push indicator view below view bounds.
 // Used in case when content size is smaller than view bounds
 @property (nonatomic, setter=pb_setInfiniteScrollExtraBottomInset:, getter=pb_infiniteScrollExtraBottomInset)
@@ -87,9 +82,6 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     if(self.pb_infiniteScrollInitialized) {
         return;
     }
-    
-    // Save original scrollView insets
-    self.pb_infiniteScrollOriginalInsets = self.contentInset;
     
     // Add pan guesture handler
     [self.panGestureRecognizer addTarget:self action:@selector(pb_handlePanGesture:)];
@@ -193,18 +185,6 @@ CGFloat pb_infiniteScrollExtraBottomInset;
 
 - (void(^)(UIScrollView* scrollView))pb_infiniteScrollHandler {
     return objc_getAssociatedObject(self, kPBInfiniteScrollHandlerKey);
-}
-
-- (void)pb_setInfiniteScrollOriginalInsets:(UIEdgeInsets)insets {
-    objc_setAssociatedObject(self, kPBInfiniteScrollOriginalInsetsKey, [NSValue valueWithUIEdgeInsets:insets], OBJC_ASSOCIATION_RETAIN);
-}
-
-- (UIEdgeInsets)pb_infiniteScrollOriginalInsets {
-    NSValue* insetsValue = objc_getAssociatedObject(self, kPBInfiniteScrollOriginalInsetsKey);
-    if(insetsValue) {
-        return [insetsValue UIEdgeInsetsValue];
-    }
-    return UIEdgeInsetsZero;
 }
 
 - (void)pb_setInfiniteScrollExtraBottomInset:(CGFloat)height {
@@ -374,7 +354,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
         // Initiate scroll to the bottom if due to user interaction contentOffset.y
         // stuck somewhere between last cell and activity indicator
         if(finished) {
-            CGFloat newY = self.contentSize.height - self.bounds.size.height + self.pb_infiniteScrollOriginalInsets.bottom;
+            CGFloat newY = self.contentSize.height - self.bounds.size.height;
             
             if(self.contentOffset.y > newY && newY > 0) {
                 [self setContentOffset:CGPointMake(0, newY) animated:YES];
