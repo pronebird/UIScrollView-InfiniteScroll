@@ -17,6 +17,24 @@
 @property (nonatomic) UIActivityIndicatorViewStyle infiniteScrollIndicatorStyle;
 
 /**
+ *  Infinite indicator view
+ *
+ *  You can set your own custom view instead of default activity indicator, 
+ *  make sure it implements methods below:
+ *
+ *  * `- (void)startAnimating`
+ *  * `- (void)stopAnimating`
+ *
+ *  Infinite scroll will call implemented methods during user interaction.
+ */
+@property (nonatomic) UIView* infiniteScrollIndicatorView;
+
+/**
+ *  This property exists for compatibility reasons. Use infiniteScrollIndicatorView instead.
+ */
+@property (nonatomic) UIView* infiniteIndicatorView DEPRECATED_MSG_ATTRIBUTE("Use infiniteScrollIndicatorView instead.");
+
+/**
  *  Setup infinite scroll handler
  *
  *  @param handler a handler block
@@ -45,19 +63,5 @@
  *  animations properly and reset infinite scroll state
  */
 - (void)finishInfiniteScroll;
-
-/**
- *  Set custom infinite indicator view
- *
- *  You may implement methods below to animate custom indicator:
- *
- *  * `- (void)startAnimating`
- *  * `- (void)stopAnimating`
- *
- *  Infinite scroll will call implemented methods during user interaction.
- *
- *  @param indicatorView a custom indicator view
- */
-- (void)setInfiniteIndicatorView:(UIView*)indicatorView;
 
 @end
