@@ -238,7 +238,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
 }
 
 - (CGFloat)pb_adjustedHeightFromContentSize:(CGSize)contentSize {
-    CGFloat remainingHeight = self.bounds.size.height - self.contentInset.top;
+    CGFloat remainingHeight = self.bounds.size.height - self.contentInset.top - self.contentInset.bottom;
     if(contentSize.height < remainingHeight) {
         return remainingHeight;
     }
@@ -289,9 +289,6 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     
     if(!CGRectEqualToRect(rect, activityIndicator.frame)) {
         activityIndicator.frame = rect;
-        TRACE(@"pb_positionInfiniteScrollIndicatorWithContentSize::setFrame");
-    } else {
-        TRACE(@"pb_positionInfiniteScrollIndicatorWithContentSize");
     }
 }
 
@@ -330,7 +327,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
             [self pb_scrollToInfiniteIndicatorIfNeeded];
         }
     }];
-    TRACE(@"pb_startAnimatingInfiniteScroll");
+    TRACE(@"Start animating.");
 }
 
 - (void)pb_stopAnimatingInfiniteScrollWithCompletion:(void(^)(UIScrollView* scrollView))handler {
@@ -358,7 +355,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
             
             if(self.contentOffset.y > newY && newY > 0) {
                 [self setContentOffset:CGPointMake(0, newY) animated:YES];
-                TRACE(@"pb_stopAnimatingInfiniteScroll::scrollToBottom");
+                TRACE(@"Stop animating and scroll to bottom.");
             }
         }
         
@@ -368,20 +365,22 @@ CGFloat pb_infiniteScrollExtraBottomInset;
         }
     }];
     
-    TRACE(@"pb_stopAnimatingInfiniteScroll");
+    TRACE(@"Stop animating.");
 }
 
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
     CGFloat contentHeight = [self pb_adjustedHeightFromContentSize:self.contentSize];
-    CGFloat minY = contentHeight - self.bounds.size.height;
+    
+    // The lower bound when infinite scroll should kick in
+    CGFloat actionOffset = contentHeight - self.bounds.size.height + self.contentInset.bottom;
     
     // Disable infinite scroll when scroll view is empty
     // Default UITableView reports height = 1 on empty tables
     BOOL hasActualContent = (self.contentSize.height > 1);
     
-    if([self isDragging] && hasActualContent && contentOffset.y > minY) {
+    if([self isDragging] && hasActualContent && contentOffset.y > actionOffset) {
         if(self.pb_infiniteScrollState == PBInfiniteScrollStateNone) {
-            TRACE(@"pb_scrollViewDidScroll::initiateInfiniteScroll");
+            TRACE(@"Action.");
             
             [self pb_startAnimatingInfiniteScroll];
             
@@ -400,7 +399,8 @@ CGFloat pb_infiniteScrollExtraBottomInset;
         CGFloat contentHeight = [self pb_adjustedHeightFromContentSize:self.contentSize];
         CGFloat indicatorRowHeight = [self pb_infiniteIndicatorRowHeight];
         
-        CGFloat minY = contentHeight - self.bounds.size.height;
+        CGFloat bottomBarHeight = (self.contentInset.bottom - indicatorRowHeight);
+        CGFloat minY = contentHeight - self.bounds.size.height + bottomBarHeight;
         CGFloat maxY = minY + indicatorRowHeight;
         
         TRACE(@"minY = %.2f; maxY = %.2f; offsetY = %.2f", minY, maxY, self.contentOffset.y);
