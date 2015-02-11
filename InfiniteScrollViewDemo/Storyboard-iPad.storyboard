@@ -150,7 +150,7 @@
                         <constraints>
                             <constraint firstItem="RCv-Do-z16" firstAttribute="top" secondItem="Hvl-xC-Rh5" secondAttribute="top" id="4FF-99-ts3"/>
                             <constraint firstAttribute="trailing" secondItem="RCv-Do-z16" secondAttribute="trailing" id="Pht-Vn-sjh"/>
-                            <constraint firstItem="aIW-kJ-B6C" firstAttribute="top" secondItem="RCv-Do-z16" secondAttribute="bottom" id="m45-BZ-hgH"/>
+                            <constraint firstAttribute="bottom" secondItem="RCv-Do-z16" secondAttribute="bottom" id="dLA-ub-SV8"/>
                             <constraint firstItem="RCv-Do-z16" firstAttribute="leading" secondItem="Hvl-xC-Rh5" secondAttribute="leading" id="q8g-6S-W9V"/>
                         </constraints>
                     </view>
