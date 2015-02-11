@@ -13,6 +13,7 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
 @interface CustomInfiniteIndicator()
 
 @property (nonatomic) CAShapeLayer* circle;
+@property BOOL animating;
 
 @end
 
@@ -21,8 +22,17 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
 - (id)initWithFrame:(CGRect)frame {
     if(self = [super initWithFrame:frame]) {
         self.layer.contentsScale = [UIScreen mainScreen].scale;
+        self.backgroundColor = [UIColor purpleColor];
     }
     return self;
+}
+
+- (void)didMoveToWindow {
+    // CoreAnimation animations are removed when view goes offscreen.
+    // So we have to restart them when view reappears.
+    if(self.window && self.animating) {
+        [self startAnimating];
+    }
 }
 
 - (CAShapeLayer*)circle {
@@ -61,10 +71,14 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
     animationGroup.animations = @[ scaleAnimation, opacityAnimation ];
     
     [self.circle addAnimation:animationGroup forKey:kSpinAnimationKey];
+    
+    self.animating = YES;
 }
 
 - (void)stopAnimating {
     [self.circle removeAnimationForKey:kSpinAnimationKey];
+    
+    self.animating = NO;
 }
 
 @end
