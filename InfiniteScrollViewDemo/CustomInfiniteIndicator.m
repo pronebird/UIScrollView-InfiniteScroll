@@ -22,7 +22,6 @@ static NSString* const kSpinAnimationKey = @"SpinAnimation";
 - (id)initWithFrame:(CGRect)frame {
     if(self = [super initWithFrame:frame]) {
         self.layer.contentsScale = [UIScreen mainScreen].scale;
-        self.backgroundColor = [UIColor purpleColor];
     }
     return self;
 }
