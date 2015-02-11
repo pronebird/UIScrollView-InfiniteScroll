@@ -170,7 +170,7 @@
         <scene sceneID="9UF-m8-CVR">
             <objects>
                 <navigationController id="5l7-8e-1Jf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Collection" id="Hm6-2C-0iB"/>
+                    <tabBarItem key="tabBarItem" title="Collection" image="second" id="Hm6-2C-0iB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="oae-Ci-HvH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -187,7 +187,7 @@
         <scene sceneID="clY-fO-4oH">
             <objects>
                 <navigationController definesPresentationContext="YES" id="SEo-9M-rz0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Table" id="hNC-Ej-8v6"/>
+                    <tabBarItem key="tabBarItem" title="Table" image="first" id="hNC-Ej-8v6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LUE-Qf-1hi">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -200,6 +200,10 @@
             <point key="canvasLocation" x="76" y="37"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="first" width="30" height="30"/>
+        <image name="second" width="30" height="30"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

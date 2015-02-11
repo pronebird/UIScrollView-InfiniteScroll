@@ -5,11 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Collection Demo-->
+        <!--Collection-->
         <scene sceneID="fnf-6h-r7j">
             <objects>
                 <navigationController id="RAF-Pp-DVA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Collection Demo" id="B91-OV-m3D"/>
+                    <tabBarItem key="tabBarItem" title="Collection" image="second" id="B91-OV-m3D"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="h3y-R6-K1W">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -163,11 +163,11 @@
             </objects>
             <point key="canvasLocation" x="1820" y="409"/>
         </scene>
-        <!--Table Demo-->
+        <!--Table-->
         <scene sceneID="koz-fb-4R2">
             <objects>
                 <navigationController definesPresentationContext="YES" id="mVh-dD-KlC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Table Demo" id="odn-up-38M"/>
+                    <tabBarItem key="tabBarItem" title="Table" image="first" id="odn-up-38M"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d0R-B6-SBm">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -199,6 +199,10 @@
             <point key="canvasLocation" x="-1469" y="-231"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="first" width="30" height="30"/>
+        <image name="second" width="30" height="30"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
