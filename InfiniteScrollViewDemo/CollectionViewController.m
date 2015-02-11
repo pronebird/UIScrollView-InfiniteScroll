@@ -17,10 +17,13 @@
 
 @property NSMutableArray* flickrPhotos;
 @property NSDate* flickrFeedModifiedAt;
+@property NSCache* cache;
 
 @end
 
 @implementation CollectionViewController
+
+#pragma mark - View lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +32,7 @@
     
     self.flickrPhotos = [NSMutableArray new];
     self.flickrFeedModifiedAt = [NSDate distantPast];
+    self.cache = [NSCache new];
     
     // Create custom indicator
     CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -36,24 +40,35 @@
     // Set custom indicator
     self.collectionView.infiniteScrollIndicatorView = indicator;
     
+    self.collectionView.infiniteScrollIndicatorMargin = 20;
+    
     // Add infinite scroll handler
     [self.collectionView addInfiniteScrollWithHandler:^(UIScrollView *scrollView) {
-        [weakSelf loadFlickrFeedWithCompletion:^{
+        [weakSelf loadFlickrFeed:^{
             // Finish infinite scroll animations
             [scrollView finishInfiniteScroll];
         }];
     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     if(!self.flickrPhotos.count) {
-        [self loadFlickrFeedWithCompletion:nil];
+        [self loadFlickrFeed:nil];
     }
 }
 
-- (void)loadFlickrFeedWithCompletion:(void(^)(void))completion {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    // invalidate layout on rotation
+    [self.collectionViewLayout invalidateLayout];
+}
+
+#pragma mark - Private
+
+- (void)loadFlickrFeed:(void(^)(void))completion {
     NSURL* feedURL = [NSURL URLWithString:@"https://api.flickr.com/services/feeds/photos_public.gne?tags=nature&nojsoncallback=1&format=json"];
     
     // Show network activity indicator
@@ -94,11 +109,15 @@
     
     if([self.flickrFeedModifiedAt compare:modifiedAt] == NSOrderedAscending) {
         [self.collectionView performBatchUpdates:^{
+            NSMutableArray* newIndexPaths = [NSMutableArray new];
             NSInteger firstIndex = self.flickrPhotos.count;
             
             for(NSInteger i = 0; i < photos.count; i++) {
-                [self.collectionView insertItemsAtIndexPaths:@[ [NSIndexPath indexPathForItem:firstIndex + i inSection:0] ]];
+                NSIndexPath* indexPath = [NSIndexPath indexPathForItem:firstIndex + i inSection:0];
+                [newIndexPaths addObject:indexPath];
             }
+            
+            [self.collectionView insertItemsAtIndexPaths:newIndexPaths];
             
             self.flickrFeedModifiedAt = modifiedAt;
             [self.flickrPhotos addObjectsFromArray:photos];
@@ -114,54 +133,30 @@
     }
 }
 
-- (NSString*)diskPathForPhotoURL:(NSURL*)URL {
-    NSString* filename = [URL lastPathComponent];
-    NSString* cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString* photoCacheDir = [cacheDir stringByAppendingPathComponent:@"FlickrPhotoCache"];
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [[NSFileManager defaultManager] createDirectoryAtPath:photoCacheDir withIntermediateDirectories:YES attributes:nil error:nil];
-    });
-    
-    return [photoCacheDir stringByAppendingPathComponent:filename];
-}
-
-- (void)photoForURL:(NSURL*)URL completion:(void(^)(NSURL* URL, UIImage* image))completion {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        __block UIImage* image = [UIImage imageWithContentsOfFile:[self diskPathForPhotoURL:URL]];
-        
-        if(!image) {
-            [self downloadPhotoFromURL:URL completion:completion];
-            return;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(URL, image);
-        });
-    });
-}
-
 - (void)downloadPhotoFromURL:(NSURL*)URL completion:(void(^)(NSURL* URL, UIImage* image))completion {
     static dispatch_queue_t downloadQueue;
-    
-    if(!downloadQueue) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         downloadQueue = dispatch_queue_create("ru.codeispoetry.downloadQueue", 0);
-    }
+    });
     
     dispatch_async(downloadQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:URL];
-        [data writeToFile:[self diskPathForPhotoURL:URL] atomically:YES];
-        
         __block UIImage* image = [UIImage imageWithData:data];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            if(image) {
+                [self.cache setObject:image forKey:URL];
+            }
+            
             if(completion) {
                 completion(URL, image);
             }
         });
     });
 }
+
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.flickrPhotos.count;
@@ -171,18 +166,32 @@
     PhotoCell* cell = (PhotoCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
     
     NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
-    cell.imageView.image = nil;
+    UIImage* image = [self.cache objectForKey:photoURL];
+    
+    cell.imageView.image = image;
     cell.imageView.backgroundColor = [UIColor lightGrayColor];
-    [self photoForURL:photoURL completion:^(NSURL *URL, UIImage *image) {
-        cell.imageView.image = image;
-    }];
+    
+    if(!image) {
+        [self downloadPhotoFromURL:photoURL completion:^(NSURL *URL, UIImage *image) {
+            NSIndexPath* newIndexPath = [collectionView indexPathForCell:cell];
+            if([newIndexPath isEqual:indexPath]) {
+                cell.imageView.image = image;
+            }
+        }];
+    }
     
     return cell;
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionWidth = CGRectGetWidth(collectionView.bounds);
     CGFloat itemWidth = collectionWidth * 0.5;
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        itemWidth = collectionWidth * 0.25;
+    }
     
     return CGSizeMake(itemWidth, itemWidth);
 }
