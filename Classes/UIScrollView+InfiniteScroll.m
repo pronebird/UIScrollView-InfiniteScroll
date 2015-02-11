@@ -249,7 +249,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     if(self.pb_infiniteScrollHandler) {
         self.pb_infiniteScrollHandler(self);
     }
-    TRACE(@"pb_callInfiniteScrollHandler");
+    TRACE(@"Call handler.");
 }
 
 - (UIView*)pb_getOrCreateActivityIndicatorView {
@@ -406,7 +406,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
         TRACE(@"minY = %.2f; maxY = %.2f; offsetY = %.2f", minY, maxY, self.contentOffset.y);
         
         if(self.contentOffset.y > minY && self.contentOffset.y < maxY) {
-            TRACE(@"pb_scrollToInfiniteIndicatorIfNeeded");
+            TRACE(@"Scroll to infinite indicator.");
             [self setContentOffset:CGPointMake(0, maxY) animated:YES];
         }
     }
