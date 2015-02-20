@@ -31,97 +31,6 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 
 @implementation TableViewController
 
-#pragma mark - Private methods
-
-- (void)showRetryAlertWithError:(NSError*)error {
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
-                                                        message:[error localizedDescription]
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-                                              otherButtonTitles:NSLocalizedString(@"Retry", @""), nil];
-    [alertView show];
-}
-
-- (void)handleAPIResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
-    // Check for network errors
-    if(error) {
-        [self showRetryAlertWithError:error];
-        if(completion) {
-            completion();
-        }
-        return;
-    }
-    
-    // Unserialize JSON
-    NSError* JSONError;
-    NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
-    
-    if(JSONError) {
-        [self showRetryAlertWithError:JSONError];
-        if(completion) {
-            completion();
-        }
-        return;
-    }
-    
-    // Decode models on background queue
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        __block NSMutableArray* newStories = [NSMutableArray new];
-        
-        for(NSDictionary* item in responseDict[kJSONResultsKey]) {
-            @autoreleasepool {
-                [newStories addObject:[StoryModel modelWithDictionary:item]];
-            }
-        }
-        
-        // Append new data on main thread and reload table
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.numPages = [responseDict[kJSONNumPagesKey] integerValue];
-            self.currentPage++;
-            
-            [self.stories addObjectsFromArray:newStories];
-            [self.tableView reloadData];
-            
-            if(completion) {
-                completion();
-            }
-        });
-    });
-}
-
-- (void)loadRemoteDataWithDelay:(BOOL)withDelay completion:(void(^)(void))completion
-{
-    // Show network activity indicator
-    [[UIApplication sharedApplication] startNetworkActivity];
-    
-    // Calculate optimal number of results to load
-    NSInteger hitsPerPage = CGRectGetHeight(self.tableView.bounds) / 44.0;
-    
-    // Craft API URL
-    NSString* requestURL = [NSString stringWithFormat:kAPIEndpointURL, (long)hitsPerPage, (long)self.currentPage];
-    
-    // Create request
-    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
-    
-    // Create NSDataTask
-    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self handleAPIResponse:response data:data error:error completion:completion];
-            
-            // Hide network activity indicator
-            [[UIApplication sharedApplication] stopNetworkActivity];
-            
-        });
-    }];
-    
-    // Start network task
-    
-    // I run -[task resume] with delay because my network is too fast
-    NSTimeInterval delay = (withDelay ? 2.0 : 0.0);
-    
-    [task performSelector:@selector(resume) withObject:nil afterDelay:delay];
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
@@ -194,6 +103,95 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     if(buttonIndex == alertView.firstOtherButtonIndex) {
         [self loadRemoteDataWithDelay:NO completion:nil];
     }
+}
+
+#pragma mark - Private methods
+
+- (void)showRetryAlertWithError:(NSError*)error {
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
+                                                        message:[error localizedDescription]
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
+                                              otherButtonTitles:NSLocalizedString(@"Retry", @""), nil];
+    [alertView show];
+}
+
+- (void)handleAPIResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
+    // Check for network errors
+    if(error) {
+        [self showRetryAlertWithError:error];
+        if(completion) {
+            completion();
+        }
+        return;
+    }
+    
+    // Unserialize JSON
+    NSError* JSONError;
+    NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
+    
+    if(JSONError) {
+        [self showRetryAlertWithError:JSONError];
+        if(completion) {
+            completion();
+        }
+        return;
+    }
+    
+    // Decode models on background queue
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __block NSMutableArray* newStories = [NSMutableArray new];
+        
+        for(NSDictionary* item in responseDict[kJSONResultsKey]) {
+            [newStories addObject:[StoryModel modelWithDictionary:item]];
+        }
+        
+        // Append new data on main thread and reload table
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.numPages = [responseDict[kJSONNumPagesKey] integerValue];
+            self.currentPage++;
+            
+            [self.stories addObjectsFromArray:newStories];
+            [self.tableView reloadData];
+            
+            if(completion) {
+                completion();
+            }
+        });
+    });
+}
+
+- (void)loadRemoteDataWithDelay:(BOOL)withDelay completion:(void(^)(void))completion
+{
+    // Show network activity indicator
+    [[UIApplication sharedApplication] startNetworkActivity];
+    
+    // Calculate optimal number of results to load
+    NSInteger hitsPerPage = CGRectGetHeight(self.tableView.bounds) / 44.0;
+    
+    // Craft API URL
+    NSString* requestURL = [NSString stringWithFormat:kAPIEndpointURL, (long)hitsPerPage, (long)self.currentPage];
+    
+    // Create request
+    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
+    
+    // Create NSDataTask
+    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self handleAPIResponse:response data:data error:error completion:completion];
+            
+            // Hide network activity indicator
+            [[UIApplication sharedApplication] stopNetworkActivity];
+            
+        });
+    }];
+    
+    // Start network task
+    
+    // I run -[task resume] with delay because my network is too fast
+    NSTimeInterval delay = (withDelay ? 5.0 : 0.0);
+    
+    [task performSelector:@selector(resume) withObject:nil afterDelay:delay];
 }
 
 @end
