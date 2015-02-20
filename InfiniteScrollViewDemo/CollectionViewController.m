@@ -13,6 +13,8 @@
 #import "UIScrollView+InfiniteScroll.h"
 #import "CustomInfiniteIndicator.h"
 
+static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/feeds/photos_public.gne?tags=nature&nojsoncallback=1&format=json";
+
 @interface CollectionViewController() <UICollectionViewDelegateFlowLayout>
 
 @property NSMutableArray* flickrPhotos;
@@ -29,7 +31,7 @@
     [super viewDidLoad];
     
     __weak typeof(self) weakSelf = self;
-    
+
     self.flickrPhotos = [NSMutableArray new];
     self.flickrFeedModifiedAt = [NSDate distantPast];
     self.cache = [NSCache new];
@@ -40,23 +42,19 @@
     // Set custom indicator
     self.collectionView.infiniteScrollIndicatorView = indicator;
     
+    // Increase indicator margins
     self.collectionView.infiniteScrollIndicatorMargin = 20;
     
     // Add infinite scroll handler
     [self.collectionView addInfiniteScrollWithHandler:^(UIScrollView *scrollView) {
-        [weakSelf loadFlickrFeed:^{
+        [weakSelf loadFlickrFeedWithDelay:YES completion:^{
             // Finish infinite scroll animations
             [scrollView finishInfiniteScroll];
         }];
     }];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
-    if(!self.flickrPhotos.count) {
-        [self loadFlickrFeed:nil];
-    }
+    // Load initial data
+    [self loadFlickrFeedWithDelay:NO completion:nil];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -68,8 +66,8 @@
 
 #pragma mark - Private
 
-- (void)loadFlickrFeed:(void(^)(void))completion {
-    NSURL* feedURL = [NSURL URLWithString:@"https://api.flickr.com/services/feeds/photos_public.gne?tags=nature&nojsoncallback=1&format=json"];
+- (void)loadFlickrFeedWithDelay:(BOOL)withDelay completion:(void(^)(void))completion {
+    NSURL* feedURL = [NSURL URLWithString:kFlickrAPIEndpoint];
     
     // Show network activity indicator
     [[UIApplication sharedApplication] startNetworkActivity];
@@ -83,10 +81,25 @@
         });
     }];
     
-    [task resume];
+    // Start network task
+    
+    // I run -[task resume] with delay because my network is too fast
+    NSTimeInterval delay = (withDelay ? 5.0 : 0.0);
+    
+    [task performSelector:@selector(resume) withObject:nil afterDelay:delay];
 }
 
 - (void)handleAPIResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
+    // Check for network errors
+    if(error) {
+        [self showRetryAlertWithError:error];
+        if(completion) {
+            completion();
+        }
+        return;
+    }
+    
+    // Unserialize JSON
     NSError* JSONError;
     NSString* JSONString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
@@ -96,7 +109,10 @@
     NSDictionary* JSONResponse = (NSDictionary*) [NSJSONSerialization JSONObjectWithData:[JSONString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&JSONError];
     
     if(JSONError) {
-        NSLog(@"JSON Error = %@", JSONError);
+        [self showRetryAlertWithError:JSONError];
+        if(completion) {
+            completion();
+        }
         return;
     }
     
@@ -154,6 +170,23 @@
             }
         });
     });
+}
+
+- (void)showRetryAlertWithError:(NSError*)error {
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
+                                                        message:[error localizedDescription]
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
+                                              otherButtonTitles:NSLocalizedString(@"Retry", @""), nil];
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == alertView.firstOtherButtonIndex) {
+        [self loadFlickrFeedWithDelay:NO completion:nil];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
