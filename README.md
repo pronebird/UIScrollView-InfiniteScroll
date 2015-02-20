@@ -6,11 +6,10 @@ Be aware that this category swizzles `setContentOffset` and `setContentSize` on 
 
 Default indicator view
 
-![Standard indicator view](https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll1.gif)
+<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll1.gif" width="240" align="left" hspace="10" vspace="10">
+<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif" width="240" align="left" hspace="10" vspace="10">
 
-Custom indicator view
-
-![Custom indicator view](https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif)
+<p></p>
 
 ### CocoaPods
 
