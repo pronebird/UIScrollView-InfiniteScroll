@@ -40,6 +40,12 @@
 @property (nonatomic) CGFloat infiniteScrollIndicatorMargin;
 
 /**
+ *  Sets the offset between the real end of the scroll view content and the scroll position, so the handler can be triggered before reaching end.
+ *  Defaults to 0.0;
+ */
+@property (nonatomic) CGFloat infiniteScrollTriggerOffset;
+
+/**
  *  Setup infinite scroll handler
  *
  *  @param handler a handler block
