@@ -40,6 +40,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 static const void* kPBInfiniteScrollInitKey = &kPBInfiniteScrollInitKey;
 static const void* kPBInfiniteScrollExtraBottomInsetKey = &kPBInfiniteScrollExtraBottomInsetKey;
 static const void* kPBInfiniteScrollIndicatorMarginKey = &kPBInfiniteScrollIndicatorMarginKey;
+static const void* kPBInfiniteScrollTriggerOffsetKey = &kPBInfiniteScrollTriggerOffsetKey;
 
 // Infinite scroll states
 typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
@@ -155,6 +156,19 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     }
     // Default row height minus activity indicator height
     return 11;
+}
+
+- (void)setInfiniteScrollTriggerOffset:(CGFloat)infiniteScrollTriggerOffset {
+    objc_setAssociatedObject(self, kPBInfiniteScrollTriggerOffsetKey, @(infiniteScrollTriggerOffset), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)infiniteScrollTriggerOffset {
+    NSNumber* offset = objc_getAssociatedObject(self, kPBInfiniteScrollTriggerOffsetKey);
+    if(offset) {
+        return offset.floatValue;
+    }
+
+    return 0;
 }
 
 #pragma mark - Deprecated methods
@@ -372,7 +386,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     CGFloat contentHeight = [self pb_adjustedHeightFromContentSize:self.contentSize];
     
     // The lower bound when infinite scroll should kick in
-    CGFloat actionOffset = contentHeight - self.bounds.size.height + self.contentInset.bottom;
+    CGFloat actionOffset = contentHeight - self.bounds.size.height + self.contentInset.bottom - self.infiniteScrollTriggerOffset;
     
     // Disable infinite scroll when scroll view is empty
     // Default UITableView reports height = 1 on empty tables

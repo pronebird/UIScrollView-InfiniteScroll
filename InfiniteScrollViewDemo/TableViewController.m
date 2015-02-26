@@ -54,6 +54,9 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     // Set custom indicator
     self.tableView.infiniteScrollIndicatorView = indicator;
     
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500.0;
+    
     // Add infinite scroll handler
     [self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
         [weakSelf loadRemoteDataWithDelay:YES completion:^{
