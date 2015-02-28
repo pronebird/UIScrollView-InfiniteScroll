@@ -202,7 +202,7 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
     UIImage* image = [self.cache objectForKey:photoURL];
     
     cell.imageView.image = image;
-    cell.imageView.backgroundColor = [UIColor lightGrayColor];
+    cell.imageView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     
     if(!image) {
         [self downloadPhotoFromURL:photoURL completion:^(NSURL *URL, UIImage *image) {
