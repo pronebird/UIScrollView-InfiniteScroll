@@ -3,12 +3,14 @@
 * Accommodate bottom bar inset (@pronebird)
 * Add collection view demo (@pronebird)
 * Restart animations when custom indicator comes back from offscreen (@pronebird)
+* Drop previously deprecated infiniteIndicatorView (use infiniteScrollIndicatorView instead) (@pronebird)
 
 = 0.6.0 (2015-01-24)
 
 * Add option to setup indicator margin (@pronebird)
 * Convert certain methods to properties (@pronebird)
 * Change custom indicator implementation to pulse animation (@pronebird)
+* Deprecate infiniteIndicatorView in favor of newer infiniteScrollIndicatorView (@pronebird)
 
 = 0.5.2 (2015-01-17)
 
