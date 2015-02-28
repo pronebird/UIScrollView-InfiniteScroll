@@ -33,14 +33,61 @@ pod 'UIScrollView-InfiniteScroll'
     self.tableView.infiniteScrollIndicatorStyle = UIActivityIndicatorViewStyleWhite;
 
     // setup infinite scroll
-    [self.tableView addInfiniteScrollWithHandler:^(UIScrollView* scrollView) {
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView* tableView) {
         //
         // fetch your data here, can be async operation,
         // just make sure to call finishInfiniteScroll in the end
         //
 
         // finish infinite scroll animation
-        [scrollView finishInfiniteScroll];
+        [tableView finishInfiniteScroll];
+    }];
+}
+```
+
+#### Collection view quirks
+
+`UICollectionView#reloadData` causes contentOffset to reset. Please use `UICollectionView#performBatchUpdates` instead when possible.
+
+```objc
+// Somewhere in your implementation file
+#import <UIScrollView+InfiniteScroll.h>
+
+// ...
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    [self.collectionView addInfiniteScrollWithHandler:^(UICollectionView* collectionView) {
+        //
+        // fetch your data here, can be async operation,
+        // just make sure to call finishInfiniteScroll in the end
+        //
+        
+        NSArray* newData;
+        
+        // update collection view
+        [collectionView performBatchUpdates:^{
+            NSMutableArray* newIndexPaths = [NSMutableArray new];
+            NSInteger firstIndex = [collectionView numberOfItemsInSection:0];
+            
+            // create index paths for new elements
+            for(NSInteger i = 0; i < newData.count; i++) {
+                NSInteger index = firstIndex + i;
+                NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+                
+                [newIndexPaths addObject:indexPath];
+            }
+            
+            // tell collection to append new elements
+            [collectionView insertItemsAtIndexPaths:newIndexPaths];
+            
+            // update your data source with more data
+            [collectionView.dataSource appendData:newData];
+        } completion:^(BOOL finished) {
+            // finish infinite scroll animation
+            [collectionView finishInfiniteScroll];
+        }];
     }];
 }
 ```
