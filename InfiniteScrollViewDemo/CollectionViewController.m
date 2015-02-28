@@ -46,10 +46,10 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
     self.collectionView.infiniteScrollIndicatorMargin = 20;
     
     // Add infinite scroll handler
-    [self.collectionView addInfiniteScrollWithHandler:^(UIScrollView *scrollView) {
+    [self.collectionView addInfiniteScrollWithHandler:^(UICollectionView *collectionView) {
         [weakSelf loadFlickrFeedWithDelay:YES completion:^{
             // Finish infinite scroll animations
-            [scrollView finishInfiniteScroll];
+            [collectionView finishInfiniteScroll];
         }];
     }];
     
