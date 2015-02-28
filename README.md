@@ -4,9 +4,9 @@ Infinite scroll implementation as a category for UIScrollView.
 
 Be aware that this category swizzles `setContentOffset` and `setContentSize` on `UIScrollView`.
 
-<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll1.gif" width="240" align="left" hspace="10" vspace="10">
-<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif" width="240" hspace="10" vspace="10">
-<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll3.gif" width="240" hspace="10" vspace="10">
+<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll1.gif" width="25%" align="left" hspace="10" vspace="10">
+<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif" width="25%" hspace="10" vspace="10">
+<img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll3.gif" width="25%" hspace="10" vspace="10">
 
 ### CocoaPods
 
