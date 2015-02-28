@@ -44,7 +44,7 @@
  *
  *  @param handler a handler block
  */
-- (void)addInfiniteScrollWithHandler:(void(^)(UIScrollView* scrollView))handler;
+- (void)addInfiniteScrollWithHandler:(void(^)(id scrollView))handler;
 
 /**
  *  Unregister infinite scroll
@@ -59,7 +59,7 @@
  *
  *  @param handler a completion block handler called when animation finished
  */
-- (void)finishInfiniteScrollWithCompletion:(void(^)(UIScrollView* scrollView))handler;
+- (void)finishInfiniteScrollWithCompletion:(void(^)(id scrollView))handler;
 
 /**
  *  Finish infinite scroll animations

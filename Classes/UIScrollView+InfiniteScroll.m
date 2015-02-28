@@ -52,7 +52,7 @@ typedef NS_ENUM(NSInteger, PBInfiniteScrollState) {
 
 // Infinite scroll handler block
 @property (copy, nonatomic, setter=pb_setInfiniteScrollHandler:, getter=pb_infiniteScrollHandler)
-void(^pb_infiniteScrollHandler)(UIScrollView* scrollView);
+void(^pb_infiniteScrollHandler)(id scrollView);
 
 // Infinite scroll state
 @property (nonatomic, setter=pb_setInfiniteScrollState:, getter=pb_infiniteScrollState)
@@ -73,7 +73,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
 
 #pragma mark - Public methods
 
-- (void)addInfiniteScrollWithHandler:(void(^)(UIScrollView* scrollView))handler {
+- (void)addInfiniteScrollWithHandler:(void(^)(id scrollView))handler {
     // Save handler block
     self.pb_infiniteScrollHandler = handler;
     
@@ -111,7 +111,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     [self finishInfiniteScrollWithCompletion:nil];
 }
 
-- (void)finishInfiniteScrollWithCompletion:(void(^)(UIScrollView* scrollView))handler {
+- (void)finishInfiniteScrollWithCompletion:(void(^)(id scrollView))handler {
     if(self.pb_infiniteScrollState == PBInfiniteScrollStateLoading) {
         [self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
     }
@@ -179,11 +179,11 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     TRACE(@"pb_setInfiniteScrollState = %ld", (long)state);
 }
 
-- (void)pb_setInfiniteScrollHandler:(void(^)(UIScrollView* scrollView))handler {
+- (void)pb_setInfiniteScrollHandler:(void(^)(id scrollView))handler {
     objc_setAssociatedObject(self, kPBInfiniteScrollHandlerKey, handler, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void(^)(UIScrollView* scrollView))pb_infiniteScrollHandler {
+- (void(^)(id scrollView))pb_infiniteScrollHandler {
     return objc_getAssociatedObject(self, kPBInfiniteScrollHandlerKey);
 }
 
@@ -330,7 +330,7 @@ CGFloat pb_infiniteScrollExtraBottomInset;
     TRACE(@"Start animating.");
 }
 
-- (void)pb_stopAnimatingInfiniteScrollWithCompletion:(void(^)(UIScrollView* scrollView))handler {
+- (void)pb_stopAnimatingInfiniteScrollWithCompletion:(void(^)(id scrollView))handler {
     UIView* activityIndicator = self.infiniteScrollIndicatorView;
     UIEdgeInsets contentInset = self.contentInset;
     
