@@ -8,6 +8,8 @@ Be aware that this category swizzles `setContentOffset` and `setContentSize` on 
 <img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif" width="25%" hspace="10" vspace="10">
 <img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll3.gif" width="25%" hspace="10" vspace="10">
 
+\* The content used in demo app is publicly available and provided by hn.algolia.com and Flickr. Both can be inappropriate.
+
 ### CocoaPods
 
 Just add the following line in your Podfile:
