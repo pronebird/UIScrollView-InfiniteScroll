@@ -1,3 +1,9 @@
+= 0.7.0 (2015-02-28)
+
+* Accommodate bottom bar inset (@pronebird)
+* Add collection view demo (@pronebird)
+* Restart animations when custom indicator comes back from offscreen (@pronebird)
+
 = 0.6.0 (2015-01-24)
 
 * Add option to setup indicator margin (@pronebird)
