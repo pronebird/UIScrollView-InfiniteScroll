@@ -14,6 +14,8 @@
 #import "CustomInfiniteIndicator.h"
 #import "UIScrollView+InfiniteScroll.h"
 
+#define USE_AUTOSIZING_CELLS 1
+
 static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%ld&page=%ld";
 static NSString* const kShowBrowserSegueIdentifier = @"ShowBrowser";
 static NSString* const kCellIdentifier = @"Cell";
@@ -36,11 +38,13 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+#if USE_AUTOSIZING_CELLS
     // enable auto-sizing cells on iOS 8
     if([self.tableView respondsToSelector:@selector(layoutMargins)]) {
         self.tableView.estimatedRowHeight = 88.0;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
     }
+#endif
     
     self.currentPage = 0;
     self.numPages = 0;
@@ -87,12 +91,14 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     
     cell.textLabel.text = itemModel.title;
     cell.detailTextLabel.text = itemModel.author;
-    
+
+#if USE_AUTOSIZING_CELLS
     // enable auto-sizing cells on iOS 8
     if([tableView respondsToSelector:@selector(layoutMargins)]) {
         cell.textLabel.numberOfLines = 0;
         cell.detailTextLabel.numberOfLines = 0;
     }
+#endif
     
     return cell;
 }
