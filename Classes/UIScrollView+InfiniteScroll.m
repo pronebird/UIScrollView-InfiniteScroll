@@ -450,15 +450,28 @@ CGFloat pb_infiniteScrollIndicatorViewInset;
     // Default UITableView reports height = 1 on empty tables
     BOOL hasActualContent = (self.contentSize.height > 1);
     
-    if([self isDragging] && hasActualContent && contentOffset.y > actionOffset) {
-        if(self.pb_infiniteScrollState == PBInfiniteScrollStateNone) {
-            TRACE(@"Action.");
-            
-            [self pb_startAnimatingInfiniteScroll];
-            
-            // This will delay handler execution until scroll deceleration
-            [self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
-        }
+    // is there any content?
+    if(!hasActualContent) {
+        return;
+    }
+    
+    // is user initiated?
+    if(![self isDragging]) {
+        return;
+    }
+    
+    // did it kick in already?
+    if(self.pb_infiniteScrollState != PBInfiniteScrollStateNone) {
+        return;
+    }
+    
+    if(contentOffset.y > actionOffset) {
+        TRACE(@"Action.");
+        
+        [self pb_startAnimatingInfiniteScroll];
+        
+        // This will delay handler execution until scroll deceleration
+        [self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
     }
 }
 
