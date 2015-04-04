@@ -220,13 +220,21 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionWidth = CGRectGetWidth(collectionView.bounds);
-    CGFloat itemWidth = collectionWidth * 0.5;
+    CGFloat itemWidth = collectionWidth / 3 - 1;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        itemWidth = collectionWidth * 0.25;
+        itemWidth = collectionWidth / 4 - 1;
     }
     
     return CGSizeMake(itemWidth, itemWidth);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
 }
 
 @end
