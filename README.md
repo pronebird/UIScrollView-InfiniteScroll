@@ -120,7 +120,3 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
   Custom indicators support
 * Alex Shevchenko [@skeeet](https://github.com/skeeet)<br/>
   Fix for bounce back glitch when content size is smaller than view bounds
-
-### Known bugs
-
-- Invalid content offset on bounce back when loading small number of items at a time (reproducible with 1 item per page on sample app).
