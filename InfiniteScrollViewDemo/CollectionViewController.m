@@ -37,13 +37,13 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
     self.cache = [NSCache new];
     
     // Create custom indicator
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
     
     // Set custom indicator
     self.collectionView.infiniteScrollIndicatorView = indicator;
     
-    // Increase indicator margins
-    self.collectionView.infiniteScrollIndicatorMargin = 20;
+    // Set custom indicator margin
+    self.collectionView.infiniteScrollIndicatorMargin = 40;
     
     // Add infinite scroll handler
     [self.collectionView addInfiniteScrollWithHandler:^(UICollectionView *collectionView) {
