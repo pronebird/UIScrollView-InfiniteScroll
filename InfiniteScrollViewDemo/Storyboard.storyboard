@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uwD-LM-gNq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uwD-LM-gNq">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -49,14 +49,14 @@
                                             <rect key="frame" x="15" y="3" width="34" height="22"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wPu-bB-dmW">
                                             <rect key="frame" x="15" y="25" width="43" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -137,20 +137,21 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4A3-eV-JGE">
-                                            <rect key="frame" x="1" y="1" width="148" height="148"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="0.35000000000000003" colorSpace="calibratedWhite"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="4A3-eV-JGE" firstAttribute="top" secondItem="HHv-Hf-Xef" secondAttribute="top" constant="1" id="Atj-tQ-o39"/>
-                                    <constraint firstAttribute="trailing" secondItem="4A3-eV-JGE" secondAttribute="trailing" constant="1" id="YZU-cL-BM5"/>
-                                    <constraint firstItem="4A3-eV-JGE" firstAttribute="leading" secondItem="HHv-Hf-Xef" secondAttribute="leading" constant="1" id="gbM-FP-Z9b"/>
-                                    <constraint firstAttribute="bottom" secondItem="4A3-eV-JGE" secondAttribute="bottom" constant="1" id="nlj-rS-rSg"/>
+                                    <constraint firstItem="4A3-eV-JGE" firstAttribute="top" secondItem="HHv-Hf-Xef" secondAttribute="top" id="Atj-tQ-o39"/>
+                                    <constraint firstAttribute="trailing" secondItem="4A3-eV-JGE" secondAttribute="trailing" id="YZU-cL-BM5"/>
+                                    <constraint firstItem="4A3-eV-JGE" firstAttribute="leading" secondItem="HHv-Hf-Xef" secondAttribute="leading" id="gbM-FP-Z9b"/>
+                                    <constraint firstAttribute="bottom" secondItem="4A3-eV-JGE" secondAttribute="bottom" id="nlj-rS-rSg"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="4A3-eV-JGE" id="Rwm-k3-gVQ"/>
+                                    <segue destination="6uv-Bs-3h2" kind="push" identifier="ShowPhoto" id="2PC-1n-29o"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -165,6 +166,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJM-6g-s14" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="561" y="-697"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="E7I-Fp-jTu">
+            <objects>
+                <viewController id="6uv-Bs-3h2" customClass="PhotoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sTa-yH-qLO"/>
+                        <viewControllerLayoutGuide type="bottom" id="08n-RG-DaU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XJg-uh-LfB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p1J-Hx-DRl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="p1J-Hx-DRl" firstAttribute="top" secondItem="XJg-uh-LfB" secondAttribute="top" id="Loc-Yr-U3T"/>
+                            <constraint firstItem="p1J-Hx-DRl" firstAttribute="leading" secondItem="XJg-uh-LfB" secondAttribute="leading" id="RG5-W0-zzE"/>
+                            <constraint firstAttribute="bottom" secondItem="p1J-Hx-DRl" secondAttribute="bottom" id="fMv-cQ-mtO"/>
+                            <constraint firstAttribute="trailing" secondItem="p1J-Hx-DRl" secondAttribute="trailing" id="tOw-wc-IrO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="3Wt-EH-oFT"/>
+                    <connections>
+                        <outlet property="imageView" destination="p1J-Hx-DRl" id="trK-ML-cEO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mm0-Em-vHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1067" y="-697"/>
         </scene>
         <!--Collection-->
         <scene sceneID="9UF-m8-CVR">

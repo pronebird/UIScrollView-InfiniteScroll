@@ -8,7 +8,7 @@
 
 #import "CollectionViewController.h"
 #import "PhotoCell.h"
-
+#import "PhotoViewController.h"
 #import "UIApplication+NetworkIndicator.h"
 #import "UIScrollView+InfiniteScroll.h"
 #import "CustomInfiniteIndicator.h"
@@ -55,6 +55,38 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
     
     // Load initial data
     [self loadFlickrFeedWithDelay:NO completion:nil];
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if([identifier isEqualToString:@"ShowPhoto"]) {
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
+        NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
+        UIImage* image = [self.cache objectForKey:photoURL];
+        
+        if(!image) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"ShowPhoto"]) {
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
+        NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
+        UIImage* image = [self.cache objectForKey:photoURL];
+        PhotoViewController *photoController;
+        
+        if([segue.destinationViewController isKindOfClass:UINavigationController.class]) {
+            photoController = (PhotoViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
+        }
+        else {
+            photoController = segue.destinationViewController;
+        }
+        
+        photoController.photo = image;
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
