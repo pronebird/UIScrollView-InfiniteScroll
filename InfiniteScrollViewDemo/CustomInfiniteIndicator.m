@@ -8,76 +8,173 @@
 
 #import "CustomInfiniteIndicator.h"
 
-static NSString* const kSpinAnimationKey = @"SpinAnimation";
+static NSString *const kRotationAnimationKey = @"rotation";
 
 @interface CustomInfiniteIndicator()
 
-@property (nonatomic) CAShapeLayer* circle;
-@property BOOL animating;
+@property CAShapeLayer *outerCircle;
+@property CAShapeLayer *innerCircle;
+@property (readwrite) BOOL animating;
 
 @end
 
 @implementation CustomInfiniteIndicator
 
-- (id)initWithFrame:(CGRect)frame {
-    if(self = [super initWithFrame:frame]) {
-        self.layer.contentsScale = [UIScreen mainScreen].scale;
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if(self = [super initWithCoder:coder]) {
+        [self _commonInit];
     }
     return self;
 }
 
-- (void)didMoveToWindow {
-    // CoreAnimation animations are removed when view goes offscreen.
-    // So we have to restart them when view reappears.
-    if(self.window && self.animating) {
-        [self startAnimating];
+- (instancetype)initWithFrame:(CGRect)frame {
+    if(self = [super initWithFrame:frame]) {
+        [self _commonInit];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [self _unregisterFromAppStateNotifications];
+}
+
+- (void)setThickness:(CGFloat)thickness {
+    if(_thickness != thickness) {
+        _thickness = thickness;
+        
+        self.innerCircle.lineWidth = thickness;
+        self.outerCircle.lineWidth = thickness;
+    }
+}
+- (void)setInnerColor:(UIColor *)innerColor {
+    if(![_innerColor isEqual:innerColor]) {
+        _innerColor = innerColor;
+        
+        self.innerCircle.strokeColor = innerColor.CGColor;
     }
 }
 
-- (CAShapeLayer*)circle {
-    if(!_circle) {
-        _circle = [CAShapeLayer layer];
-        _circle.fillColor = [UIColor colorWithRed:0.173 green:0.243 blue:0.314 alpha:1].CGColor; /*#2c3e50*/
-        _circle.contentsScale = self.layer.contentsScale;
-        [self.layer addSublayer:_circle];
+- (void)setOuterColor:(UIColor *)outerColor {
+    if(![_outerColor isEqual:outerColor]) {
+        _outerColor = outerColor;
+        
+        self.outerCircle.strokeColor = outerColor.CGColor;
     }
-    return _circle;
 }
 
 - (void)startAnimating {
-    CGFloat radius = MIN(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) * 0.5;
-    CGPoint center = CGPointMake(radius, radius);
-    UIBezierPath* bezierPath = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:M_PI*2 clockwise:YES];
-    
-    self.circle.bounds = self.bounds;
-    self.circle.path = bezierPath.CGPath;
-    self.circle.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    
-    CABasicAnimation* scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-    CABasicAnimation* opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    CAAnimationGroup* animationGroup = [CAAnimationGroup animation];
-    
-    scaleAnimation.fromValue = @0.0;
-    scaleAnimation.toValue = @1.0;
-    scaleAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
-    opacityAnimation.fromValue = @1.0;
-    opacityAnimation.toValue = @0.0;
-    opacityAnimation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:1 :0 :0.65 :1];
-    
-    animationGroup.duration = 1.0;
-    animationGroup.repeatCount = INFINITY;
-    animationGroup.animations = @[ scaleAnimation, opacityAnimation ];
-    
-    [self.circle addAnimation:animationGroup forKey:kSpinAnimationKey];
-    
-    self.animating = YES;
+    if(self.animating) {
+        return;
+    }
+    [self _startAnimating];
 }
 
 - (void)stopAnimating {
-    [self.circle removeAnimationForKey:kSpinAnimationKey];
+    if(!self.animating) {
+        return;
+    }
     
+    [self.layer removeAnimationForKey:kRotationAnimationKey];
+    self.hidden = YES;
     self.animating = NO;
+}
+
+- (void)layoutSublayersOfLayer:(CALayer *)layer {
+    [self _setupBezierPaths];
+}
+
+- (void)prepareForInterfaceBuilder {
+    self.hidden = NO;
+}
+
+- (void)didMoveToWindow {
+    [super didMoveToWindow];
+    
+    // CoreAnimation animations are removed when view goes offscreen.
+    // So we have to restart them when view reappears.
+    if(self.window) {
+        [self _restartAnimationIfNeeded];
+    }
+}
+
+- (void)_startAnimating {
+    self.animating = YES;
+    self.hidden = NO;
+    [self.layer addAnimation:[self _animation] forKey:kRotationAnimationKey];
+}
+
+- (void)_setupBezierPaths {
+    CGPoint center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
+    CGFloat radius = self.bounds.size.width * 0.5 - self.thickness;
+    UIBezierPath *ringPath = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    UIBezierPath *quarterRingPath = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:-M_PI_4 endAngle:M_PI_2 - M_PI_4 clockwise:YES];
+    
+    self.outerCircle.path = ringPath.CGPath;
+    self.innerCircle.path = quarterRingPath.CGPath;
+}
+
+- (void)_commonInit {
+    [self _registerForAppStateNotifications];
+    
+    self.hidden = YES;
+    self.backgroundColor = [UIColor clearColor];
+    
+    if(self.thickness < 1) {
+        self.thickness = 2;
+    }
+    
+    if(!self.innerColor) {
+        self.innerColor = self.tintColor;
+    }
+    
+    if(!self.outerColor) {
+        self.outerColor = [[UIColor grayColor] colorWithAlphaComponent:0.2];
+    }
+    
+    CAShapeLayer *outerCircle = [CAShapeLayer layer];
+    CAShapeLayer *innerCircle = [CAShapeLayer layer];
+    
+    outerCircle.strokeColor = self.outerColor.CGColor;
+    outerCircle.fillColor = [UIColor clearColor].CGColor;
+    outerCircle.lineWidth = self.thickness;
+    
+    innerCircle.strokeColor = self.innerColor.CGColor;
+    innerCircle.fillColor = [UIColor clearColor].CGColor;
+    innerCircle.lineWidth = self.thickness;
+    
+    self.innerCircle = innerCircle;
+    self.outerCircle = outerCircle;
+    
+    [self _setupBezierPaths];
+    
+    [self.layer addSublayer:outerCircle];
+    [self.layer addSublayer:innerCircle];
+}
+
+- (CABasicAnimation *)_animation {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    animation.toValue = @(M_PI * 2);
+    animation.duration = 1;
+    animation.repeatCount = INFINITY;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    
+    return animation;
+}
+
+- (void)_restartAnimationIfNeeded {
+    if(self.animating && ![[self.layer animationKeys] containsObject:kRotationAnimationKey]) {
+        [self _startAnimating];
+    }
+}
+
+#pragma mark - Notifications
+
+- (void)_registerForAppStateNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_restartAnimationIfNeeded) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)_unregisterFromAppStateNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
