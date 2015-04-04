@@ -1,3 +1,7 @@
+= 0.7.1 (2015-04-04)
+
+* Fix indicator's position when contentSize < viewSize (@pronebird)
+
 = 0.7.0 (2015-02-28)
 
 * Accommodate bottom bar inset (@pronebird)
