@@ -27,7 +27,7 @@
  *
  *  Infinite scroll will call implemented methods during user interaction.
  */
-@property (nonatomic) UIView* infiniteScrollIndicatorView;
+@property (nonatomic) UIView *infiniteScrollIndicatorView;
 
 /**
  *  Vertical margin around indicator view (Default: 11)
