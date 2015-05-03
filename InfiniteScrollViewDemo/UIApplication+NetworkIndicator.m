@@ -19,9 +19,11 @@ static NSInteger networkActivityCount = 0;
 }
 
 - (void)stopNetworkActivity {
-    if(networkActivityCount > 0) {
-        networkActivityCount--;
-        
+    if(networkActivityCount < 1) {
+        return;
+    }
+    
+    if(--networkActivityCount == 0) {
         [self setNetworkActivityIndicatorVisible:NO];
     }
 }
