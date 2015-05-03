@@ -33,7 +33,7 @@ static void PBSwizzleMethod(Class c, SEL original, SEL alternate) {
 static const NSTimeInterval kPBInfiniteScrollAnimationDuration = 0.35;
 
 // Keys for values in associated dictionary
-static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
+static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 /**
  *  Infinite scroll state class.
@@ -302,8 +302,8 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *
  *  @return indicator view.
  */
-- (UIView*)pb_getOrCreateActivityIndicatorView {
-    UIView* activityIndicator = self.infiniteScrollIndicatorView;
+- (UIView *)pb_getOrCreateActivityIndicatorView {
+    UIView *activityIndicator = self.infiniteScrollIndicatorView;
     
     if(!activityIndicator) {
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:self.infiniteScrollIndicatorStyle];
@@ -324,7 +324,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @return CGFloat
  */
 - (CGFloat)pb_infiniteIndicatorRowHeight {
-    UIView* activityIndicator = [self pb_getOrCreateActivityIndicatorView];
+    UIView *activityIndicator = [self pb_getOrCreateActivityIndicatorView];
     CGFloat indicatorHeight = CGRectGetHeight(activityIndicator.bounds);
     
     return indicatorHeight + self.infiniteScrollIndicatorMargin * 2;
@@ -336,7 +336,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @param contentSize content size.
  */
 - (void)pb_positionInfiniteScrollIndicatorWithContentSize:(CGSize)contentSize {
-    UIView* activityIndicator = [self pb_getOrCreateActivityIndicatorView];
+    UIView *activityIndicator = [self pb_getOrCreateActivityIndicatorView];
     CGFloat contentHeight = [self pb_clampContentSizeToFitVisibleBounds:contentSize];
     CGFloat indicatorRowHeight = [self pb_infiniteIndicatorRowHeight];
     CGPoint center = CGPointMake(contentSize.width * 0.5, contentHeight + indicatorRowHeight * 0.5);
@@ -351,7 +351,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  */
 - (void)pb_startAnimatingInfiniteScroll {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
-    UIView* activityIndicator = [self pb_getOrCreateActivityIndicatorView];
+    UIView *activityIndicator = [self pb_getOrCreateActivityIndicatorView];
     
     // Layout indicator view
     [self pb_positionInfiniteScrollIndicatorWithContentSize:self.contentSize];
@@ -404,7 +404,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  */
 - (void)pb_stopAnimatingInfiniteScrollWithCompletion:(void(^)(id scrollView))handler {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
-    UIView* activityIndicator = self.infiniteScrollIndicatorView;
+    UIView *activityIndicator = self.infiniteScrollIndicatorView;
     UIEdgeInsets contentInset = self.contentInset;
     
     // Remove row height inset
