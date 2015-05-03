@@ -111,7 +111,6 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 #pragma mark - Public methods
 
 - (void)addInfiniteScrollWithHandler:(void(^)(id scrollView))handler {
-    // make sure state exists
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Save handler block
@@ -196,7 +195,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 - (_PBInfiniteScrollState *)pb_infiniteScrollState {
     _PBInfiniteScrollState *state = objc_getAssociatedObject(self, kPBInfiniteScrollStateKey);
-    
+
     if(!state) {
         state = [_PBInfiniteScrollState new];
         
@@ -288,6 +287,7 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     if(state.infiniteScrollHandler) {
         state.infiniteScrollHandler(self);
     }
+    
     TRACE(@"Call handler.");
 }
 
