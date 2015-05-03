@@ -35,10 +35,10 @@ static const NSTimeInterval kPBInfiniteScrollAnimationDuration = 0.35;
 // Keys for values in associated dictionary
 static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
-//
-// Infinite scroll state.
-// @private
-//
+/**
+ *  Infinite scroll state class.
+ *  @private
+ */
 @interface _PBInfiniteScrollState : NSObject
 
 /**
@@ -99,9 +99,15 @@ static const void* kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 @end
 
-// Private category on UIScrollView to define dynamic properties
+
+/**
+ *  Private category on UIScrollView to define dynamic properties.
+ */
 @interface UIScrollView ()
 
+/**
+ *  Infinite scroll state.
+ */
 @property (nonatomic, readonly, getter=pb_infiniteScrollState) _PBInfiniteScrollState *pb_infiniteScrollState;
 
 @end
