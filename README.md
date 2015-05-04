@@ -20,7 +20,7 @@ pod 'UIScrollView-InfiniteScroll'
 
 ### Basic usage
 
-In Objective-C:
+Objective-C:
 
 ```objc
 // Somewhere in your implementation file
@@ -47,7 +47,7 @@ In Objective-C:
 }
 ```
 
-In Swift (with bridging header):
+Swift (with bridging header):
 
 ```swift
 override func viewDidLoad() {
@@ -74,7 +74,7 @@ override func viewDidLoad() {
 
 `UICollectionView#reloadData` causes contentOffset to reset. Please use `UICollectionView#performBatchUpdates` instead when possible.
 
-In Objective-C:
+Objective-C:
 
 ```objc
 // Somewhere in your implementation file
@@ -119,7 +119,7 @@ In Objective-C:
 }
 ```
 
-In Swift: 
+Swift: 
 
 ```swift
 override func viewDidLoad() {
@@ -146,7 +146,7 @@ override func viewDidLoad() {
         // Update collection view
         collectionView.performBatchUpdates({ () -> Void in
             // add new items into collection
-            collectionView?.insertItemsAtIndexPaths(indexPaths)
+            collectionView.insertItemsAtIndexPaths(indexPaths)
         }, completion: { (finished) -> Void in
             // finish infinite scroll animations
             collectionView.finishInfiniteScroll()
@@ -165,11 +165,18 @@ Custom indicator must be a subclass of `UIView` and implement the following meth
  * `- (void)startAnimating`
  * `- (void)stopAnimating`
 
+Objective-C: 
 ```objc
 // optionally you can use custom indicator view
 CustomInfiniteIndicator *infiniteIndicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
 
 self.tableView.infiniteScrollIndicatorView = indicator;
+```
+
+Swift: 
+```swift
+// optionally you can use custom indicator view
+tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
 ```
 
 Please see example implementation of indicator view:
