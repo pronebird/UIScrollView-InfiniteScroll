@@ -8,7 +8,7 @@
 
 import UIKit
 
-let useAutosizingCells = true
+private let useAutosizingCells = true
 
 class TableViewController: UITableViewController, UIAlertViewDelegate {
     
@@ -17,9 +17,11 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
     private let JSONResultsKey = "hits"
     private let JSONNumPagesKey = "nbPages"
     
-    var currentPage = 0
-    var numPages = 0
-    var stories: Array<StoryModel> = []
+    private var currentPage = 0
+    private var numPages = 0
+    private var stories: Array<StoryModel> = []
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +38,8 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         tableView.infiniteScrollIndicatorMargin = 40
         
         // Add infinite scroll handler
-        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView: AnyObject!) -> Void in
-            let scrollView = scrollView as! UIScrollView
+        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
+            let scrollView = scrollView as! UITableView
             
             self?.fetchData() {
                 scrollView.finishInfiniteScroll()
@@ -56,14 +58,45 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         }
     }
     
-    func apiURL(numHits: Int, page: Int) -> NSURL {
+    // MARK: - UITableViewDataSource
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return stories.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let story = stories[indexPath.row]
+        
+        cell.textLabel?.text = story.title
+        cell.detailTextLabel?.text = story.author
+        
+        if useAutosizingCells && tableView.respondsToSelector("layoutMargins") {
+            cell.textLabel?.numberOfLines = 0
+            cell.detailTextLabel?.numberOfLines = 0
+        }
+        
+        return cell
+    }
+    
+    // MARK: - UIAlertViewDelegate
+    
+    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
+        if buttonIndex != alertView.cancelButtonIndex {
+            fetchData(nil)
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func apiURL(numHits: Int, page: Int) -> NSURL {
         let string = "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)"
         let url = NSURL(string: string)
         
         return url!
     }
     
-    func fetchData(handler: ((Void) -> Void)?) {
+    private func fetchData(handler: ((Void) -> Void)?) {
         let hits: Int = Int(CGRectGetHeight(tableView.bounds)) / 44
         let requestURL = apiURL(hits, page: currentPage)
         
@@ -89,37 +122,44 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         })
     }
     
-    func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
-        var jsonError: NSError?
-        let dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &jsonError) as? Dictionary<String, AnyObject>
-        let results = dictionary?[JSONResultsKey] as? Array<Dictionary<String, AnyObject>>
+    private func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
+        if error != nil {
+            showAlertWithError(error)
+            return;
+        }
         
-        if results != nil {
-            for item in results! {
-                stories.append(StoryModel(item))
+        var jsonError: NSError?
+        let responseDict = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &jsonError) as? Dictionary<String, AnyObject>
+        
+        if jsonError != nil {
+            showAlertWithError(jsonError)
+            return
+        }
+        
+        if let pages = responseDict?[JSONNumPagesKey] as? NSNumber {
+            numPages = pages as! Int
+        }
+        
+        if let results = responseDict?[JSONResultsKey] as? Array<Dictionary<String, AnyObject>> {
+            currentPage++
+
+            for i in results {
+                stories.append(StoryModel(i))
             }
             
             tableView.reloadData()
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stories.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
-        let story = stories[indexPath.row]
-        
-        cell.textLabel?.text = story.title
-        cell.detailTextLabel?.text = story.author
-        
-        if useAutosizingCells && tableView.respondsToSelector("layoutMargins") {
-            cell.textLabel?.numberOfLines = 0
-            cell.detailTextLabel?.numberOfLines = 0
-        }
-        
-        return cell
+    private func showAlertWithError(error: NSError!) {
+        let alert = UIAlertView(
+            title: NSLocalizedString("Error fetching data", comment: ""),
+            message: error.localizedDescription,
+            delegate: self,
+            cancelButtonTitle: NSLocalizedString("Dismiss", comment: ""),
+            otherButtonTitles: NSLocalizedString("Retry", comment: "")
+        )
+        alert.show()
     }
 
 }
