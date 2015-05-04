@@ -19,7 +19,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
     
     private var currentPage = 0
     private var numPages = 0
-    private var stories: Array<StoryModel> = []
+    private var stories = [StoryModel]()
     
     // MARK: - Lifecycle
     
@@ -140,7 +140,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
             numPages = pages as! Int
         }
         
-        if let results = responseDict?[JSONResultsKey] as? Array<Dictionary<String, AnyObject>> {
+        if let results = responseDict?[JSONResultsKey] as? [Dictionary<String, AnyObject>] {
             currentPage++
 
             for i in results {
