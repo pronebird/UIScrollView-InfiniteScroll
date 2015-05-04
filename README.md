@@ -20,6 +20,8 @@ pod 'UIScrollView-InfiniteScroll'
 
 ### Basic usage
 
+In Objective-C:
+
 ```objc
 // Somewhere in your implementation file
 #import <UIScrollView+InfiniteScroll.h>
@@ -45,9 +47,34 @@ pod 'UIScrollView-InfiniteScroll'
 }
 ```
 
+In Swift (with bridging header):
+
+```swift
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // change indicator view style to white
+        tableView.infiniteScrollIndicatorStyle = .White
+        
+        // Add infinite scroll handler
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            let scrollView = scrollView as! UITableView
+            
+            //
+            // fetch your data here, can be async operation,
+            // just make sure to call finishInfiniteScroll in the end
+            //
+            
+            scrollView.finishInfiniteScroll()
+        }
+    }
+```
+
 #### Collection view quirks
 
 `UICollectionView#reloadData` causes contentOffset to reset. Please use `UICollectionView#performBatchUpdates` instead when possible.
+
+In Objective-C:
 
 ```objc
 // Somewhere in your implementation file
@@ -57,6 +84,8 @@ pod 'UIScrollView-InfiniteScroll'
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    __weak typeof(self) weakSelf = self;
 
     [self.collectionView addInfiniteScrollWithHandler:^(UICollectionView* collectionView) {
         //
@@ -68,26 +97,63 @@ pod 'UIScrollView-InfiniteScroll'
         NSArray *newStories;
         
         NSMutableArray *indexPaths = [NSMutableArray new];
-        NSInteger index = self.allStories.count;
+        NSInteger index = weakSelf.allStories.count;
     
         // create index paths for affected items
         for(Story *story in newStories) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index++ inSection:0];
 
-            [self.allStories addObject:story];
+            [weakSelf.allStories addObject:story];
             [indexPaths addObject:indexPath];
         }
         
         // Update collection view
-        [self.collectionView performBatchUpdates:^{
+        [weakSelf.collectionView performBatchUpdates:^{
             // add new items into collection
             [self.collectionView insertItemsAtIndexPaths:indexPaths];
         } completion:^(BOOL finished) {
             // finish infinite scroll animations
-            [collectionView finishInfiniteScroll];
+            [weakSelf.collectionView finishInfiniteScroll];
         }];
     }];
 }
+```
+
+In Swift: 
+
+```swift
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Add infinite scroll handler
+        collectionView?.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
+            let collectionView = scrollView as! UICollectionView
+            
+            // suppose this is an array with new data
+            let newStories = [Story]()
+            
+            var indexPaths = [NSIndexPath]()
+            let index = self?.allStories.count
+            
+            // create index paths for affected items
+            for story in newStories {
+                let indexPath = NSIndexPath(forItem: index++, inSection: 0)
+                
+                indexPaths.append(indexPath)
+                self?.allStories.append(story)
+            }
+            
+            // Update collection view
+            collectionView.performBatchUpdates({ () -> Void in
+                // add new items into collection
+                collectionView?.insertItemsAtIndexPaths(indexPaths)
+            }, completion: { (finished) -> Void in
+                // finish infinite scroll animations
+                collectionView.finishInfiniteScroll()
+            });
+            
+        }
+    }
 ```
 
 ### Custom indicator
