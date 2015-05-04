@@ -14,6 +14,7 @@ private let downloadQueue = dispatch_queue_create("ru.codeispoetry.downloadQueue
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate {
     
     private let cellIdentifier = "PhotoCell"
+    private let showPhotoSegueIdentifier = "ShowPhoto"
     private let apiURL = "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json"
     
     private var photos = [NSURL]()
@@ -41,6 +42,37 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
         
         fetchData(nil)
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if identifier == showPhotoSegueIdentifier {
+            if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
+                let url = photos[indexPath.item]
+                if let image = cache.objectForKey(url) as? UIImage {
+                    return true
+                }
+            }
+            return false
+        }
+        return true
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == showPhotoSegueIdentifier {
+            if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
+                var controller: PhotoViewController
+                let url = photos[indexPath.item]
+                
+                if segue.destinationViewController.isKindOfClass(UINavigationController) {
+                    controller = (segue.destinationViewController as! UINavigationController).topViewController as! PhotoViewController
+                }
+                else {
+                    controller = segue.destinationViewController as! PhotoViewController
+                }
+                
+                controller.photo = cache.objectForKey(url) as? UIImage
+            }
+        }
     }
     
     // MARK: - UICollectionViewDataSource
