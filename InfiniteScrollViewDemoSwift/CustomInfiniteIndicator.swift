@@ -25,13 +25,12 @@ class CustomInfiniteIndicator: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.commonInit()
+        commonInit()
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit()
+        commonInit()
     }
     
     deinit {
@@ -120,10 +119,8 @@ class CustomInfiniteIndicator: UIView {
         if animating {
             return
         }
-        
         animating = true
         hidden = false
-        
         addAnimation()
     }
     
@@ -131,10 +128,9 @@ class CustomInfiniteIndicator: UIView {
         if !animating {
             return
         }
-        
-        layer.removeAnimationForKey(rotationAnimationKey)
-        hidden = true
         animating = false
+        hidden = true
+        layer.removeAnimationForKey(rotationAnimationKey)
     }
 
 }

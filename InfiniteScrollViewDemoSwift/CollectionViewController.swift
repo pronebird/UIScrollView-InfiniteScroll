@@ -208,23 +208,23 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
         
         var indexPaths = [NSIndexPath]()
-        let firstIndex = self.photos.count
+        let firstIndex = photos.count
         
         if let items = responseDict?["items"] as? NSArray {
             if let urls = items.valueForKeyPath("media.m") as? [String] {
                 for (i, url) in enumerate(urls) {
                     let indexPath = NSIndexPath(forItem: firstIndex + i, inSection: 0)
                     
-                    self.photos.append(NSURL(string: url)!)
+                    photos.append(NSURL(string: url)!)
                     indexPaths.append(indexPath)
                 }
             }
         }
         
-        self.modifiedAt = modifiedAt_!
+        modifiedAt = modifiedAt_!
         
         collectionView?.performBatchUpdates({ () -> Void in
-            self.collectionView?.insertItemsAtIndexPaths(indexPaths)
+            collectionView?.insertItemsAtIndexPaths(indexPaths)
         }, completion: { (finished) -> Void in
             completion?()
         });
