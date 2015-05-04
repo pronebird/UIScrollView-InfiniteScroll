@@ -19,6 +19,7 @@
 		58279BFF1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */; };
 		58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */; };
+		58279C0A1AF787340075D88A /* Storyboard-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58279C091AF787340075D88A /* Storyboard-iPad.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfiniteIndicator.swift; sourceTree = "<group>"; };
 		58279C061AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
+		58279C091AF787340075D88A /* Storyboard-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Storyboard-iPad.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				58279BC31AF6AC5D0075D88A /* AppDelegate.swift */,
 				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
 				58279BF01AF6ADA60075D88A /* Storyboard.storyboard */,
+				58279C091AF787340075D88A /* Storyboard-iPad.storyboard */,
 				58279BC11AF6AC5D0075D88A /* Supporting Files */,
 				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
 				58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */,
@@ -162,6 +165,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58279C0A1AF787340075D88A /* Storyboard-iPad.storyboard in Resources */,
 				58279BCD1AF6AC5D0075D88A /* Images.xcassets in Resources */,
 				58279BF11AF6ADA60075D88A /* Storyboard.storyboard in Resources */,
 			);
