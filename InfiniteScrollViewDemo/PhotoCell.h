@@ -10,6 +10,6 @@
 
 @interface PhotoCell : UICollectionViewCell
 
-@property (weak) IBOutlet UIImageView* imageView;
+@property (weak) IBOutlet UIImageView *imageView;
 
 @end

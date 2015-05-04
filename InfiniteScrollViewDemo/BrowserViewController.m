@@ -51,7 +51,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if(error.code != NSURLErrorCancelled) {
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failed to load URL", @"")
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failed to load URL", @"")
                                                             message:[error localizedDescription]
                                                            delegate:self
                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", @"")

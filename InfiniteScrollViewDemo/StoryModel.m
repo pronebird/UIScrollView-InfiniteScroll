@@ -10,11 +10,11 @@
 
 @implementation StoryModel
 
-+ (instancetype)modelWithDictionary:(NSDictionary*)dictionary {
++ (instancetype)modelWithDictionary:(NSDictionary *)dictionary {
     return [[self alloc] initWithDictionary:dictionary];
 }
 
-- (id)initWithDictionary:(NSDictionary*)dictionary {
+- (id)initWithDictionary:(NSDictionary *)dictionary {
     if(self = [super init]) {
         self.title = dictionary[@"title"];
         self.author = dictionary[@"author"];

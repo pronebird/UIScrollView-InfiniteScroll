@@ -13,7 +13,8 @@
 #import "UIScrollView+InfiniteScroll.h"
 #import "CustomInfiniteIndicator.h"
 
-static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json";
+static NSString *const kFlickrAPIEndpoint = @"https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json";
+static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
 
 @interface CollectionViewController() <UICollectionViewDelegateFlowLayout>
 
@@ -58,7 +59,7 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if([identifier isEqualToString:@"ShowPhoto"]) {
+    if([identifier isEqualToString:kShowPhotoSegueIdentifier]) {
         NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
         NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
         UIImage* image = [self.cache objectForKey:photoURL];
@@ -72,7 +73,7 @@ static NSString* const kFlickrAPIEndpoint = @"https://api.flickr.com/services/fe
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"ShowPhoto"]) {
+    if([segue.identifier isEqualToString:kShowPhotoSegueIdentifier]) {
         NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
         NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
         UIImage* image = [self.cache objectForKey:photoURL];

@@ -12,7 +12,7 @@
 
 @interface BrowserViewController : UIViewController<UIWebViewDelegate, UIAlertViewDelegate>
 
-@property (weak) IBOutlet UIWebView* webView;
-@property (strong) StoryModel* story;
+@property (weak) IBOutlet UIWebView *webView;
+@property (strong) StoryModel *story;
 
 @end

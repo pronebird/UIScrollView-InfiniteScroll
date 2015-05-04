@@ -66,7 +66,10 @@ static NSString *const kRotationAnimationKey = @"rotation";
     if(self.animating) {
         return;
     }
-    [self _startAnimating];
+    
+    self.animating = YES;
+    self.hidden = NO;
+    [self _addAnimation];
 }
 
 - (void)stopAnimating {
@@ -97,16 +100,16 @@ static NSString *const kRotationAnimationKey = @"rotation";
     }
 }
 
-- (void)_startAnimating {
-    self.animating = YES;
-    self.hidden = NO;
+#pragma mark - Private
+
+- (void)_addAnimation {
     [self.layer addAnimation:[self _animation] forKey:kRotationAnimationKey];
 }
 
 - (void)_setupBezierPaths {
     CGPoint center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
     CGFloat radius = self.bounds.size.width * 0.5 - self.thickness;
-    UIBezierPath *ringPath = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:M_PI*2 clockwise:YES];
+    UIBezierPath *ringPath = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:0 endAngle:M_PI * 2 clockwise:YES];
     UIBezierPath *quarterRingPath = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:-M_PI_4 endAngle:M_PI_2 - M_PI_4 clockwise:YES];
     
     self.outerCircle.path = ringPath.CGPath;
@@ -163,7 +166,7 @@ static NSString *const kRotationAnimationKey = @"rotation";
 
 - (void)_restartAnimationIfNeeded {
     if(self.animating && ![[self.layer animationKeys] containsObject:kRotationAnimationKey]) {
-        [self _startAnimating];
+        [self _addAnimation];
     }
 }
 
