@@ -179,6 +179,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     private func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!, completion: (Void -> Void)?) {
         if error != nil {
             showAlertWithError(error)
+            completion?()
             return;
         }
         
@@ -193,6 +194,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         if jsonError != nil {
             showAlertWithError(jsonError)
+            completion?()
             return
         }
         
