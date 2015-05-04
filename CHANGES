@@ -1,3 +1,9 @@
+= 0.7.2 (2015-05-04)
+
+* Optimize the use of dynamic properties by grouping them into single state object
+* Add Swift demo app
+* Refine Objective-C demo app
+
 = 0.7.1 (2015-04-04)
 
 * Fix indicator's position when contentSize < viewSize (@pronebird)
