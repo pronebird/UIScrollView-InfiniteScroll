@@ -90,14 +90,12 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! PhotoCell
         let url = photos[indexPath.item]
+        let image = cache.objectForKey(url) as? UIImage
         
-        if let image = cache.objectForKey(url) as? UIImage {
-            cell.imageView.image = image
-            cell.imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        }
-        else {
-            cell.imageView.image = nil
-            
+        cell.imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        cell.imageView.image = image
+        
+        if image == nil {
             downloadPhoto(url, completion: { (url, image) -> Void in
                 let indexPath_ = collectionView.indexPathForCell(cell)
                 if indexPath.isEqual(indexPath_) {
