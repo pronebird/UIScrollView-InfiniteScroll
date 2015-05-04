@@ -75,6 +75,12 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
     }
     
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+        
+        collectionViewLayout.invalidateLayout()
+    }
+    
     // MARK: - UICollectionViewDataSource
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
