@@ -50,24 +50,24 @@ In Objective-C:
 In Swift (with bridging header):
 
 ```swift
-    override func viewDidLoad() {
-        super.viewDidLoad()
+override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    // change indicator view style to white
+    tableView.infiniteScrollIndicatorStyle = .White
+    
+    // Add infinite scroll handler
+    tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+        let tableView = scrollView as! UITableView
         
-        // change indicator view style to white
-        tableView.infiniteScrollIndicatorStyle = .White
+        //
+        // fetch your data here, can be async operation,
+        // just make sure to call finishInfiniteScroll in the end
+        //
         
-        // Add infinite scroll handler
-        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            let tableView = scrollView as! UITableView
-            
-            //
-            // fetch your data here, can be async operation,
-            // just make sure to call finishInfiniteScroll in the end
-            //
-            
-            tableView.finishInfiniteScroll()
-        }
+        tableView.finishInfiniteScroll()
     }
+}
 ```
 
 #### Collection view quirks
@@ -122,38 +122,38 @@ In Objective-C:
 In Swift: 
 
 ```swift
-    override func viewDidLoad() {
-        super.viewDidLoad()
+override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    // Add infinite scroll handler
+    collectionView?.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
+        let collectionView = scrollView as! UICollectionView
         
-        // Add infinite scroll handler
-        collectionView?.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
-            let collectionView = scrollView as! UICollectionView
+        // suppose this is an array with new data
+        let newStories = [Story]()
+        
+        var indexPaths = [NSIndexPath]()
+        let index = self?.allStories.count
+        
+        // create index paths for affected items
+        for story in newStories {
+            let indexPath = NSIndexPath(forItem: index++, inSection: 0)
             
-            // suppose this is an array with new data
-            let newStories = [Story]()
-            
-            var indexPaths = [NSIndexPath]()
-            let index = self?.allStories.count
-            
-            // create index paths for affected items
-            for story in newStories {
-                let indexPath = NSIndexPath(forItem: index++, inSection: 0)
-                
-                indexPaths.append(indexPath)
-                self?.allStories.append(story)
-            }
-            
-            // Update collection view
-            collectionView.performBatchUpdates({ () -> Void in
-                // add new items into collection
-                collectionView?.insertItemsAtIndexPaths(indexPaths)
-            }, completion: { (finished) -> Void in
-                // finish infinite scroll animations
-                collectionView.finishInfiniteScroll()
-            });
-            
+            indexPaths.append(indexPath)
+            self?.allStories.append(story)
         }
+        
+        // Update collection view
+        collectionView.performBatchUpdates({ () -> Void in
+            // add new items into collection
+            collectionView?.insertItemsAtIndexPaths(indexPaths)
+        }, completion: { (finished) -> Void in
+            // finish infinite scroll animations
+            collectionView.finishInfiniteScroll()
+        });
+        
     }
+}
 ```
 
 ### Custom indicator
