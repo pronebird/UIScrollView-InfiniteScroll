@@ -13,14 +13,15 @@
 #import "UIScrollView+InfiniteScroll.h"
 #import "CustomInfiniteIndicator.h"
 
-static NSString *const kFlickrAPIEndpoint = @"https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json";
+static NSString *const kAPIEndpointURL = @"https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json";
 static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
+static NSString *const kCellIdentifier = @"PhotoCell";
 
-@interface CollectionViewController() <UICollectionViewDelegateFlowLayout>
+@interface CollectionViewController()
 
-@property NSMutableArray* flickrPhotos;
-@property NSDate* flickrFeedModifiedAt;
-@property NSCache* cache;
+@property NSMutableArray *photos;
+@property NSDate *modifiedAt;
+@property NSCache *cache;
 
 @end
 
@@ -33,8 +34,8 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
     
     __weak typeof(self) weakSelf = self;
 
-    self.flickrPhotos = [NSMutableArray new];
-    self.flickrFeedModifiedAt = [NSDate distantPast];
+    self.photos = [NSMutableArray new];
+    self.modifiedAt = [NSDate distantPast];
     self.cache = [NSCache new];
     
     // Create custom indicator
@@ -48,23 +49,22 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
     
     // Add infinite scroll handler
     [self.collectionView addInfiniteScrollWithHandler:^(UICollectionView *collectionView) {
-        [weakSelf loadFlickrFeedWithDelay:YES completion:^{
+        [weakSelf fetchData:^{
             // Finish infinite scroll animations
             [collectionView finishInfiniteScroll];
         }];
     }];
     
     // Load initial data
-    [self loadFlickrFeedWithDelay:NO completion:nil];
+    [self fetchData:nil];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if([identifier isEqualToString:kShowPhotoSegueIdentifier]) {
         NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
-        NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
-        UIImage* image = [self.cache objectForKey:photoURL];
+        NSURL *photoURL = self.photos[indexPath.item];
         
-        if(!image) {
+        if(![self.cache objectForKey:photoURL]) {
             return NO;
         }
     }
@@ -75,18 +75,18 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:kShowPhotoSegueIdentifier]) {
         NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
-        NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
-        UIImage* image = [self.cache objectForKey:photoURL];
-        PhotoViewController *photoController;
+        NSURL *photoURL = self.photos[indexPath.item];
+        UIImage *image = [self.cache objectForKey:photoURL];
+        PhotoViewController *controller;
         
         if([segue.destinationViewController isKindOfClass:UINavigationController.class]) {
-            photoController = (PhotoViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
+            controller = (PhotoViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
         }
         else {
-            photoController = segue.destinationViewController;
+            controller = segue.destinationViewController;
         }
         
-        photoController.photo = image;
+        controller.photo = image;
     }
 }
 
@@ -99,53 +99,46 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
 
 #pragma mark - Private
 
-- (void)loadFlickrFeedWithDelay:(BOOL)withDelay completion:(void(^)(void))completion {
-    NSURL* feedURL = [NSURL URLWithString:kFlickrAPIEndpoint];
-    
-    // Show network activity indicator
-    [[UIApplication sharedApplication] startNetworkActivity];
-    
-    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithURL:feedURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+- (void)fetchData:(void(^)(void))completion {
+    NSURL *requestURL = [NSURL URLWithString:kAPIEndpointURL];
+
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self handleAPIResponse:response data:data error:error completion:completion];
+            [self handleResponse:response data:data error:error completion:completion];
             
-            // Hide network activity indicator
             [[UIApplication sharedApplication] stopNetworkActivity];
         });
     }];
     
-    // Start network task
+    [[UIApplication sharedApplication] startNetworkActivity];
     
     // I run -[task resume] with delay because my network is too fast
-    NSTimeInterval delay = (withDelay ? 5.0 : 0.0);
+    NSTimeInterval delay = (self.photos.count == 0 ? 0 : 5);
     
     [task performSelector:@selector(resume) withObject:nil afterDelay:delay];
 }
 
-- (void)handleAPIResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
-    // Check for network errors
+- (void)handleResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
+    void(^finish)(void) = completion ?: ^{};
+    
     if(error) {
         [self showRetryAlertWithError:error];
-        if(completion) {
-            completion();
-        }
+        finish();
         return;
     }
     
-    // Unserialize JSON
-    NSError* JSONError;
-    NSString* JSONString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSError *jsonError;
+    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
     // Fix broken Flickr JSON
-    JSONString = [JSONString stringByReplacingOccurrencesOfString: @"\\'" withString: @"'"];
+    jsonString = [jsonString stringByReplacingOccurrencesOfString: @"\\'" withString: @"'"];
+    NSData *fixedData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSDictionary* JSONResponse = (NSDictionary*) [NSJSONSerialization JSONObjectWithData:[JSONString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&JSONError];
+    NSDictionary *responseDict = (NSDictionary*) [NSJSONSerialization JSONObjectWithData:fixedData options:0 error:&jsonError];
     
-    if(JSONError) {
-        [self showRetryAlertWithError:JSONError];
-        if(completion) {
-            completion();
-        }
+    if(jsonError) {
+        [self showRetryAlertWithError:jsonError];
+        finish();
         return;
     }
     
@@ -153,36 +146,34 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
     dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
     
-    NSDate* modifiedAt = [dateFormatter dateFromString:JSONResponse[@"modified"]];
-    NSArray* photos = [JSONResponse valueForKeyPath:@"items.media.m"];
+    NSDate *modifiedAt = [dateFormatter dateFromString:responseDict[@"modified"]];
     
-    if([self.flickrFeedModifiedAt compare:modifiedAt] == NSOrderedAscending) {
-        [self.collectionView performBatchUpdates:^{
-            NSMutableArray* newIndexPaths = [NSMutableArray new];
-            NSInteger firstIndex = self.flickrPhotos.count;
-            
-            for(NSInteger i = 0; i < photos.count; i++) {
-                NSIndexPath* indexPath = [NSIndexPath indexPathForItem:firstIndex + i inSection:0];
-                [newIndexPaths addObject:indexPath];
-            }
-            
-            [self.collectionView insertItemsAtIndexPaths:newIndexPaths];
-            
-            self.flickrFeedModifiedAt = modifiedAt;
-            [self.flickrPhotos addObjectsFromArray:photos];
-        } completion:^(BOOL finished) {
-            if(completion) {
-                completion();
-            }
-        }];
-    } else {
-        if(completion) {
-            completion();
-        }
+    if([modifiedAt compare:self.modifiedAt] != NSOrderedDescending) {
+        finish();
+        return;
     }
+    
+    NSMutableArray *indexPaths = [NSMutableArray new];
+    NSArray *photos = [responseDict valueForKeyPath:@"items.media.m"];
+    NSInteger index = self.photos.count;
+    
+    for(NSString *url in photos) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index++ inSection:0];
+        
+        [self.photos addObject:[NSURL URLWithString:url]];
+        [indexPaths addObject:indexPath];
+    }
+    
+    self.modifiedAt = modifiedAt;
+    
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView insertItemsAtIndexPaths:indexPaths];
+    } completion:^(BOOL finished) {
+        finish();
+    }];
 }
 
-- (void)downloadPhotoFromURL:(NSURL*)URL completion:(void(^)(NSURL* URL, UIImage* image))completion {
+- (void)downloadPhotoFromURL:(NSURL*)URL completion:(void(^)(NSURL *URL, UIImage *image))completion {
     static dispatch_queue_t downloadQueue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -191,22 +182,22 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
     
     dispatch_async(downloadQueue, ^{
         NSData *data = [NSData dataWithContentsOfURL:URL];
-        __block UIImage* image = [UIImage imageWithData:data];
+        UIImage *image = [UIImage imageWithData:data];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(image) {
+        if(image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [self.cache setObject:image forKey:URL];
-            }
-            
-            if(completion) {
-                completion(URL, image);
-            }
-        });
+                
+                if(completion) {
+                    completion(URL, image);
+                }
+            });
+        }
     });
 }
 
 - (void)showRetryAlertWithError:(NSError*)error {
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
                                                         message:[error localizedDescription]
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
@@ -218,29 +209,28 @@ static NSString *const kShowPhotoSegueIdentifier = @"ShowPhoto";
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if(buttonIndex == alertView.firstOtherButtonIndex) {
-        [self loadFlickrFeedWithDelay:NO completion:nil];
+        [self fetchData:nil];
     }
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.flickrPhotos.count;
+    return self.photos.count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotoCell* cell = (PhotoCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
-    
-    NSURL* photoURL = [NSURL URLWithString:self.flickrPhotos[indexPath.item]];
-    UIImage* image = [self.cache objectForKey:photoURL];
+    PhotoCell *cell = (PhotoCell*)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
+    NSURL *photoURL = self.photos[indexPath.item];
+    UIImage *image = [self.cache objectForKey:photoURL];
     
     cell.imageView.image = image;
     cell.imageView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     
     if(!image) {
         [self downloadPhotoFromURL:photoURL completion:^(NSURL *URL, UIImage *image) {
-            NSIndexPath* newIndexPath = [collectionView indexPathForCell:cell];
-            if([newIndexPath isEqual:indexPath]) {
+            NSIndexPath *indexPath_ = [collectionView indexPathForCell:cell];
+            if([indexPath isEqual:indexPath_]) {
                 cell.imageView.image = image;
             }
         }];
