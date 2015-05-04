@@ -58,14 +58,14 @@ In Swift (with bridging header):
         
         // Add infinite scroll handler
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            let scrollView = scrollView as! UITableView
+            let tableView = scrollView as! UITableView
             
             //
             // fetch your data here, can be async operation,
             // just make sure to call finishInfiniteScroll in the end
             //
             
-            scrollView.finishInfiniteScroll()
+            tableView.finishInfiniteScroll()
         }
     }
 ```
