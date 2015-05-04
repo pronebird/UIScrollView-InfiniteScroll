@@ -64,28 +64,26 @@ pod 'UIScrollView-InfiniteScroll'
         // just make sure to call finishInfiniteScroll in the end
         //
         
-        NSArray* newData;
+        // suppose this is an array with new data
+        NSArray *newStories;
         
-        // update collection view
-        [collectionView performBatchUpdates:^{
-            NSMutableArray* newIndexPaths = [NSMutableArray new];
-            NSInteger firstIndex = [collectionView numberOfItemsInSection:0];
-            
-            // create index paths for new elements
-            for(NSInteger i = 0; i < newData.count; i++) {
-                NSInteger index = firstIndex + i;
-                NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-                
-                [newIndexPaths addObject:indexPath];
-            }
-            
-            // tell collection to append new elements
-            [collectionView insertItemsAtIndexPaths:newIndexPaths];
-            
-            // update your data source with more data
-            [collectionView.dataSource appendData:newData];
+        NSMutableArray *indexPaths = [NSMutableArray new];
+        NSInteger index = self.allStories.count;
+    
+        // create index paths for affected items
+        for(Story *story in newStories) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index++ inSection:0];
+
+            [self.allStories addObject:story];
+            [indexPaths addObject:indexPath];
+        }
+        
+        // Update collection view
+        [self.collectionView performBatchUpdates:^{
+            // add new items into collection
+            [self.collectionView insertItemsAtIndexPaths:indexPaths];
         } completion:^(BOOL finished) {
-            // finish infinite scroll animation
+            // finish infinite scroll animations
             [collectionView finishInfiniteScroll];
         }];
     }];
