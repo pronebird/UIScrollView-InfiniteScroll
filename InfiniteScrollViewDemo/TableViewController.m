@@ -16,18 +16,18 @@
 
 #define USE_AUTOSIZING_CELLS 1
 
-static NSString* const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%ld&page=%ld";
-static NSString* const kShowBrowserSegueIdentifier = @"ShowBrowser";
-static NSString* const kCellIdentifier = @"Cell";
+static NSString *const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%ld&page=%ld";
+static NSString *const kShowBrowserSegueIdentifier = @"ShowBrowser";
+static NSString *const kCellIdentifier = @"Cell";
 
-static NSString* const kJSONResultsKey = @"hits";
-static NSString* const kJSONNumPagesKey = @"nbPages";
+static NSString *const kJSONResultsKey = @"hits";
+static NSString *const kJSONNumPagesKey = @"nbPages";
 
 @interface TableViewController()
 
-@property (strong) NSMutableArray* stories;
-@property (assign) NSInteger currentPage;
-@property (assign) NSInteger numPages;
+@property NSMutableArray *stories;
+@property NSInteger currentPage;
+@property NSInteger numPages;
 
 @end
 
@@ -46,9 +46,9 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     }
 #endif
     
+    self.stories = [NSMutableArray new];
     self.currentPage = 0;
     self.numPages = 0;
-    self.stories = [NSMutableArray new];
     
     __weak typeof(self) weakSelf = self;
     
@@ -62,22 +62,22 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     self.tableView.infiniteScrollIndicatorMargin = 40;
     
     // Add infinite scroll handler
-    [self.tableView addInfiniteScrollWithHandler:^(UITableView* tableView) {
-        [weakSelf loadRemoteDataWithDelay:YES completion:^{
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        [weakSelf fetchData:^{
             // Finish infinite scroll animations
             [tableView finishInfiniteScroll];
         }];
     }];
     
     // Load initial data
-    [self loadRemoteDataWithDelay:NO completion:nil];
+    [self fetchData:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:kShowBrowserSegueIdentifier]) {
-        NSIndexPath* selectedRow = [self.tableView indexPathForSelectedRow];
-        BrowserViewController* browserController = (BrowserViewController*)segue.destinationViewController;
-        browserController.story = self.stories[selectedRow.row];
+        NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
+        BrowserViewController *controller = (BrowserViewController *)segue.destinationViewController;
+        controller.story = self.stories[selectedRow.row];
     }
 }
 
@@ -87,13 +87,12 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
     return [self.stories count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    StoryModel* itemModel = self.stories[indexPath.row];
+    StoryModel *story = self.stories[indexPath.row];
     
-    cell.textLabel.text = itemModel.title;
-    cell.detailTextLabel.text = itemModel.author;
+    cell.textLabel.text = story.title;
+    cell.detailTextLabel.text = story.author;
 
 #if USE_AUTOSIZING_CELLS
     // enable auto-sizing cells on iOS 8
@@ -110,95 +109,68 @@ static NSString* const kJSONNumPagesKey = @"nbPages";
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if(buttonIndex == alertView.firstOtherButtonIndex) {
-        [self loadRemoteDataWithDelay:NO completion:nil];
+        [self fetchData:nil];
     }
 }
 
 #pragma mark - Private methods
 
-- (void)showRetryAlertWithError:(NSError*)error {
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
-                                                        message:[error localizedDescription]
+- (void)showRetryAlertWithError:(NSError *)error {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
+                                                        message:error.localizedDescription
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
                                               otherButtonTitles:NSLocalizedString(@"Retry", @""), nil];
     [alertView show];
 }
 
-- (void)handleAPIResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
-    // Check for network errors
+- (void)handleResponse:(NSURLResponse *)response data:(NSData *)data error:(NSError *)error {
     if(error) {
         [self showRetryAlertWithError:error];
-        if(completion) {
-            completion();
-        }
         return;
     }
     
-    // Unserialize JSON
-    NSError* JSONError;
-    NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
+    NSError *JSONError;
+    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
     
     if(JSONError) {
         [self showRetryAlertWithError:JSONError];
-        if(completion) {
-            completion();
-        }
         return;
     }
     
-    // Decode models on background queue
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        __block NSMutableArray* newStories = [NSMutableArray new];
-        
-        for(NSDictionary* item in responseDict[kJSONResultsKey]) {
-            [newStories addObject:[StoryModel modelWithDictionary:item]];
-        }
-        
-        // Append new data on main thread and reload table
+    self.numPages = [responseDict[kJSONNumPagesKey] integerValue];
+    self.currentPage++;
+    
+    NSArray *results = responseDict[kJSONResultsKey];
+    
+    for(NSDictionary *i in results) {
+        [self.stories addObject:[StoryModel modelWithDictionary:i]];
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)fetchData:(void(^)(void))completion {
+    NSInteger hits = CGRectGetHeight(self.tableView.bounds) / 44.0;
+    NSString *URLString = [NSString stringWithFormat:kAPIEndpointURL, (long)hits, (long)self.currentPage];
+    NSURL *requestURL = [NSURL URLWithString:URLString];
+
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.numPages = [responseDict[kJSONNumPagesKey] integerValue];
-            self.currentPage++;
+            [self handleResponse:response data:data error:error];
             
-            [self.stories addObjectsFromArray:newStories];
-            [self.tableView reloadData];
+            [[UIApplication sharedApplication] stopNetworkActivity];
             
             if(completion) {
                 completion();
             }
         });
-    });
-}
+    }];
 
-- (void)loadRemoteDataWithDelay:(BOOL)withDelay completion:(void(^)(void))completion
-{
-    // Show network activity indicator
     [[UIApplication sharedApplication] startNetworkActivity];
     
-    // Calculate optimal number of results to load
-    NSInteger hitsPerPage = CGRectGetHeight(self.tableView.bounds) / 44.0;
-    
-    // Craft API URL
-    NSString* requestURL = [NSString stringWithFormat:kAPIEndpointURL, (long)hitsPerPage, (long)self.currentPage];
-    
-    // Create request
-    NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
-    
-    // Create NSDataTask
-    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self handleAPIResponse:response data:data error:error completion:completion];
-            
-            // Hide network activity indicator
-            [[UIApplication sharedApplication] stopNetworkActivity];
-            
-        });
-    }];
-    
-    // Start network task
-    
     // I run -[task resume] with delay because my network is too fast
-    NSTimeInterval delay = (withDelay ? 5.0 : 0.0);
+    NSTimeInterval delay = (self.stories.count == 0 ? 0 : 5);
     
     [task performSelector:@selector(resume) withObject:nil afterDelay:delay];
 }
