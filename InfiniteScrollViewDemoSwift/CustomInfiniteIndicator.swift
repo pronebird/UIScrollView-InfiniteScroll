@@ -50,7 +50,9 @@ class CustomInfiniteIndicator: UIView {
         }
     }
     
-    func commonInit() {
+    // MARK: - Private
+    
+    private func commonInit() {
         registerForAppStateNotifications()
         
         hidden = true
@@ -68,6 +70,10 @@ class CustomInfiniteIndicator: UIView {
         layer.addSublayer(innerCircle)
     }
     
+    private func addAnimation() {
+        layer.addAnimation(animation(), forKey: rotationAnimationKey)
+    }
+    
     func restartAnimationIfNeeded() {
         let anim = layer.animationForKey(rotationAnimationKey)
         
@@ -76,15 +82,15 @@ class CustomInfiniteIndicator: UIView {
         }
     }
     
-    func registerForAppStateNotifications() {
+    private func registerForAppStateNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "restartAnimationIfNeeded", name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
-    func unregisterFromAppStateNotifications() {
+    private func unregisterFromAppStateNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func animation() -> CABasicAnimation {
+    private func animation() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.toValue = NSNumber(double: M_PI * 2)
         animation.duration = 1
@@ -94,7 +100,7 @@ class CustomInfiniteIndicator: UIView {
         return animation
     }
     
-    func setupBezierPaths() {
+    private func setupBezierPaths() {
         let center = CGPointMake(bounds.size.width * 0.5, bounds.size.height * 0.5)
         let radius = bounds.size.width * 0.5 - thickness
         let ringPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI * 2), clockwise: true)
@@ -103,6 +109,8 @@ class CustomInfiniteIndicator: UIView {
         outerCircle.path = ringPath.CGPath
         innerCircle.path = quarterRingPath.CGPath
     }
+    
+    // MARK: - Public
     
     func isAnimating() -> Bool {
         return animating
@@ -117,10 +125,6 @@ class CustomInfiniteIndicator: UIView {
         hidden = false
         
         addAnimation()
-    }
-    
-    private func addAnimation() {
-        layer.addAnimation(animation(), forKey: rotationAnimationKey)
     }
     
     func stopAnimationg() {
