@@ -162,8 +162,10 @@ You can use custom indicator instead of default `UIActivityIndicatorView`.
 
 Custom indicator must be a subclass of `UIView` and implement the following methods:
 
- * `- (void)startAnimating`
- * `- (void)stopAnimating`
+```objc
+- (void)startAnimating;
+- (void)stopAnimating;
+```
 
 Objective-C: 
 ```objc
@@ -181,9 +183,9 @@ tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMak
 
 Please see example implementation of indicator view:
 
-in Objective-C: [CustomInfiniteIndicator.m](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemo/CustomInfiniteIndicator.m)
+* Objective-C: [CustomInfiniteIndicator.m](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemo/CustomInfiniteIndicator.m)
 
-in Swift: [CustomInfiniteIndicator.swift](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemoSwift/CustomInfiniteIndicator.swift)
+* Swift: [CustomInfiniteIndicator.swift](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemoSwift/CustomInfiniteIndicator.swift)
 
 At the moment InfiniteScroll uses indicator's frame directly so make sure you size custom indicator view beforehand. Such views as `UIImageView` or `UIActivityIndicatorView` will automatically resize themselves so no need to setup frame for them.
 
