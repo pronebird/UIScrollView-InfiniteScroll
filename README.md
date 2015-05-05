@@ -108,12 +108,12 @@ Objective-C:
         }
         
         // Update collection view
-        [weakSelf.collectionView performBatchUpdates:^{
+        [collectionView performBatchUpdates:^{
             // add new items into collection
-            [self.collectionView insertItemsAtIndexPaths:indexPaths];
+            [collectionView insertItemsAtIndexPaths:indexPaths];
         } completion:^(BOOL finished) {
             // finish infinite scroll animations
-            [weakSelf.collectionView finishInfiniteScroll];
+            [collectionView finishInfiniteScroll];
         }];
     }];
 }
