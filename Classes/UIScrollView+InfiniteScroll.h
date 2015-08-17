@@ -11,6 +11,8 @@
 
 @interface UIScrollView (InfiniteScroll)
 
+@property (nonatomic, readonly, getter=isLoading) BOOL loading;
+
 /**
  *  Infinite scroll activity indicator style (default: UIActivityIndicatorViewStyleGray)
  */
