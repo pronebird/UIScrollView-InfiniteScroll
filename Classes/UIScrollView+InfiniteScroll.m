@@ -116,7 +116,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 #pragma mark - Public methods
 
-- (BOOL)isLoading {
+- (BOOL)isAnimatingInfiniteScroll {
     return self.pb_infiniteScrollState.loading;
 }
 
