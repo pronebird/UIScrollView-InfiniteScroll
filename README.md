@@ -195,3 +195,5 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
   Custom indicators support
 * Alex Shevchenko [@skeeet](https://github.com/skeeet)<br/>
   Fix for bounce back glitch when content size is smaller than view bounds
+* Vlad [brightsider](https://github.com/brightsider)<br/>
+  Add access to check loading status
