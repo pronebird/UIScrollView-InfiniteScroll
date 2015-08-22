@@ -162,7 +162,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     [self finishInfiniteScrollWithCompletion:nil];
 }
 
-- (void)finishInfiniteScrollWithCompletion:(void(^)(id scrollView))handler {
+- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(id scrollView))handler {
     if(self.pb_infiniteScrollState.loading) {
         [self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
     }
@@ -406,7 +406,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *
  *  @param handler a completion handler
  */
-- (void)pb_stopAnimatingInfiniteScrollWithCompletion:(void(^)(id scrollView))handler {
+- (void)pb_stopAnimatingInfiniteScrollWithCompletion:(nullable void(^)(id scrollView))handler {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     UIView *activityIndicator = self.infiniteScrollIndicatorView;
     UIEdgeInsets contentInset = self.contentInset;
