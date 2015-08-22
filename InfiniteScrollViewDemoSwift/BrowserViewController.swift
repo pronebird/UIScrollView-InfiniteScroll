@@ -47,11 +47,11 @@ class BrowserViewController: UIViewController, UIWebViewDelegate, UIAlertViewDel
         UIApplication.sharedApplication().stopNetworkActivity()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        if error.code != NSURLErrorCancelled {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+        if error?.code != NSURLErrorCancelled {
             let alert = UIAlertView(
                 title: NSLocalizedString("Failed to load URL", comment: ""),
-                message: error.localizedDescription,
+                message: error!.localizedDescription,
                 delegate: self,
                 cancelButtonTitle: NSLocalizedString("Cancel", comment: ""),
                 otherButtonTitles: NSLocalizedString("Retry", comment: "")
