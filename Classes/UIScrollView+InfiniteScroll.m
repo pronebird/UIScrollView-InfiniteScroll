@@ -182,14 +182,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     return self.pb_infiniteScrollState.indicatorStyle;
 }
 
-- (void)setInfiniteScrollIndicatorView:(UIView*)indicatorView {
+- (void)setInfiniteScrollIndicatorView:(UIView *)indicatorView {
     // make sure indicator is initially hidden
     indicatorView.hidden = YES;
 
     self.pb_infiniteScrollState.indicatorView = indicatorView;
 }
 
-- (UIView*)infiniteScrollIndicatorView {
+- (UIView *)infiniteScrollIndicatorView {
     return self.pb_infiniteScrollState.indicatorView;
 }
 
@@ -230,7 +230,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *
  *  @param gestureRecognizer
  */
-- (void)pb_handlePanGesture:(UITapGestureRecognizer*)gestureRecognizer {
+- (void)pb_handlePanGesture:(UITapGestureRecognizer *)gestureRecognizer {
     if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self pb_scrollToInfiniteIndicatorIfNeeded];
     }
