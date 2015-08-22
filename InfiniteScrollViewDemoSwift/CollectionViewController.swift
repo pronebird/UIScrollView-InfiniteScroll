@@ -34,10 +34,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         // Add infinite scroll handler
         collectionView?.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
-            let collectionView = scrollView as! UICollectionView
-            
             self?.fetchData() {
-                collectionView.finishInfiniteScroll()
+                scrollView.finishInfiniteScroll()
             }
         }
         

@@ -38,9 +38,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         tableView.infiniteScrollIndicatorMargin = 40
         
         // Add infinite scroll handler
-        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
-            let scrollView = scrollView as! UITableView
-            
+        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in            
             self?.fetchData() {
                 scrollView.finishInfiniteScroll()
             }
