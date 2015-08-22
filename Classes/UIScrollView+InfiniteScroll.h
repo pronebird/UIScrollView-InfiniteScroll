@@ -9,6 +9,16 @@
 
 #import <UIKit/UIKit.h>
 
+#ifdef __pb_kindof
+#   undef __pb_kindof
+#endif
+
+#if __has_feature(objc_kindof)
+#   define __pb_kindof(__typename) __kindof __typename
+#else
+#   define __pb_kindof(__typename) id
+#endif
+
 @interface UIScrollView (InfiniteScroll)
 
 @property (nonatomic, readonly, getter=isAnimatingInfiniteScroll) BOOL animatingInfiniteScroll;
@@ -41,7 +51,7 @@
  *
  *  @param handler a handler block
  */
-- (void)addInfiniteScrollWithHandler:(void(^)(id scrollView))handler;
+- (void)addInfiniteScrollWithHandler:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
 
 /**
  *  Unregister infinite scroll
@@ -56,7 +66,7 @@
  *
  *  @param handler a completion block handler called when animation finished
  */
-- (void)finishInfiniteScrollWithCompletion:(void(^)(id scrollView))handler;
+- (void)finishInfiniteScrollWithCompletion:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
 
 /**
  *  Finish infinite scroll animations
