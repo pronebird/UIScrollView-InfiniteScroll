@@ -9,6 +9,16 @@
 
 #import <UIKit/UIKit.h>
 
+#ifdef __pb_kindof
+#   undef __pb_kindof
+#endif
+
+#if __has_feature(objc_kindof)
+#   define __pb_kindof(__typename) __kindof __typename
+#else
+#   define __pb_kindof(__typename) id
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (InfiniteScroll)
@@ -43,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param handler a handler block
  */
-- (void)addInfiniteScrollWithHandler:(void(^)(id scrollView))handler;
+- (void)addInfiniteScrollWithHandler:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
 
 /**
  *  Unregister infinite scroll
@@ -58,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param handler a completion block handler called when animation finished
  */
-- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(id scrollView))handler;
+- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
 
 /**
  *  Finish infinite scroll animations
