@@ -120,7 +120,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     return self.pb_infiniteScrollState.loading;
 }
 
-- (void)addInfiniteScrollWithHandler:(void(^)(id scrollView))handler {
+- (void)addInfiniteScrollWithHandler:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Save handler block
@@ -162,7 +162,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     [self finishInfiniteScrollWithCompletion:nil];
 }
 
-- (void)finishInfiniteScrollWithCompletion:(void(^)(id scrollView))handler {
+- (void)finishInfiniteScrollWithCompletion:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler {
     if(self.pb_infiniteScrollState.loading) {
         [self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
     }
