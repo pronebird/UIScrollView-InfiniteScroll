@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (InfiniteScroll)
 
+/**
+ *  Flag that indicates whether infinite scroll is animating
+ */
 @property (nonatomic, readonly, getter=isAnimatingInfiniteScroll) BOOL animatingInfiniteScroll;
 
 /**
