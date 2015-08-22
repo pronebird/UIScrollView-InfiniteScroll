@@ -19,6 +19,8 @@
 #   define __pb_kindof(__typename) id
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIScrollView (InfiniteScroll)
 
 @property (nonatomic, readonly, getter=isAnimatingInfiniteScroll) BOOL animatingInfiniteScroll;
@@ -39,7 +41,7 @@
  *
  *  Infinite scroll will call implemented methods during user interaction.
  */
-@property (nonatomic) UIView *infiniteScrollIndicatorView;
+@property (nonatomic, nullable) UIView *infiniteScrollIndicatorView;
 
 /**
  *  Vertical margin around indicator view (Default: 11)
@@ -66,7 +68,7 @@
  *
  *  @param handler a completion block handler called when animation finished
  */
-- (void)finishInfiniteScrollWithCompletion:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
+- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
 
 /**
  *  Finish infinite scroll animations
@@ -77,3 +79,5 @@
 - (void)finishInfiniteScroll;
 
 @end
+
+NS_ASSUME_NONNULL_END
