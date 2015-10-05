@@ -49,14 +49,12 @@ Objective-C:
 
 Swift
 
-Firsly add
-```
-#import "UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.h"
-```
-to your bridging header file
+Before using InfiniteScroll you have to add the following line in your bridging header file: 
 
+```objc
+#import <UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.h>
+```
 
-Then use
 ```swift
 override func viewDidLoad() {
     super.viewDidLoad()
