@@ -144,7 +144,10 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     NSArray *results = responseDict[kJSONResultsKey];
     
     for(NSDictionary *i in results) {
-        [self.stories addObject:[StoryModel modelWithDictionary:i]];
+        StoryModel *model = [StoryModel modelWithDictionary:i];
+        if(model) {
+            [self.stories addObject:model];
+        }
     }
     
     [self.tableView reloadData];
