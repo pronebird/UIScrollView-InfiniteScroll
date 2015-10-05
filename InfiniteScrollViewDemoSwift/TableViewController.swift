@@ -38,9 +38,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         tableView.infiniteScrollIndicatorMargin = 40
         
         // Add infinite scroll handler
-        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
-            let scrollView = scrollView as! UITableView
-            
+        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in            
             self?.fetchData() {
                 scrollView.finishInfiniteScroll()
             }
@@ -51,7 +49,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == showBrowserSegueIdentifier {
-            if let selectedRow = tableView.indexPathForSelectedRow() {
+            if let selectedRow = tableView.indexPathForSelectedRow {
                 let browser = segue.destinationViewController as! BrowserViewController
                 browser.story = stories[selectedRow.row]
             }
@@ -65,7 +63,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) 
         let story = stories[indexPath.row]
         
         cell.textLabel?.text = story.title
@@ -101,7 +99,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         let requestURL = apiURL(hits, page: currentPage)
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: {
-            (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.handleResponse(data, response: response, error: error)
@@ -116,7 +114,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         
         // I run task.resume() with delay because my network is too fast
         let delay = (stories.count == 0 ? 0 : 5) * Double(NSEC_PER_SEC)
-        var time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue(), {
             task.resume()
         })
@@ -129,18 +127,24 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         }
         
         var jsonError: NSError?
-        let responseDict = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &jsonError) as? Dictionary<String, AnyObject>
+        var responseDict: [String: AnyObject]?
+        
+        do {
+            responseDict = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
+        } catch {
+            jsonError = NSError(domain: "JSONError", code: 1, userInfo: [ NSLocalizedDescriptionKey: "Failed to parse JSON." ])
+        }
         
         if jsonError != nil {
-            showAlertWithError(jsonError)
+            showAlertWithError(jsonError!)
             return
         }
         
         if let pages = responseDict?[JSONNumPagesKey] as? NSNumber {
-            numPages = pages as! Int
+            numPages = pages as Int
         }
         
-        if let results = responseDict?[JSONResultsKey] as? [Dictionary<String, AnyObject>] {
+        if let results = responseDict?[JSONResultsKey] as? [[String: AnyObject]] {
             currentPage++
 
             for i in results {
@@ -151,7 +155,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         }
     }
     
-    private func showAlertWithError(error: NSError!) {
+    private func showAlertWithError(error: NSError) {
         let alert = UIAlertView(
             title: NSLocalizedString("Error fetching data", comment: ""),
             message: error.localizedDescription,

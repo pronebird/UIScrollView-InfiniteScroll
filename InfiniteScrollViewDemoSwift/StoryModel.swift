@@ -14,7 +14,7 @@ class StoryModel: NSObject {
     var author: String?
     var url: NSURL?
     
-    init(_ dictionary: Dictionary<String, AnyObject>) {
+    init(_ dictionary: [String: AnyObject]) {
         super.init()
     
         title = dictionary["title"] as? String

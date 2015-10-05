@@ -18,7 +18,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     private let apiURL = "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json"
     
     private var photos = [NSURL]()
-    private var modifiedAt = NSDate.distantPast() as! NSDate
+    private var modifiedAt = NSDate.distantPast() 
     private var cache = NSCache()
     
     // MARK: - Lifecycle
@@ -34,21 +34,19 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         // Add infinite scroll handler
         collectionView?.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
-            let collectionView = scrollView as! UICollectionView
-            
             self?.fetchData() {
-                collectionView.finishInfiniteScroll()
+                scrollView.finishInfiniteScroll()
             }
         }
         
         fetchData(nil)
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == showPhotoSegueIdentifier {
             if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
                 let url = photos[indexPath.item]
-                if let image = cache.objectForKey(url) as? UIImage {
+                if cache.objectForKey(url) != nil {
                     return true
                 }
             }
@@ -155,7 +153,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         let requestURL = NSURL(string: apiURL)!
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: {
-            (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.handleResponse(data, response: response, error: error, completion: handler)
@@ -168,7 +166,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         // I run task.resume() with delay because my network is too fast
         let delay = (photos.count == 0 ? 0 : 5) * Double(NSEC_PER_SEC)
-        var time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue(), {
             task.resume()
         })
@@ -183,12 +181,18 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         var jsonError: NSError?
         var jsonString = NSString(data: data, encoding: NSUTF8StringEncoding)
+        var responseDict: [String: AnyObject]?
         
         // Fix broken Flickr JSON
         jsonString = jsonString?.stringByReplacingOccurrencesOfString("\\'", withString: "'")
         let fixedData = jsonString?.dataUsingEncoding(NSUTF8StringEncoding)
         
-        let responseDict = NSJSONSerialization.JSONObjectWithData(fixedData!, options: NSJSONReadingOptions.allZeros, error: &jsonError) as? Dictionary<String, AnyObject>
+        do {
+            responseDict = try NSJSONSerialization.JSONObjectWithData(fixedData!, options: NSJSONReadingOptions()) as? [String: AnyObject]
+        }
+        catch {
+            jsonError = NSError(domain: "JSONError", code: 1, userInfo: [ NSLocalizedDescriptionKey: "Failed to parse JSON." ])
+        }
         
         if jsonError != nil {
             showAlertWithError(jsonError)
@@ -212,7 +216,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         if let items = responseDict?["items"] as? NSArray {
             if let urls = items.valueForKeyPath("media.m") as? [String] {
-                for (i, url) in enumerate(urls) {
+                for (i, url) in urls.enumerate() {
                     let indexPath = NSIndexPath(forItem: firstIndex + i, inSection: 0)
                     
                     photos.append(NSURL(string: url)!)
