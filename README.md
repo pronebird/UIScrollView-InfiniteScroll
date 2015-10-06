@@ -40,6 +40,9 @@ Objective-C:
         // fetch your data here, can be async operation,
         // just make sure to call finishInfiniteScroll in the end
         //
+        
+        // make sure you reload tableView before calling -finishInfiniteScroll
+        [tableView reloadData];
 
         // finish infinite scroll animation
         [tableView finishInfiniteScroll];
@@ -71,6 +74,10 @@ override func viewDidLoad() {
         // just make sure to call finishInfiniteScroll in the end
         //
         
+        // make sure you reload tableView before calling -finishInfiniteScroll
+        tableView.reloadData()
+        
+        // finish infinite scroll animation
         tableView.finishInfiniteScroll()
     }
 }
