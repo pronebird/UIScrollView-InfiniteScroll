@@ -177,7 +177,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     static dispatch_queue_t downloadQueue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        downloadQueue = dispatch_queue_create("ru.codeispoetry.downloadQueue", 0);
+        downloadQueue = dispatch_queue_create("ru.codeispoetry.downloadQueue", DISPATCH_QUEUE_CONCURRENT);
     });
     
     dispatch_async(downloadQueue, ^{
