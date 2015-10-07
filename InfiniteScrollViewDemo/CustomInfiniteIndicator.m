@@ -123,7 +123,11 @@ static NSString *const kRotationAnimationKey = @"rotation";
     self.backgroundColor = [UIColor clearColor];
     
     if(self.thickness < 1) {
+#if TARGET_OS_TV
+        self.thickness = 6;
+#else
         self.thickness = 2;
+#endif
     }
     
     if(!self.innerColor) {

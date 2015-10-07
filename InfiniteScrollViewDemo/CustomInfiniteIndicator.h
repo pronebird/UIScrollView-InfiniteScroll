@@ -12,7 +12,7 @@ IB_DESIGNABLE
 @interface CustomInfiniteIndicator : UIView
 
 /**
- *  Ring thickness (default: 2)
+ *  Ring thickness (default on iOS: 2, default on tvOS: 6)
  */
 @property (nonatomic) IBInspectable CGFloat thickness;
 
