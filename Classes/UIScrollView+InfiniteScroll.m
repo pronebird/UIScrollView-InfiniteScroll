@@ -213,7 +213,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     if(!state) {
         state = [[_PBInfiniteScrollState alloc] init];
         
-        objc_setAssociatedObject(self, kPBInfiniteScrollStateKey, state, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(self, kPBInfiniteScrollStateKey, state, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
     return state;
