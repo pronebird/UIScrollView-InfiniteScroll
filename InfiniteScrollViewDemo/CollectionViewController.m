@@ -77,15 +77,8 @@ static NSString *const kCellIdentifier = @"PhotoCell";
         NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
         NSURL *photoURL = self.photos[indexPath.item];
         UIImage *image = [self.cache objectForKey:photoURL];
-        PhotoViewController *controller;
         
-        if([segue.destinationViewController isKindOfClass:UINavigationController.class]) {
-            controller = (PhotoViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
-        }
-        else {
-            controller = segue.destinationViewController;
-        }
-        
+        PhotoViewController *controller = segue.destinationViewController;
         controller.photo = image;
     }
 }
@@ -240,20 +233,32 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionWidth = CGRectGetWidth(collectionView.bounds);
-    CGFloat itemWidth = collectionWidth / 3 - 1;
+    CGFloat spacing = [self collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
+    CGFloat itemWidth = collectionWidth / 3 - spacing;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        itemWidth = collectionWidth / 4 - 1;
+        itemWidth = collectionWidth / 4 - spacing;
+    }
+    else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
+        CGFloat spacing = [self collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
+        
+        itemWidth = collectionWidth / 12 - spacing;
     }
     
     return CGSizeMake(itemWidth, itemWidth);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
+        return 10;
+    }
     return 1;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
+        return 10;
+    }
     return 1;
 }
 
