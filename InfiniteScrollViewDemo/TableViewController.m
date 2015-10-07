@@ -8,7 +8,11 @@
 
 #import "TableViewController.h"
 #import "UIApplication+NetworkIndicator.h"
+
+#if !TARGET_OS_TV
 #import "BrowserViewController.h"
+#endif
+
 #import "StoryModel.h"
 
 #import "CustomInfiniteIndicator.h"
@@ -17,7 +21,11 @@
 #define USE_AUTOSIZING_CELLS 1
 
 static NSString *const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%ld&page=%ld";
+
+#if !TARGET_OS_TV
 static NSString *const kShowBrowserSegueIdentifier = @"ShowBrowser";
+#endif
+
 static NSString *const kCellIdentifier = @"Cell";
 
 static NSString *const kJSONResultsKey = @"hits";
@@ -74,11 +82,13 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+#if !TARGET_OS_TV
     if([segue.identifier isEqualToString:kShowBrowserSegueIdentifier]) {
         NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
         BrowserViewController *controller = (BrowserViewController *)segue.destinationViewController;
         controller.story = self.stories[selectedRow.row];
     }
+#endif
 }
 
 #pragma mark - UITableViewDataSource

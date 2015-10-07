@@ -15,14 +15,24 @@
 		5848152F191D5D290019C583 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5848152E191D5D290019C583 /* main.m */; };
 		58481533191D5D290019C583 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58481532191D5D290019C583 /* AppDelegate.m */; };
 		58481535191D5D290019C583 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58481534191D5D290019C583 /* Images.xcassets */; };
-		5865765A197D6ED300E7AF20 /* Storyboard-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58657659197D6ED300E7AF20 /* Storyboard-iPad.storyboard */; };
 		5865765D197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */; };
-		5874FD7B191D5E080041FBF8 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5874FD7A191D5E080041FBF8 /* Storyboard.storyboard */; };
+		5874FD7B191D5E080041FBF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5874FD7A191D5E080041FBF8 /* Main.storyboard */; };
 		5874FD7E191D5E6E0041FBF8 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD7D191D5E6E0041FBF8 /* TableViewController.m */; };
 		5874FD81191E752B0041FBF8 /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD80191E752B0041FBF8 /* StoryModel.m */; };
 		5874FD84191E75410041FBF8 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD83191E75410041FBF8 /* BrowserViewController.m */; };
 		5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */; };
 		587983EB1AD020C200D736C9 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587983EA1AD020C200D736C9 /* PhotoViewController.m */; };
+		5898E55B1BC531C900DB2ECC /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */; };
+		5898E55C1BC531CB00DB2ECC /* UIApplication+NetworkIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */; };
+		5898E55D1BC531CE00DB2ECC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58481532191D5D290019C583 /* AppDelegate.m */; };
+		5898E55E1BC531CF00DB2ECC /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD80191E752B0041FBF8 /* StoryModel.m */; };
+		5898E55F1BC531D100DB2ECC /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */; };
+		5898E5601BC531D200DB2ECC /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD7D191D5E6E0041FBF8 /* TableViewController.m */; };
+		5898E5621BC531D500DB2ECC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A028691A741ECD00D79E2F /* CollectionViewController.m */; };
+		5898E5631BC531D700DB2ECC /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587983EA1AD020C200D736C9 /* PhotoViewController.m */; };
+		5898E5641BC531D900DB2ECC /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
+		5898E5651BC532DE00DB2ECC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5848152E191D5D290019C583 /* main.m */; };
+		5898E5691BC536E300DB2ECC /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5898E5681BC536E300DB2ECC /* Main-tvOS.storyboard */; };
 		58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A028691A741ECD00D79E2F /* CollectionViewController.m */; };
 		58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
 /* End PBXBuildFile section */
@@ -31,7 +41,7 @@
 		31E76BFBDEA2456E98943CE8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfiniteIndicator.h; sourceTree = "<group>"; };
 		583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfiniteIndicator.m; sourceTree = "<group>"; };
-		5848151F191D5D290019C583 /* InfiniteScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfiniteScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5848151F191D5D290019C583 /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58481522191D5D290019C583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		58481524191D5D290019C583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		58481526191D5D290019C583 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -43,10 +53,9 @@
 		58481532191D5D290019C583 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		58481534191D5D290019C583 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5848153B191D5D290019C583 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		58657659197D6ED300E7AF20 /* Storyboard-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Storyboard-iPad.storyboard"; sourceTree = "<group>"; };
 		5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+NetworkIndicator.h"; sourceTree = "<group>"; };
 		5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+NetworkIndicator.m"; sourceTree = "<group>"; };
-		5874FD7A191D5E080041FBF8 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		5874FD7A191D5E080041FBF8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5874FD7C191D5E6E0041FBF8 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		5874FD7D191D5E6E0041FBF8 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		5874FD7F191E752B0041FBF8 /* StoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryModel.h; sourceTree = "<group>"; };
@@ -57,6 +66,9 @@
 		5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
 		587983E91AD020C200D736C9 /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		587983EA1AD020C200D736C9 /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
+		5898E5421BC52C8600DB2ECC /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5898E5551BC52C8600DB2ECC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5898E5681BC536E300DB2ECC /* Main-tvOS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-tvOS.storyboard"; sourceTree = "<group>"; };
 		58A028681A741ECD00D79E2F /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		58A028691A741ECD00D79E2F /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		58A0286B1A74305000D79E2F /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
@@ -74,6 +86,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5898E53F1BC52C8600DB2ECC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				58481528191D5D290019C583 /* InfiniteScrollViewDemo */,
+				5898E5431BC52C8600DB2ECC /* InfiniteScrollViewDemo_tvOS */,
 				58481521191D5D290019C583 /* Frameworks */,
 				58481520191D5D290019C583 /* Products */,
 			);
@@ -89,7 +109,8 @@
 		58481520191D5D290019C583 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5848151F191D5D290019C583 /* InfiniteScrollViewDemo.app */,
+				5848151F191D5D290019C583 /* Infinite Scroll.app */,
+				5898E5421BC52C8600DB2ECC /* Infinite Scroll.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,8 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				5874FD85191E7EB10041FBF8 /* Classes */,
-				5874FD7A191D5E080041FBF8 /* Storyboard.storyboard */,
-				58657659197D6ED300E7AF20 /* Storyboard-iPad.storyboard */,
+				5874FD7A191D5E080041FBF8 /* Main.storyboard */,
 				5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */,
 				5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */,
 				58481531191D5D290019C583 /* AppDelegate.h */,
@@ -156,6 +176,15 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		5898E5431BC52C8600DB2ECC /* InfiniteScrollViewDemo_tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				5898E5681BC536E300DB2ECC /* Main-tvOS.storyboard */,
+				5898E5551BC52C8600DB2ECC /* Info.plist */,
+			);
+			path = InfiniteScrollViewDemo_tvOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -173,7 +202,24 @@
 			);
 			name = InfiniteScrollViewDemo;
 			productName = InfiniteScrollViewDemo;
-			productReference = 5848151F191D5D290019C583 /* InfiniteScrollViewDemo.app */;
+			productReference = 5848151F191D5D290019C583 /* Infinite Scroll.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5898E5411BC52C8600DB2ECC /* InfiniteScrollViewDemo_tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5898E5581BC52C8600DB2ECC /* Build configuration list for PBXNativeTarget "InfiniteScrollViewDemo_tvOS" */;
+			buildPhases = (
+				5898E53E1BC52C8600DB2ECC /* Sources */,
+				5898E53F1BC52C8600DB2ECC /* Frameworks */,
+				5898E5401BC52C8600DB2ECC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InfiniteScrollViewDemo_tvOS;
+			productName = InfiniteScrollViewDemo_tvOS;
+			productReference = 5898E5421BC52C8600DB2ECC /* Infinite Scroll.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,8 +228,13 @@
 		58481517191D5D290019C583 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = codeispoetry.ru;
+				TargetAttributes = {
+					5898E5411BC52C8600DB2ECC = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
 			};
 			buildConfigurationList = 5848151A191D5D290019C583 /* Build configuration list for PBXProject "InfiniteScrollViewDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -191,6 +242,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 58481516191D5D290019C583;
 			productRefGroup = 58481520191D5D290019C583 /* Products */;
@@ -198,6 +250,7 @@
 			projectRoot = "";
 			targets = (
 				5848151E191D5D290019C583 /* InfiniteScrollViewDemo */,
+				5898E5411BC52C8600DB2ECC /* InfiniteScrollViewDemo_tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -208,9 +261,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5848152D191D5D290019C583 /* InfoPlist.strings in Resources */,
-				5865765A197D6ED300E7AF20 /* Storyboard-iPad.storyboard in Resources */,
 				58481535191D5D290019C583 /* Images.xcassets in Resources */,
-				5874FD7B191D5E080041FBF8 /* Storyboard.storyboard in Resources */,
+				5874FD7B191D5E080041FBF8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5898E5401BC52C8600DB2ECC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5898E5691BC536E300DB2ECC /* Main-tvOS.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +292,23 @@
 				5848152F191D5D290019C583 /* main.m in Sources */,
 				587983EB1AD020C200D736C9 /* PhotoViewController.m in Sources */,
 				58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5898E53E1BC52C8600DB2ECC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5898E5641BC531D900DB2ECC /* PhotoCell.m in Sources */,
+				5898E55D1BC531CE00DB2ECC /* AppDelegate.m in Sources */,
+				5898E55B1BC531C900DB2ECC /* UIScrollView+InfiniteScroll.m in Sources */,
+				5898E55F1BC531D100DB2ECC /* CustomInfiniteIndicator.m in Sources */,
+				5898E55E1BC531CF00DB2ECC /* StoryModel.m in Sources */,
+				5898E5601BC531D200DB2ECC /* TableViewController.m in Sources */,
+				5898E55C1BC531CB00DB2ECC /* UIApplication+NetworkIndicator.m in Sources */,
+				5898E5621BC531D500DB2ECC /* CollectionViewController.m in Sources */,
+				5898E5651BC532DE00DB2ECC /* main.m in Sources */,
+				5898E5631BC531D700DB2ECC /* PhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +344,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -281,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -313,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -327,9 +405,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "Infinite Scroll";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -342,10 +422,55 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "Infinite Scroll";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5898E5561BC52C8600DB2ECC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = InfiniteScrollViewDemo_tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.InfiniteScrollViewDemo-tvOS";
+				PRODUCT_NAME = "Infinite Scroll";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		5898E5571BC52C8600DB2ECC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = InfiniteScrollViewDemo_tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.InfiniteScrollViewDemo-tvOS";
+				PRODUCT_NAME = "Infinite Scroll";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -366,6 +491,15 @@
 			buildConfigurations = (
 				5848154C191D5D290019C583 /* Debug */,
 				5848154D191D5D290019C583 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5898E5581BC52C8600DB2ECC /* Build configuration list for PBXNativeTarget "InfiniteScrollViewDemo_tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5898E5561BC52C8600DB2ECC /* Debug */,
+				5898E5571BC52C8600DB2ECC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

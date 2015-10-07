@@ -1,6 +1,13 @@
 {
   "images" : [
     {
+      "orientation" : "landscape",
+      "idiom" : "tv",
+      "extent" : "full-screen",
+      "minimum-system-version" : "9.0",
+      "scale" : "1x"
+    },
+    {
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "736h",
@@ -21,9 +28,9 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "en-US-iPhone4-LaunchScreen-portrait.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "en-US-iPhone4-LaunchScreen-portrait.png",
       "scale" : "2x"
     },
     {
