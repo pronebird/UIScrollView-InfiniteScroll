@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, getter=isAnimatingInfiniteScroll) BOOL animatingInfiniteScroll;
 
 /**
- *  Infinite scroll activity indicator style (default: UIActivityIndicatorViewStyleGray)
+ *  Infinite scroll activity indicator style (default: UIActivityIndicatorViewStyleGray on iOS, UIActivityIndicatorViewStyleWhite on tvOS)
  */
 @property (nonatomic) UIActivityIndicatorViewStyle infiniteScrollIndicatorStyle;
 
