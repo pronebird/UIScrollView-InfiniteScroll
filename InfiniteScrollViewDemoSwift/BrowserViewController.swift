@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowserViewController: UIViewController, UIWebViewDelegate, UIAlertViewDelegate {
+class BrowserViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     var story: StoryModel?
     
@@ -49,29 +49,20 @@ class BrowserViewController: UIViewController, UIWebViewDelegate, UIAlertViewDel
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         if error?.code != NSURLErrorCancelled {
-            let alert = UIAlertView(
-                title: NSLocalizedString("Failed to load URL", comment: ""),
-                message: error!.localizedDescription,
-                delegate: self,
-                cancelButtonTitle: NSLocalizedString("Cancel", comment: ""),
-                otherButtonTitles: NSLocalizedString("Retry", comment: "")
-            )
-            alert.show()
+            let alert = UIAlertController(title: NSLocalizedString("Failed to load URL", comment: ""), message: error!.localizedDescription, preferredStyle: .Alert)
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+            }))
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .Default, handler: { (action) -> Void in
+                self.startLoading()
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         UIApplication.sharedApplication().stopNetworkActivity()
-    }
-    
-    // MARL: - UIAlertViewDelegate
-    
-    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        // Swift bug: firstOtherButtonIndex is not being set, use cancelButtonIndex then
-        if buttonIndex != alertView.cancelButtonIndex {
-            startLoading()
-            return
-        }
-        
-        navigationController?.popViewControllerAnimated(true)
     }
     
 }

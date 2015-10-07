@@ -11,7 +11,7 @@ import Foundation
 
 private let downloadQueue = dispatch_queue_create("ru.codeispoetry.downloadQueue", nil)
 
-class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate {
+class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     private let cellIdentifier = "PhotoCell"
     private let showPhotoSegueIdentifier = "ShowPhoto"
@@ -46,7 +46,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         if identifier == showPhotoSegueIdentifier {
             if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
                 let url = photos[indexPath.item]
-                if cache.objectForKey(url) != nil {
+                if let _ = cache.objectForKey(url) {
                     return true
                 }
             }
@@ -58,23 +58,16 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == showPhotoSegueIdentifier {
             if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
-                var controller: PhotoViewController
+                let controller = segue.destinationViewController as! PhotoViewController
                 let url = photos[indexPath.item]
-                
-                if segue.destinationViewController.isKindOfClass(UINavigationController) {
-                    controller = (segue.destinationViewController as! UINavigationController).topViewController as! PhotoViewController
-                }
-                else {
-                    controller = segue.destinationViewController as! PhotoViewController
-                }
                 
                 controller.photo = cache.objectForKey(url) as? UIImage
             }
         }
     }
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
         collectionViewLayout.invalidateLayout()
     }
@@ -126,14 +119,6 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return 1
     }
     
-    // MARK: - UIAlertViewDelegate
-    
-    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        if buttonIndex != alertView.cancelButtonIndex {
-            fetchData(nil)
-        }
-    }
-    
     // MARK: - Private
     
     private func downloadPhoto(url: NSURL, completion: (url: NSURL, image: UIImage) -> Void) {
@@ -173,7 +158,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     
     private func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!, completion: (Void -> Void)?) {
-        if error != nil {
+        if let _ = error {
             showAlertWithError(error)
             completion?()
             return;
@@ -194,7 +179,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             jsonError = NSError(domain: "JSONError", code: 1, userInfo: [ NSLocalizedDescriptionKey: "Failed to parse JSON." ])
         }
         
-        if jsonError != nil {
+        if let jsonError = jsonError {
             showAlertWithError(jsonError)
             completion?()
             return
@@ -228,21 +213,23 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         modifiedAt = modifiedAt_!
         
         collectionView?.performBatchUpdates({ () -> Void in
-            collectionView?.insertItemsAtIndexPaths(indexPaths)
+            self.collectionView?.insertItemsAtIndexPaths(indexPaths)
         }, completion: { (finished) -> Void in
             completion?()
         });
     }
     
-    private func showAlertWithError(error: NSError!) {
-        let alert = UIAlertView(
-            title: NSLocalizedString("Error fetching data", comment: ""),
-            message: error.localizedDescription,
-            delegate: self,
-            cancelButtonTitle: NSLocalizedString("Dismiss", comment: ""),
-            otherButtonTitles: NSLocalizedString("Retry", comment: "")
-        )
-        alert.show()
+    private func showAlertWithError(error: NSError) {
+        let alert = UIAlertController(title: NSLocalizedString("Error fetching data", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .Cancel, handler: { (action) -> Void in
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .Default, handler: { (action) -> Void in
+            self.fetchData(nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }

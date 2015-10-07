@@ -44,7 +44,7 @@ class CustomInfiniteIndicator: UIView {
     override func didMoveToWindow() {
         super.didMoveToWindow()
         
-        if window != nil {
+        if let _ = window {
             restartAnimationIfNeeded()
         }
     }

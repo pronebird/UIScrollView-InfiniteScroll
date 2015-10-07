@@ -10,7 +10,7 @@ import UIKit
 
 private let useAutosizingCells = true
 
-class TableViewController: UITableViewController, UIAlertViewDelegate {
+class TableViewController: UITableViewController {
     
     private let cellIdentifier = "Cell"
     private let showBrowserSegueIdentifier = "ShowBrowser"
@@ -76,15 +76,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
         
         return cell
     }
-    
-    // MARK: - UIAlertViewDelegate
-    
-    func alertView(alertView: UIAlertView, didDismissWithButtonIndex buttonIndex: Int) {
-        if buttonIndex != alertView.cancelButtonIndex {
-            fetchData(nil)
-        }
-    }
-    
+
     // MARK: - Private
     
     private func apiURL(numHits: Int, page: Int) -> NSURL {
@@ -121,7 +113,7 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
     }
     
     private func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
-        if error != nil {
+        if let _ = error {
             showAlertWithError(error)
             return;
         }
@@ -135,8 +127,8 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
             jsonError = NSError(domain: "JSONError", code: 1, userInfo: [ NSLocalizedDescriptionKey: "Failed to parse JSON." ])
         }
         
-        if jsonError != nil {
-            showAlertWithError(jsonError!)
+        if let jsonError = jsonError {
+            showAlertWithError(jsonError)
             return
         }
         
@@ -156,14 +148,16 @@ class TableViewController: UITableViewController, UIAlertViewDelegate {
     }
     
     private func showAlertWithError(error: NSError) {
-        let alert = UIAlertView(
-            title: NSLocalizedString("Error fetching data", comment: ""),
-            message: error.localizedDescription,
-            delegate: self,
-            cancelButtonTitle: NSLocalizedString("Dismiss", comment: ""),
-            otherButtonTitles: NSLocalizedString("Retry", comment: "")
-        )
-        alert.show()
+        let alert = UIAlertController(title: NSLocalizedString("Error fetching data", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .Cancel, handler: { (action) -> Void in
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .Default, handler: { (action) -> Void in
+            self.fetchData(nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }
