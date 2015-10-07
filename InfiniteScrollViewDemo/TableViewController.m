@@ -61,7 +61,15 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     __weak typeof(self) weakSelf = self;
     
     // Create custom indicator
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    CGRect indicatorRect;
+    
+#if TARGET_OS_TV
+    indicatorRect = CGRectMake(0, 0, 64, 64);
+#else
+    indicatorRect = CGRectMake(0, 0, 24, 24);
+#endif
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:indicatorRect];
     
     // Set custom indicator
     self.tableView.infiniteScrollIndicatorView = indicator;

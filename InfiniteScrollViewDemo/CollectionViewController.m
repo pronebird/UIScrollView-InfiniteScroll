@@ -39,7 +39,15 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     self.cache = [[NSCache alloc] init];
     
     // Create custom indicator
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    CGRect indicatorRect;
+    
+#if TARGET_OS_TV
+    indicatorRect = CGRectMake(0, 0, 64, 64);
+#else
+    indicatorRect = CGRectMake(0, 0, 24, 24);
+#endif
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:indicatorRect];
     
     // Set custom indicator
     self.collectionView.infiniteScrollIndicatorView = indicator;
@@ -135,16 +143,16 @@ static NSString *const kCellIdentifier = @"PhotoCell";
         return;
     }
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-    
-    NSDate *modifiedAt = [dateFormatter dateFromString:responseDict[@"modified"]];
-    
-    if([modifiedAt compare:self.modifiedAt] != NSOrderedDescending) {
-        finish();
-        return;
-    }
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+//    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+//    
+//    NSDate *modifiedAt = [dateFormatter dateFromString:responseDict[@"modified"]];
+//    
+//    if([modifiedAt compare:self.modifiedAt] != NSOrderedDescending) {
+//        finish();
+//        return;
+//    }
     
     NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
     NSArray *photos = [responseDict valueForKeyPath:@"items.media.m"];
@@ -157,7 +165,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
         [indexPaths addObject:indexPath];
     }
     
-    self.modifiedAt = modifiedAt;
+//    self.modifiedAt = modifiedAt;
     
     [self.collectionView performBatchUpdates:^{
         [self.collectionView insertItemsAtIndexPaths:indexPaths];
@@ -242,7 +250,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     else if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
         CGFloat spacing = [self collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
         
-        itemWidth = collectionWidth / 12 - spacing;
+        itemWidth = collectionWidth / 8 - spacing;
     }
     
     return CGSizeMake(itemWidth, itemWidth);
@@ -250,14 +258,14 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
-        return 10;
+        return 40;
     }
     return 1;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
-        return 10;
+        return 40;
     }
     return 1;
 }
