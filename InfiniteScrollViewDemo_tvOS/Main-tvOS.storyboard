@@ -34,7 +34,7 @@
                         <animations/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="dpR-gd-Xxj" detailTextLabel="b5e-vv-5Yf" style="IBUITableViewCellStyleSubtitle" id="Ca7-AZ-Ygn">
-                                <rect key="frame" x="0.0" y="199" width="1920" height="100"/>
+                                <rect key="frame" x="0.0" y="199" width="1880" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ca7-AZ-Ygn" id="vyd-X0-8Dd">
                                     <rect key="frame" x="0.0" y="0.0" width="1904" height="100"/>

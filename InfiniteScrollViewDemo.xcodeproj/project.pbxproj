@@ -35,6 +35,7 @@
 		5898E5691BC536E300DB2ECC /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5898E5681BC536E300DB2ECC /* Main-tvOS.storyboard */; };
 		58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A028691A741ECD00D79E2F /* CollectionViewController.m */; };
 		58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
+		58A67D491BC5547700C9A7A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58481534191D5D290019C583 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,10 +46,9 @@
 		58481522191D5D290019C583 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		58481524191D5D290019C583 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		58481526191D5D290019C583 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		5848152A191D5D290019C583 /* InfiniteScrollViewDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InfiniteScrollViewDemo-Info.plist"; sourceTree = "<group>"; };
+		5848152A191D5D290019C583 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5848152C191D5D290019C583 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5848152E191D5D290019C583 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		58481530191D5D290019C583 /* InfiniteScrollViewDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InfiniteScrollViewDemo-Prefix.pch"; sourceTree = "<group>"; };
 		58481531191D5D290019C583 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		58481532191D5D290019C583 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		58481534191D5D290019C583 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -159,10 +159,9 @@
 		58481529191D5D290019C583 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5848152A191D5D290019C583 /* InfiniteScrollViewDemo-Info.plist */,
+				5848152A191D5D290019C583 /* Info.plist */,
 				5848152B191D5D290019C583 /* InfoPlist.strings */,
 				5848152E191D5D290019C583 /* main.m */,
-				58481530191D5D290019C583 /* InfiniteScrollViewDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -271,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5898E5691BC536E300DB2ECC /* Main-tvOS.storyboard in Resources */,
+				58A67D491BC5547700C9A7A4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -391,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -403,9 +403,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Prefix.pch";
-				INFOPLIST_FILE = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				INFOPLIST_FILE = InfiniteScrollViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Infinite Scroll";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -420,9 +419,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Prefix.pch";
-				INFOPLIST_FILE = "InfiniteScrollViewDemo/InfiniteScrollViewDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				INFOPLIST_FILE = InfiniteScrollViewDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "Infinite Scroll";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -434,7 +432,7 @@
 		5898E5561BC52C8600DB2ECC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "tvOS Icons";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -455,7 +453,7 @@
 		5898E5571BC52C8600DB2ECC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "tvOS Icons";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
