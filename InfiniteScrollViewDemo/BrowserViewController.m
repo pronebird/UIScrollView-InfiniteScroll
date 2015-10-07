@@ -51,26 +51,20 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if(error.code != NSURLErrorCancelled) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Failed to load URL", @"")
-                                                            message:[error localizedDescription]
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", @"")
-                                                  otherButtonTitles:NSLocalizedString(@"Retry", @""), nil];
-        [alertView show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Failed to load URL", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self startLoading];
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
     }
     
     [[UIApplication sharedApplication] stopNetworkActivity];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == alertView.firstOtherButtonIndex) {
-        [self startLoading];
-        return;
-    }
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

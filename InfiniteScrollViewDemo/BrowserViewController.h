@@ -10,9 +10,9 @@
 
 @class StoryModel;
 
-@interface BrowserViewController : UIViewController<UIWebViewDelegate, UIAlertViewDelegate>
+@interface BrowserViewController : UIViewController<UIWebViewDelegate>
 
 @property (weak) IBOutlet UIWebView *webView;
-@property (strong) StoryModel *story;
+@property (nonatomic) StoryModel *story;
 
 @end
