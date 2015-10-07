@@ -105,23 +105,20 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     return cell;
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == alertView.firstOtherButtonIndex) {
-        [self fetchData:nil];
-    }
-}
-
 #pragma mark - Private methods
 
 - (void)showRetryAlertWithError:(NSError *)error {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error fetching data", @"")
-                                                        message:error.localizedDescription
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Dismiss", @"")
-                                              otherButtonTitles:NSLocalizedString(@"Retry", @""), nil];
-    [alertView show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error fetching data", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self fetchData:nil];
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)handleResponse:(NSURLResponse *)response data:(NSData *)data error:(NSError *)error {
