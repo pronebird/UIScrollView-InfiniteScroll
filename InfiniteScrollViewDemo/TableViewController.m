@@ -54,7 +54,7 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     }
 #endif
     
-    self.stories = [NSMutableArray new];
+    self.stories = [[NSMutableArray alloc] init];
     self.currentPage = 0;
     self.numPages = 0;
     

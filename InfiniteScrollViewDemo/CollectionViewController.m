@@ -34,9 +34,9 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     
     __weak typeof(self) weakSelf = self;
 
-    self.photos = [NSMutableArray new];
+    self.photos = [[NSMutableArray alloc] init];
     self.modifiedAt = [NSDate distantPast];
-    self.cache = [NSCache new];
+    self.cache = [[NSCache alloc] init];
     
     // Create custom indicator
     CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
@@ -146,7 +146,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
         return;
     }
     
-    NSMutableArray *indexPaths = [NSMutableArray new];
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
     NSArray *photos = [responseDict valueForKeyPath:@"items.media.m"];
     NSInteger index = self.photos.count;
     
