@@ -431,7 +431,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     [self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
         // Curtain is closing they're throwing roses at my feet
         if([activityIndicator respondsToSelector:@selector(stopAnimating)]) {
-            [activityIndicator performSelector:@selector(stopAnimating) withObject:nil];
+            [activityIndicator performSelector:@selector(stopAnimating)];
         }
         activityIndicator.hidden = YES;
         
