@@ -367,7 +367,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     // It's show time!
     activityIndicator.hidden = NO;
     if([activityIndicator respondsToSelector:@selector(startAnimating)]) {
-        [activityIndicator performSelector:@selector(startAnimating) withObject:nil];
+        [activityIndicator performSelector:@selector(startAnimating)];
     }
     
     // Calculate indicator view inset
