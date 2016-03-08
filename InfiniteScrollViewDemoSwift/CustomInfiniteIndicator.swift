@@ -82,7 +82,7 @@ class CustomInfiniteIndicator: UIView {
     }
     
     private func registerForAppStateNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "restartAnimationIfNeeded", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     private func unregisterFromAppStateNotifications() {
