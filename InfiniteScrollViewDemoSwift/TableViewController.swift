@@ -26,7 +26,7 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if useAutosizingCells && tableView.respondsToSelector("layoutMargins") {
+        if useAutosizingCells && tableView.respondsToSelector(Selector("layoutMargins")) {
             tableView.estimatedRowHeight = 88
             tableView.rowHeight = UITableViewAutomaticDimension
         }
@@ -69,7 +69,7 @@ class TableViewController: UITableViewController {
         cell.textLabel?.text = story.title
         cell.detailTextLabel?.text = story.author
         
-        if useAutosizingCells && tableView.respondsToSelector("layoutMargins") {
+        if useAutosizingCells && tableView.respondsToSelector(Selector("layoutMargins")) {
             cell.textLabel?.numberOfLines = 0
             cell.detailTextLabel?.numberOfLines = 0
         }
@@ -137,7 +137,7 @@ class TableViewController: UITableViewController {
         }
         
         if let results = responseDict?[JSONResultsKey] as? [[String: AnyObject]] {
-            currentPage++
+            currentPage += 1
 
             for i in results {
                 stories.append(StoryModel(i))
