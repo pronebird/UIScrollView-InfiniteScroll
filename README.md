@@ -204,6 +204,8 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
 
 ### Contributors
 
+* Shigeyuki Takeuchi [@takeshig](https://github.com/takeshig)<br/>
+  Add Carthage support
 * Ivan Chirkov [@nsleader](https://github.com/nsleader)<br/>
   Custom indicators support
 * Alex Shevchenko [@skeeet](https://github.com/skeeet)<br/>
