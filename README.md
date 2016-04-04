@@ -204,6 +204,8 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
 
 ### Contributors
 
+* Maxim Veksler [@maximveksler](https://github.com/maximveksler)<br/>
+  Swift 2.2 upgrade
 * Shigeyuki Takeuchi [@takeshig](https://github.com/takeshig)<br/>
   Add Carthage support
 * Ivan Chirkov [@nsleader](https://github.com/nsleader)<br/>
