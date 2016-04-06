@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, UIScrollViewInfiniteScrollDirection) {
  *
  *  @param handler a completion block handler called when animation finished
  */
-- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
+- (void)finishInfiniteScroll:(BOOL)animated completion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
 
 /**
  *  Finish infinite scroll animations
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, UIScrollViewInfiniteScrollDirection) {
  *  You must call this method from your infinite scroll handler to finish all
  *  animations properly and reset infinite scroll state
  */
-- (void)finishInfiniteScroll;
+- (void)finishInfiniteScroll:(BOOL)animated;
 
 @end
 

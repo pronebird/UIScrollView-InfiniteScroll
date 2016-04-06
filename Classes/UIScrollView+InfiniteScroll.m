@@ -178,13 +178,13 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
     self.pb_infiniteScrollState.initialized = NO;
 }
 
-- (void)finishInfiniteScroll {
-    [self finishInfiniteScrollWithCompletion:nil];
+- (void)finishInfiniteScroll:(BOOL)animated {
+    [self finishInfiniteScroll:animated completion:nil];
 }
 
-- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler {
+- (void)finishInfiniteScroll:(BOOL)animated completion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler {
     if(self.pb_infiniteScrollState.loading) {
-        [self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
+        [self pb_stopAnimatingInfiniteScroll:animated completion:handler];
     }
 }
 
@@ -461,7 +461,7 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
  *
  *  @param handler a completion handler
  */
-- (void)pb_stopAnimatingInfiniteScrollWithCompletion:(nullable void(^)(id scrollView))handler {
+- (void)pb_stopAnimatingInfiniteScroll:(BOOL)animated completion:(nullable void(^)(id scrollView))handler {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     UIView *activityIndicator = self.infiniteScrollIndicatorView;
     UIEdgeInsets contentInset = self.contentInset;
@@ -492,7 +492,7 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
     state.extraTopInset = 0;
     
     // Animate content insets
-    [self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
+    [self pb_setScrollViewContentInset:contentInset animated:animated completion:^(BOOL finished) {
         // Curtain is closing they're throwing roses at my feet
         if([activityIndicator respondsToSelector:@selector(stopAnimating)]) {
             [activityIndicator performSelector:@selector(stopAnimating)];
