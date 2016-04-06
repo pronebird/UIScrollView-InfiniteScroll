@@ -21,7 +21,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, UIScrollViewInfiniteScrollDirection) {
+    UIScrollViewInfiniteScrollDirectionTop      = 0,
+    UIScrollViewInfiniteScrollDirectionBottom   = 1
+};
+
 @interface UIScrollView (InfiniteScroll)
+
+/**
+ *  Indicates whether inifinte scrol should be on top or bottom
+ */
+@property (nonatomic, assign) UIScrollViewInfiniteScrollDirection infiniteScrollDirection;
 
 /**
  *  Flag that indicates whether infinite scroll is animating
@@ -36,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Infinite indicator view
  *
- *  You can set your own custom view instead of default activity indicator, 
+ *  You can set your own custom view instead of default activity indicator,
  *  make sure it implements methods below:
  *
  *  * `- (void)startAnimating`
