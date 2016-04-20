@@ -29,6 +29,17 @@ static void PBSwizzleMethod(Class c, SEL original, SEL alternate) {
     }
 }
 
+/**
+ *  A helper function to force table view to update its content size
+ *
+ *  See https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31
+ *
+ *  @param tableView
+ */
+static void PBForceUpdateTableViewContentSize(UITableView *tableView) {
+    tableView.contentSize = [tableView sizeThatFits:CGSizeMake(tableView.frame.size.width, CGFLOAT_MAX)];
+}
+
 // Animation duration used for setContentOffset:
 static const NSTimeInterval kPBInfiniteScrollAnimationDuration = 0.35;
 
@@ -427,6 +438,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     // Reset extra bottom inset
     state.extraBottomInset = 0;
     
+    // Force the table view to update its contentSize; if we don't do this,
+    // finishInfiniteScroll() will adjust contentInsets and cause contentOffset
+    // to be off by an amount equal to the height of the activity indicator.
+    // See https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31
+    if([self isKindOfClass:[UITableView class]]) {
+        PBForceUpdateTableViewContentSize((UITableView *)self);
+    }
+    
     // Animate content insets
     [self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
         // Curtain is closing they're throwing roses at my feet
@@ -458,6 +477,11 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     TRACE(@"Stop animating.");
 }
 
+/**
+ *  Called whenever content offset changes.
+ *
+ *  @param contentOffset
+ */
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
