@@ -157,15 +157,27 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     self.currentPage++;
     
     NSArray *results = responseDict[kJSONResultsKey];
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
     
-    for(NSDictionary *i in results) {
+    NSInteger indexPathRow = self.stories.count;
+    
+    for(NSDictionary *i in results)
+    {
         StoryModel *model = [StoryModel modelWithDictionary:i];
-        if(model) {
-            [self.stories addObject:model];
+        if(!model) {
+            continue;
         }
+        
+        [self.stories addObject:model];
+        
+        [indexPaths addObject:[NSIndexPath indexPathForRow:indexPathRow inSection:0]];
+        
+        indexPathRow++;
     }
     
-    [self.tableView reloadData];
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
 }
 
 - (void)fetchData:(void(^)(void))completion {
