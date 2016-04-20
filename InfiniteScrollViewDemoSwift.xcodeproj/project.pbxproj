@@ -285,7 +285,7 @@
 				INFOPLIST_FILE = InfiniteScrollViewDemoSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.Infinite-Scroll-Swift";
 				PRODUCT_NAME = "Infinite Scroll";
 				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -302,7 +302,7 @@
 				INFOPLIST_FILE = InfiniteScrollViewDemoSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.Infinite-Scroll-Swift";
 				PRODUCT_NAME = "Infinite Scroll";
 				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
