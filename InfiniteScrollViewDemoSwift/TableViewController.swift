@@ -136,14 +136,27 @@ class TableViewController: UITableViewController {
             numPages = pages as Int
         }
         
+        var indexPaths = [NSIndexPath]()
+        var indexPathRow = stories.count
+        
         if let results = responseDict?[JSONResultsKey] as? [[String: AnyObject]] {
             currentPage += 1
 
             for i in results {
-                stories.append(StoryModel(i))
+                guard let model = StoryModel(i) else {
+                    continue
+                }
+                
+                stories.append(model)
+                
+                indexPaths.append(NSIndexPath(forRow: indexPathRow, inSection: 0))
+                
+                indexPathRow += 1
             }
             
-            tableView.reloadData()
+            tableView.beginUpdates()
+            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            tableView.endUpdates()
         }
     }
     
