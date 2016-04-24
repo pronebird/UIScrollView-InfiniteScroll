@@ -155,6 +155,9 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     [state.indicatorView removeFromSuperview];
     state.indicatorView = nil;
     
+    // Release handler block
+    state.infiniteScrollHandler = nil;
+    
     // Mark infinite scroll as uninitialized
     state.initialized = NO;
 }
