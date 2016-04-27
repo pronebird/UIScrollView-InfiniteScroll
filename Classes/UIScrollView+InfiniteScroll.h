@@ -9,16 +9,6 @@
 
 #import <UIKit/UIKit.h>
 
-#ifdef __pb_kindof
-#   undef __pb_kindof
-#endif
-
-#if __has_feature(objc_kindof)
-#   define __pb_kindof(__typename) __kindof __typename
-#else
-#   define __pb_kindof(__typename) id
-#endif
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (InfiniteScroll)
@@ -56,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param handler a handler block
  */
-- (void)addInfiniteScrollWithHandler:(void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
+- (void)addInfiniteScrollWithHandler:(void(^)(UIScrollView *scrollView))handler;
 
 /**
  *  Unregister infinite scroll
@@ -71,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param handler a completion block handler called when animation finished
  */
-- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(__pb_kindof(UIScrollView *) scrollView))handler;
+- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UIScrollView *scrollView))handler;
 
 /**
  *  Finish infinite scroll animations
@@ -80,6 +70,24 @@ NS_ASSUME_NONNULL_BEGIN
  *  animations properly and reset infinite scroll state
  */
 - (void)finishInfiniteScroll;
+
+@end
+
+/*
+ Convenience interface to avoid cast from UIScrollView to common subclasses such as UITableView and UICollectionView.
+ */
+
+@interface UITableView (InfiniteScrollConvenienceInterface)
+
+- (void)addInfiniteScrollWithHandler:(void(^)(UITableView *tableView))handler;
+- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UITableView *tableView))handler;
+
+@end
+
+@interface UICollectionView (InfiniteScrollConvenienceInterface)
+
+- (void)addInfiniteScrollWithHandler:(void(^)(UICollectionView *collectionView))handler;
+- (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UICollectionView *collectionView))handler;
 
 @end
 
