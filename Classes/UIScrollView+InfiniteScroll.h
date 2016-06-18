@@ -49,6 +49,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addInfiniteScrollWithHandler:(void(^)(UIScrollView *scrollView))handler;
 
 /**
+ *  Set a handler to be called to check if the infinite scroll should be shown
+ *
+ *  @param handler a handler block
+ */
+-(void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler;
+
+/**
  *  Unregister infinite scroll
  */
 - (void)removeInfiniteScroll;
