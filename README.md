@@ -202,6 +202,19 @@ Please see example implementation of indicator view:
 
 At the moment InfiniteScroll uses indicator's frame directly so make sure you size custom indicator view beforehand. Such views as `UIImageView` or `UIActivityIndicatorView` will automatically resize themselves so no need to setup frame for them.
 
+### Preventing Infinite Scroll from Triggering
+
+Sometimes you need to prevent the infinite scroll from continuing.  For example, if your search API has no more results, it does not make sense to keep making the requests or to show the spinner.
+
+Objective-C: 
+```objc
+//Provide a block to be called right before a infinite scroll event is triggered.  Return YES to allow or NO to prevent it from triggering.
+[self.tableView setShouldShowInfiniteScrollHandler:^BOOL(UIScrollView * _Nonnull scrollView) {
+    //Only show up to 5 pages then prevent the infinite scroll
+    return (self.currentPage < 5);
+}];
+```
+
 ### Contributors
 
 * Maxim Veksler [@maximveksler](https://github.com/maximveksler)<br/>
