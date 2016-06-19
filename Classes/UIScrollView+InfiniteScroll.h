@@ -87,6 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UITableView (InfiniteScrollConvenienceInterface)
 
 - (void)addInfiniteScrollWithHandler:(void(^)(UITableView *tableView))handler;
+- (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UITableView *scrollView))handler;
 - (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UITableView *tableView))handler;
 
 @end
@@ -94,6 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UICollectionView (InfiniteScrollConvenienceInterface)
 
 - (void)addInfiniteScrollWithHandler:(void(^)(UICollectionView *collectionView))handler;
+- (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UICollectionView *scrollView))handler;
 - (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UICollectionView *collectionView))handler;
 
 @end
