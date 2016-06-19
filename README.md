@@ -208,15 +208,17 @@ Sometimes you need to prevent the infinite scroll from continuing.  For example,
 
 Objective-C: 
 ```objc
-//Provide a block to be called right before a infinite scroll event is triggered.  Return YES to allow or NO to prevent it from triggering.
-[self.tableView setShouldShowInfiniteScrollHandler:^BOOL(UIScrollView * _Nonnull scrollView) {
-    //Only show up to 5 pages then prevent the infinite scroll
-    return (self.currentPage < 5);
+// Provide a block to be called right before a infinite scroll event is triggered.  Return YES to allow or NO to prevent it from triggering.
+[self.tableView setShouldShowInfiniteScrollHandler:^BOOL(UIScrollView *scrollView) {
+    // Only show up to 5 pages then prevent the infinite scroll
+    return (weakSelf.currentPage < 5);
 }];
 ```
 
 ### Contributors
 
+* Ryan Bertrand [@RyanBertrand](https://github.com/RyanBertrand)<br/>
+  Added a handler to conditionally prevent the infinite scroll from showing
 * Maxim Veksler [@maximveksler](https://github.com/maximveksler)<br/>
   Swift 2.2 upgrade
 * Shigeyuki Takeuchi [@takeshig](https://github.com/takeshig)<br/>
