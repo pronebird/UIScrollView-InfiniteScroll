@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param handler a handler block
  */
--(void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler;
+- (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler;
 
 /**
  *  Unregister infinite scroll

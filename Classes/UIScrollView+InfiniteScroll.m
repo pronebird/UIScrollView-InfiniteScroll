@@ -218,7 +218,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     return self.pb_infiniteScrollState.indicatorMargin;
 }
 
--(void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler{
+- (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler{
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Save handler block

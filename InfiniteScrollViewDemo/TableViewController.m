@@ -85,11 +85,11 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
         }];
     }];
     
-    //Uncomment this to provide conditionally prevent the infinite scroll from triggering
+    // Uncomment this to provide conditionally prevent the infinite scroll from triggering
     /*
     [self.tableView setShouldShowInfiniteScrollHandler:^BOOL(UIScrollView * _Nonnull scrollView) {
-        //Only show up to 5 pages then prevent the infinite scroll
-        return (self.currentPage < 5);
+        // Only show up to 5 pages then prevent the infinite scroll
+        return (weakSelf.currentPage < 5);
     }];
      */
     
