@@ -38,11 +38,19 @@ class TableViewController: UITableViewController {
         tableView.infiniteScrollIndicatorMargin = 40
         
         // Add infinite scroll handler
-        tableView.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in            
+        tableView.addInfiniteScrollWithHandler { [weak self] (tableView) -> Void in
             self?.fetchData() {
-                scrollView.finishInfiniteScroll()
+                tableView.finishInfiniteScroll()
             }
         }
+        
+        // Uncomment this to provide conditionally prevent the infinite scroll from triggering
+        /*
+        tableView.setShouldShowInfiniteScrollHandler { [weak self] (tableView) -> Bool in
+            // Only show up to 5 pages then prevent the infinite scroll
+            return (self?.currentPage < 5);
+        }
+         */
         
         fetchData(nil)
     }
