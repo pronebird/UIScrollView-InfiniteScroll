@@ -83,6 +83,12 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  */
 @property (nonatomic, copy) void(^infiniteScrollHandler)(id scrollView);
 
+/**
+ *  Infinite scroll allowed block
+ *  Return NO to block the infinite scroll. Useful to stop requests when you have shown all results, etc.
+ */
+@property (nonatomic, copy) BOOL(^shouldShowInfiniteScrollHandler)(id scrollView);
+
 @end
 
 @implementation _PBInfiniteScrollState
@@ -210,6 +216,13 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 - (CGFloat)infiniteScrollIndicatorMargin {
     return self.pb_infiniteScrollState.indicatorMargin;
+}
+
+-(void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler{
+    _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
+    
+    // Save handler block
+    state.shouldShowInfiniteScrollHandler = handler;
 }
 
 #pragma mark - Private dynamic properties
@@ -469,6 +482,18 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     TRACE(@"Stop animating.");
 }
 
+- (BOOL)pb_shouldShowInfiniteScroll{
+    _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
+
+    BOOL showInfiniteScroll = YES;
+    
+    // Ensure we should show the inifinite scroll
+    if(state.shouldShowInfiniteScrollHandler){
+        showInfiniteScroll = state.shouldShowInfiniteScrollHandler(self);
+    }
+    return showInfiniteScroll;
+}
+
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
@@ -499,10 +524,13 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     if(contentOffset.y > actionOffset) {
         TRACE(@"Action.");
         
-        [self pb_startAnimatingInfiniteScroll];
-        
-        // This will delay handler execution until scroll deceleration
-        [self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
+        // Only show the infinite scroll if it is allowed
+        if([self pb_shouldShowInfiniteScroll]){
+            [self pb_startAnimatingInfiniteScroll];
+            
+            // This will delay handler execution until scroll deceleration
+            [self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
+        }
     }
 }
 
