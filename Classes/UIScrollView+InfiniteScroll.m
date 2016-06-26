@@ -105,16 +105,20 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 @implementation _PBInfiniteScrollState
 
 - (instancetype)init {
-    if(self = [super init]) {
-#if TARGET_OS_TV
-        _indicatorStyle = UIActivityIndicatorViewStyleWhite;
-#else
-        _indicatorStyle = UIActivityIndicatorViewStyleGray;
-#endif
-        
-        // Default row height (44) minus activity indicator height (22) / 2
-        _indicatorMargin = 11;
+    self = [super init];
+    if(!self) {
+        return nil;
     }
+    
+#if TARGET_OS_TV
+    _indicatorStyle = UIActivityIndicatorViewStyleWhite;
+#else
+    _indicatorStyle = UIActivityIndicatorViewStyleGray;
+#endif
+    
+    // Default row height (44) minus activity indicator height (22) / 2
+    _indicatorMargin = 11;
+    
     return self;
 }
 
