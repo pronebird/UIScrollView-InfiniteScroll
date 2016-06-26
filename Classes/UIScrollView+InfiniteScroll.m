@@ -511,9 +511,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     BOOL showInfiniteScroll = YES;
     
     // Ensure we should show the inifinite scroll
-    if(state.shouldShowInfiniteScrollHandler){
+    if(state.shouldShowInfiniteScrollHandler) {
         showInfiniteScroll = state.shouldShowInfiniteScrollHandler(self);
     }
+    
     return showInfiniteScroll;
 }
 
