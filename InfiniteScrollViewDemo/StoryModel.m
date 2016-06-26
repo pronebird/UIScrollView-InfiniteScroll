@@ -8,6 +8,10 @@
 
 #import "StoryModel.h"
 
+static NSString * const StoryModelAttributeTitle  = @"title";
+static NSString * const StoryModelAttributeAuthor = @"author";
+static NSString * const StoryModelAttributeURL    = @"url";
+
 @implementation StoryModel
 
 + (instancetype)modelWithDictionary:(NSDictionary *)dictionary {
@@ -15,19 +19,23 @@
 }
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
-    if(self = [super init]) {
-        self.title = dictionary[@"title"];
-        self.author = dictionary[@"author"];
-        
-        // sometimes HN returns some trash
-        NSString *url = dictionary[@"url"];
-        
-        if(!url || [[NSNull null] isEqual:url]) {
-            return nil;
-        }
-        
-        self.url = [NSURL URLWithString:url];
+    self = [super init];
+    if(!self) {
+        return nil;
     }
+    
+    self.title = dictionary[StoryModelAttributeTitle];
+    self.author = dictionary[StoryModelAttributeAuthor];
+    
+    // sometimes HN returns some trash
+    NSString *url = dictionary[StoryModelAttributeURL];
+    
+    if(!url || [[NSNull null] isEqual:url]) {
+        return nil;
+    }
+    
+    self.url = [NSURL URLWithString:url];
+    
     return self;
 }
 

@@ -33,7 +33,7 @@ class BrowserViewController: UIViewController, UIWebViewDelegate {
     
     func startLoading() {
         if let story_ = story {
-            webView.loadRequest(NSURLRequest(URL: story_.url!))
+            webView.loadRequest(NSURLRequest(URL: story_.url))
         }
     }
     

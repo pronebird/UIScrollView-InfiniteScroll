@@ -8,21 +8,30 @@
 
 import Foundation
 
+private struct StoryModelAttributes {
+    static let url = "url"
+    static let title = "title"
+    static let author = "author"
+}
+
 class StoryModel: NSObject {
-    
     var title: String?
     var author: String?
-    var url: NSURL?
+    var url: NSURL
     
-    init(_ dictionary: [String: AnyObject]) {
-        super.init()
-    
-        title = dictionary["title"] as? String
-        author = dictionary["author"] as? String
-        
-        if let urlString = dictionary["url"] as? String {
-            url = NSURL(string: urlString)
+    init?(_ dictionary: [String: AnyObject]) {
+        // sometimes HN returns some trash
+        guard let urlString = dictionary[StoryModelAttributes.url] as? String,
+              let urlObject = NSURL(string: urlString)
+        else {
+            return nil
         }
+    
+        title = dictionary[StoryModelAttributes.title] as? String
+        author = dictionary[StoryModelAttributes.author] as? String
+        url = urlObject
+        
+        super.init()
     }
 
 }

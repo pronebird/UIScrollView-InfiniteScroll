@@ -40,9 +40,13 @@ Objective-C:
         // fetch your data here, can be async operation,
         // just make sure to call finishInfiniteScroll in the end
         //
+
+        NSArray<NSIndexPath *> * indexPaths; // index paths of updated rows
         
-        // make sure you reload tableView before calling -finishInfiniteScroll
-        [tableView reloadData];
+        // make sure to update tableView before calling -finishInfiniteScroll
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
 
         // finish infinite scroll animation
         [tableView finishInfiniteScroll];
@@ -73,9 +77,13 @@ override func viewDidLoad() {
         // fetch your data here, can be async operation,
         // just make sure to call finishInfiniteScroll in the end
         //
+
+        let indexPaths = [NSIndexPath]() // index paths of updated rows
         
-        // make sure you reload tableView before calling -finishInfiniteScroll
-        tableView.reloadData()
+        // make sure you update tableView before calling -finishInfiniteScroll
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        tableView.endUpdates()
         
         // finish infinite scroll animation
         tableView.finishInfiniteScroll()
@@ -217,6 +225,8 @@ Objective-C:
 
 ### Contributors
 
+* [@intrepidmatt](https://github.com/intrepidmatt)<br/>
+  Solved longstanding issue with dynamic updates in table views (see [#31](https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31))
 * Ryan Bertrand [@RyanBertrand](https://github.com/RyanBertrand)<br/>
   Added a handler to conditionally prevent the infinite scroll from showing
 * Maxim Veksler [@maximveksler](https://github.com/maximveksler)<br/>
