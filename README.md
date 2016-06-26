@@ -44,9 +44,9 @@ Objective-C:
         NSArray<NSIndexPath *> * indexPaths; // index paths of updated rows
         
         // make sure to update tableView before calling -finishInfiniteScroll
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [tableView beginUpdates];
+        [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [tableView endUpdates];
 
         // finish infinite scroll animation
         [tableView finishInfiniteScroll];
@@ -70,9 +70,7 @@ override func viewDidLoad() {
     tableView.infiniteScrollIndicatorStyle = .White
     
     // Add infinite scroll handler
-    tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-        let tableView = scrollView as! UITableView
-        
+    tableView.addInfiniteScrollWithHandler { (tableView) -> Void in
         //
         // fetch your data here, can be async operation,
         // just make sure to call finishInfiniteScroll in the end
