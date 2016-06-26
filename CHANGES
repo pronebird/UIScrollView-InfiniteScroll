@@ -1,3 +1,7 @@
+= 0.9.0 (2016-07-27)
+
+* Solved longstanding issue with dynamic updates in table views (@intrepidmatt)
+
 = 0.8.0 (2016-06-19)
 
 * Added a handler to conditionally prevent the infinite scroll from showing (@RyanBertrand)
