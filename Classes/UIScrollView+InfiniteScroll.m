@@ -454,6 +454,17 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     UIView *activityIndicator = self.infiniteScrollIndicatorView;
     UIEdgeInsets contentInset = self.contentInset;
     
+    // Force the table view to update its contentSize; if we don't do this,
+    // finishInfiniteScroll() will adjust contentInsets and cause contentOffset
+    // to be off by an amount equal to the height of the activity indicator.
+    // See https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31
+    // Note: this call has to happen before we reset extraBottomInset or indicatorInset
+    //       otherwise indicator may re-layout at the wrong position but we haven't set
+    //       contentInset yet!
+    if([self isKindOfClass:[UITableView class]]) {
+        PBForceUpdateTableViewContentSize((UITableView *)self);
+    }
+    
     // Remove row height inset
     contentInset.bottom -= state.indicatorInset;
     
@@ -465,14 +476,6 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     
     // Reset extra bottom inset
     state.extraBottomInset = 0;
-    
-    // Force the table view to update its contentSize; if we don't do this,
-    // finishInfiniteScroll() will adjust contentInsets and cause contentOffset
-    // to be off by an amount equal to the height of the activity indicator.
-    // See https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31
-    if([self isKindOfClass:[UITableView class]]) {
-        PBForceUpdateTableViewContentSize((UITableView *)self);
-    }
     
     // Animate content insets
     [self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
