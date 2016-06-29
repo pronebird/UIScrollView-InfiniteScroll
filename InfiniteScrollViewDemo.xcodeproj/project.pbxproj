@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5809B3791D2474EA0029136A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5809B3781D2474EA0029136A /* Launch Screen.storyboard */; };
 		583DCB9E1A2776E60049577B /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */; };
 		58481523191D5D290019C583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481522191D5D290019C583 /* Foundation.framework */; };
 		58481525191D5D290019C583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481524191D5D290019C583 /* CoreGraphics.framework */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		31E76BFBDEA2456E98943CE8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5809B3781D2474EA0029136A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfiniteIndicator.h; sourceTree = "<group>"; };
 		583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfiniteIndicator.m; sourceTree = "<group>"; };
 		5848151F191D5D290019C583 /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 			children = (
 				5874FD85191E7EB10041FBF8 /* Classes */,
 				5874FD7A191D5E080041FBF8 /* Main.storyboard */,
+				5809B3781D2474EA0029136A /* Launch Screen.storyboard */,
 				5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */,
 				5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */,
 				58481531191D5D290019C583 /* AppDelegate.h */,
@@ -261,6 +264,7 @@
 			files = (
 				5848152D191D5D290019C583 /* InfoPlist.strings in Resources */,
 				58481535191D5D290019C583 /* Images.xcassets in Resources */,
+				5809B3791D2474EA0029136A /* Launch Screen.storyboard in Resources */,
 				5874FD7B191D5E080041FBF8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,8 +405,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = InfiniteScrollViewDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.${PRODUCT_NAME:rfc1034identifier}";
@@ -417,8 +422,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = InfiniteScrollViewDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.${PRODUCT_NAME:rfc1034identifier}";

@@ -82,7 +82,7 @@ static NSString *const kRotationAnimationKey = @"rotation";
     self.animating = NO;
 }
 
-- (void)layoutSublayersOfLayer:(CALayer *)layer {
+- (void)layoutSublayersOfLayer:(__unused CALayer *)layer {
     [self _setupBezierPaths];
 }
 

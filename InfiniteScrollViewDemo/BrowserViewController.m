@@ -41,23 +41,23 @@
 
 #pragma mark - UIWebViewDelegate
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
+- (void)webViewDidStartLoad:(__unused UIWebView *)webView {
     [[UIApplication sharedApplication] startNetworkActivity];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webViewDidFinishLoad:(__unused UIWebView *)webView {
     [[UIApplication sharedApplication] stopNetworkActivity];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(__unused UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if(error.code != NSURLErrorCancelled) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Failed to load URL", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"") style:UIAlertActionStyleCancel handler:^(__unused UIAlertAction *action) {
             [self.navigationController popViewControllerAnimated:YES];
         }]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *action) {
             [self startLoading];
         }]];
         

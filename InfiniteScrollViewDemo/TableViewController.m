@@ -97,7 +97,7 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     [self fetchData:nil];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender {
 #if !TARGET_OS_TV
     if([segue.identifier isEqualToString:kShowBrowserSegueIdentifier]) {
         NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
@@ -109,7 +109,7 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(__unused UITableView *)tableView numberOfRowsInSection:(__unused NSInteger)section {
     return [self.stories count];
 }
 
@@ -136,18 +136,18 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 - (void)showRetryAlertWithError:(NSError *)error {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error fetching data", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", @"") style:UIAlertActionStyleCancel handler:^(__unused UIAlertAction *action) {
         
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *action) {
         [self fetchData:nil];
     }]];
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)handleResponse:(NSURLResponse *)response data:(NSData *)data error:(NSError *)error {
+- (void)handleResponse:(NSData *)data error:(NSError *)error {
     if(error) {
         [self showRetryAlertWithError:error];
         return;
@@ -193,9 +193,9 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     NSString *URLString = [NSString stringWithFormat:kAPIEndpointURL, (long)hits, (long)self.currentPage];
     NSURL *requestURL = [NSURL URLWithString:URLString];
 
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, __unused NSURLResponse *response, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self handleResponse:response data:data error:error];
+            [self handleResponse:data error:error];
             
             [[UIApplication sharedApplication] stopNetworkActivity];
             

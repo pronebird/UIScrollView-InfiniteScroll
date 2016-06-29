@@ -103,9 +103,9 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 - (void)fetchData:(void(^)(void))completion {
     NSURL *requestURL = [NSURL URLWithString:kAPIEndpointURL];
 
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, __unused NSURLResponse *response, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self handleResponse:response data:data error:error completion:completion];
+            [self handleResponse:data error:error completion:completion];
             
             [[UIApplication sharedApplication] stopNetworkActivity];
         });
@@ -119,7 +119,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     [task performSelector:@selector(resume) withObject:nil afterDelay:delay];
 }
 
-- (void)handleResponse:(NSURLResponse*)response data:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
+- (void)handleResponse:(NSData*)data error:(NSError*)error completion:(void(^)(void))completion {
     void(^finish)(void) = completion ?: ^{};
     
     if(error) {
@@ -169,7 +169,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     
     [self.collectionView performBatchUpdates:^{
         [self.collectionView insertItemsAtIndexPaths:indexPaths];
-    } completion:^(BOOL finished) {
+    } completion:^(__unused BOOL finished) {
         finish();
     }];
 }
@@ -200,11 +200,9 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 - (void)showRetryAlertWithError:(NSError*)error {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error fetching data", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", @"") style:UIAlertActionStyleCancel handler:nil]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *action) {
         [self fetchData:nil];
     }]];
     
@@ -213,7 +211,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(__unused UICollectionView *)collectionView numberOfItemsInSection:(__unused NSInteger)section {
     return self.photos.count;
 }
 
@@ -226,7 +224,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     cell.imageView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     
     if(!image) {
-        [self downloadPhotoFromURL:photoURL completion:^(NSURL *URL, UIImage *image) {
+        [self downloadPhotoFromURL:photoURL completion:^(__unused NSURL *URL, UIImage *image) {
             NSIndexPath *indexPath_ = [collectionView indexPathForCell:cell];
             if([indexPath isEqual:indexPath_]) {
                 cell.imageView.image = image;
@@ -256,14 +254,14 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     return CGSizeMake(itemWidth, itemWidth);
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(__unused UICollectionView *)collectionView layout:(__unused UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(__unused NSInteger)section {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
         return 40;
     }
     return 1;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(__unused UICollectionView *)collectionView layout:(__unused UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(__unused NSInteger)section {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomTV) {
         return 40;
     }
