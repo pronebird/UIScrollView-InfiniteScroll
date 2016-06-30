@@ -29,7 +29,7 @@ IB_DESIGNABLE
 /**
  *  Whether is currently animating
  */
-@property (readonly) BOOL animating;
+@property (nonatomic, readonly) BOOL animating;
 
 - (void)startAnimating;
 - (void)stopAnimating;

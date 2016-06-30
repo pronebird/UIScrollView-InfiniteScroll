@@ -22,6 +22,8 @@ class CustomInfiniteIndicator: UIView {
     private var animating = false
     private let innerCircle = CAShapeLayer()
     private let outerCircle = CAShapeLayer()
+    private var startTime = CFTimeInterval(0)
+    private var stopTime = CFTimeInterval(0)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,13 +72,25 @@ class CustomInfiniteIndicator: UIView {
     }
     
     private func addAnimation() {
-        layer.addAnimation(animation(), forKey: rotationAnimationKey)
+        let anim = animation()
+        anim.timeOffset = stopTime - startTime
+        
+        layer.addAnimation(anim, forKey: rotationAnimationKey)
+        
+        startTime = layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+    }
+    
+    private func removeAnimation() {
+        layer.removeAnimationForKey(rotationAnimationKey)
+        
+        stopTime = layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
     }
     
     func restartAnimationIfNeeded() {
         let anim = layer.animationForKey(rotationAnimationKey)
         
         if animating && anim == nil {
+            removeAnimation()
             addAnimation()
         }
     }
@@ -130,7 +144,7 @@ class CustomInfiniteIndicator: UIView {
         }
         animating = false
         hidden = true
-        layer.removeAnimationForKey(rotationAnimationKey)
+        removeAnimation()
     }
 
 }

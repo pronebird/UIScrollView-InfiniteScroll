@@ -12,9 +12,12 @@ static NSString *const kRotationAnimationKey = @"rotation";
 
 @interface CustomInfiniteIndicator()
 
-@property CAShapeLayer *outerCircle;
-@property CAShapeLayer *innerCircle;
-@property (readwrite) BOOL animating;
+@property (nonatomic) CAShapeLayer *outerCircle;
+@property (nonatomic) CAShapeLayer *innerCircle;
+@property (nonatomic, readwrite) BOOL animating;
+
+@property (nonatomic) CFTimeInterval startTime;
+@property (nonatomic) CFTimeInterval stopTime;
 
 @end
 
@@ -77,7 +80,8 @@ static NSString *const kRotationAnimationKey = @"rotation";
         return;
     }
     
-    [self.layer removeAnimationForKey:kRotationAnimationKey];
+    [self _removeAnimation];
+    
     self.hidden = YES;
     self.animating = NO;
 }
@@ -103,7 +107,18 @@ static NSString *const kRotationAnimationKey = @"rotation";
 #pragma mark - Private
 
 - (void)_addAnimation {
-    [self.layer addAnimation:[self _animation] forKey:kRotationAnimationKey];
+    CAAnimation *animation = [self _animation];
+    animation.timeOffset = self.stopTime - self.startTime;
+    
+    [self.layer addAnimation:animation forKey:kRotationAnimationKey];
+    
+    self.startTime = [self.layer convertTime:CACurrentMediaTime() fromLayer:nil];
+}
+
+- (void)_removeAnimation {
+    [self.layer removeAnimationForKey:kRotationAnimationKey];
+    
+    self.stopTime = [self.layer convertTime:CACurrentMediaTime() fromLayer:nil];
 }
 
 - (void)_setupBezierPaths {
@@ -170,6 +185,7 @@ static NSString *const kRotationAnimationKey = @"rotation";
 
 - (void)_restartAnimationIfNeeded {
     if(self.animating && ![[self.layer animationKeys] containsObject:kRotationAnimationKey]) {
+        [self _removeAnimation];
         [self _addAnimation];
     }
 }
