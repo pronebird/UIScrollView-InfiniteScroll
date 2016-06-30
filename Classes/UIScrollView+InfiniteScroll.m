@@ -275,7 +275,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  */
 - (void)pb_handlePanGesture:(UITapGestureRecognizer *)gestureRecognizer {
     if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self pb_scrollToInfiniteIndicatorIfNeeded];
+        [self pb_scrollToInfiniteIndicatorIfNeeded:YES];
     }
 }
 
@@ -437,7 +437,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     // Animate content insets
     [self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
         if(finished) {
-            [self pb_scrollToInfiniteIndicatorIfNeeded];
+            [self pb_scrollToInfiniteIndicatorIfNeeded:YES];
         }
     }];
 
@@ -567,7 +567,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 /**
  *  Scrolls down to activity indicator position if activity indicator is partially visible
  */
-- (void)pb_scrollToInfiniteIndicatorIfNeeded {
+- (void)pb_scrollToInfiniteIndicatorIfNeeded:(BOOL)reveal {
     // do not interfere with user
     if([self isDragging]) {
         return;
@@ -589,8 +589,8 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     TRACE(@"minY = %.2f; maxY = %.2f; offsetY = %.2f", minY, maxY, self.contentOffset.y);
     
     if(self.contentOffset.y > minY && self.contentOffset.y < maxY) {
-        TRACE(@"Scroll to infinite indicator.");
-        [self setContentOffset:CGPointMake(0, maxY) animated:YES];
+        TRACE(@"Scroll to infinite indicator. Reveal: %@", reveal ? @"YES" : @"NO");
+        [self setContentOffset:CGPointMake(0, reveal ? maxY : minY) animated:YES];
     }
 }
 
