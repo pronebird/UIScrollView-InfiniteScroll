@@ -221,6 +221,19 @@ Objective-C:
 }];
 ```
 
+### Seamlessly preload content
+
+Ideally you want your content to flow in seamlessly without ever showing a preloader. Infinite scroll offers an option to specify offset in points that will be used to start preloader before user reaches the bottom of scroll view. 
+
+The proper balance between the number of results you load each time and large enough offset should give your users a decent experience. Most likely you will have to come up with your own formula to come up with the combination of those based on kind of content and device dimensions.
+
+Objective-C:
+
+```objc
+// Preload more data 500pt before reaching the bottom of scroll view.
+tableView.infiniteScrollTriggerOffset = 500;
+```
+
 ### Contributors
 
 * [@GorkaMM](https://github.com/GorkaMM)<br/>
