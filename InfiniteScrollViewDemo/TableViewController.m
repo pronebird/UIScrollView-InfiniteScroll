@@ -76,6 +76,9 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     
     // Set custom indicator margin
     self.tableView.infiniteScrollIndicatorMargin = 40;
+
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
     
     // Add infinite scroll handler
     [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {

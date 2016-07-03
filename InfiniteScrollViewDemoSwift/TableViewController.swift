@@ -37,6 +37,9 @@ class TableViewController: UITableViewController {
         // Set custom indicator margin
         tableView.infiniteScrollIndicatorMargin = 40
         
+        // Set custom trigger offset
+        tableView.infiniteScrollTriggerOffset = 500
+        
         // Add infinite scroll handler
         tableView.addInfiniteScrollWithHandler { [weak self] (tableView) -> Void in
             self?.fetchData() {
