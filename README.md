@@ -253,7 +253,7 @@ tableView.infiniteScrollTriggerOffset = 500;
 * Vlad [brightsider](https://github.com/brightsider)<br/>
   Add access to check loading status
 
-  .. and many others who reported issues and participated in conversations
+.. and many others who reported issues and participated in conversations
 
 ### Attributions
 
