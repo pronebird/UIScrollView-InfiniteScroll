@@ -208,9 +208,9 @@ Please see example implementation of indicator view:
 
 At the moment InfiniteScroll uses indicator's frame directly so make sure you size custom indicator view beforehand. Such views as `UIImageView` or `UIActivityIndicatorView` will automatically resize themselves so no need to setup frame for them.
 
-### Preventing Infinite Scroll from Triggering
+### Prevent infinite scroll
 
-Sometimes you need to prevent the infinite scroll from continuing.  For example, if your search API has no more results, it does not make sense to keep making the requests or to show the spinner.
+Sometimes you need to prevent the infinite scroll from continuing. For example, if your search API has no more results, it does not make sense to keep making the requests or to show the spinner.
 
 Objective-C: 
 ```objc
@@ -223,7 +223,7 @@ Objective-C:
 
 ### Seamlessly preload content
 
-Ideally you want your content to flow in seamlessly without ever showing a preloader. Infinite scroll offers an option to specify offset in points that will be used to start preloader before user reaches the bottom of scroll view. 
+Ideally you want your content to flow seamlessly without ever showing a spinner. Infinite scroll offers an option to specify offset in points that will be used to start preloader before user reaches the bottom of scroll view. 
 
 The proper balance between the number of results you load each time and large enough offset should give your users a decent experience. Most likely you will have to come up with your own formula for the combination of those based on kind of content and device dimensions.
 
