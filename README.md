@@ -223,6 +223,8 @@ Objective-C:
 
 ### Contributors
 
+* [@GorkaMM](https://github.com/GorkaMM)<br/>
+  Added custom trigger offset
 * [@intrepidmatt](https://github.com/intrepidmatt)<br/>
   Solved longstanding issue with dynamic updates in table views (see [#31](https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31))
 * Ryan Bertrand [@RyanBertrand](https://github.com/RyanBertrand)<br/>
@@ -237,6 +239,8 @@ Objective-C:
   Fix for bounce back glitch when content size is smaller than view bounds
 * Vlad [brightsider](https://github.com/brightsider)<br/>
   Add access to check loading status
+
+  .. and many others who reported issues and participated in conversations
 
 ### Attributions
 
