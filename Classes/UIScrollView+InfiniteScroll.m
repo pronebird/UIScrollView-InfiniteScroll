@@ -46,6 +46,9 @@ static const NSTimeInterval kPBInfiniteScrollAnimationDuration = 0.35;
 // Keys for values in associated dictionary
 static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
+#pragma mark - Infinite scroll state
+#pragma mark -
+
 /**
  *  Infinite scroll state class.
  *  @private
@@ -503,7 +506,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     TRACE(@"Stop animating.");
 }
 
-- (BOOL)pb_shouldShowInfiniteScroll{
+- (BOOL)pb_shouldShowInfiniteScroll {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
 
     // Ensure we should show the inifinite scroll
@@ -550,7 +553,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
         TRACE(@"Action.");
         
         // Only show the infinite scroll if it is allowed
-        if([self pb_shouldShowInfiniteScroll]){
+        if([self pb_shouldShowInfiniteScroll]) {
             [self pb_startAnimatingInfiniteScroll];
             
             // This will delay handler execution until scroll deceleration
@@ -560,7 +563,9 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 /**
- *  Scrolls down to activity indicator position if activity indicator is partially visible
+ *  Scrolls down to activity indicator if it is partially visible
+ *
+ *  @param reveal scroll to reveal or hide activity indicator
  */
 - (void)pb_scrollToInfiniteIndicatorIfNeeded:(BOOL)reveal {
     // do not interfere with user
