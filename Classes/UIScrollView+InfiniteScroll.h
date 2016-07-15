@@ -84,6 +84,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)finishInfiniteScroll;
 
+/**
+ *  Forcefully shows infinite scroll and calls its handler on this instance. WIll only work after the handler is set and the @p setShouldShowInfiniteScrollHandler: allows it.
+ */
+- (void)startInfiniteScrollHandler;
+
 @end
 
 /*
