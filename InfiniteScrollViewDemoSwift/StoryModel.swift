@@ -17,12 +17,12 @@ private struct StoryModelAttributes {
 class StoryModel: NSObject {
     var title: String?
     var author: String?
-    var url: NSURL
+    var url: URL
     
     init?(_ dictionary: [String: AnyObject]) {
         // sometimes HN returns some trash
         guard let urlString = dictionary[StoryModelAttributes.url] as? String,
-              let urlObject = NSURL(string: urlString)
+              let urlObject = URL(string: urlString)
         else {
             return nil
         }

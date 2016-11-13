@@ -23,7 +23,7 @@ class PhotoViewController: UIViewController {
         imageView?.image = photo
     }
     
-    @IBAction func dismiss(sender: AnyObject!) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func dismiss(_ sender: AnyObject!) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

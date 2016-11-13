@@ -7,32 +7,29 @@
 //
 
 import UIKit
+import SafariServices
 
 private let useAutosizingCells = true
 
 class TableViewController: UITableViewController {
     
-    private let cellIdentifier = "Cell"
-    private let showBrowserSegueIdentifier = "ShowBrowser"
-    private let JSONResultsKey = "hits"
-    private let JSONNumPagesKey = "nbPages"
-    
-    private var currentPage = 0
-    private var numPages = 0
-    private var stories = [StoryModel]()
+    fileprivate let cellIdentifier = "Cell"
+    fileprivate var currentPage = 0
+    fileprivate var numPages = 0
+    fileprivate var stories = [StoryModel]()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if useAutosizingCells && tableView.respondsToSelector(Selector("layoutMargins")) {
+        if useAutosizingCells && tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
             tableView.estimatedRowHeight = 88
             tableView.rowHeight = UITableViewAutomaticDimension
         }
         
         // Set custom indicator
-        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
+        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         
         // Set custom indicator margin
         tableView.infiniteScrollIndicatorMargin = 40
@@ -41,8 +38,8 @@ class TableViewController: UITableViewController {
         tableView.infiniteScrollTriggerOffset = 500
         
         // Add infinite scroll handler
-        tableView.addInfiniteScrollWithHandler { [weak self] (tableView) -> Void in
-            self?.fetchData() {
+        tableView.addInfiniteScroll { [weak self] (tableView) -> Void in
+            self?.performFetch {
                 tableView.finishInfiniteScroll()
             }
         }
@@ -53,135 +50,181 @@ class TableViewController: UITableViewController {
             // Only show up to 5 pages then prevent the infinite scroll
             return (self?.currentPage < 5);
         }
-         */
+        */
         
-        fetchData(nil)
+        performFetch(nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == showBrowserSegueIdentifier {
-            if let selectedRow = tableView.indexPathForSelectedRow {
-                let browser = segue.destinationViewController as! BrowserViewController
-                browser.story = stories[selectedRow.row]
+    fileprivate func performFetch(_ completionHandler: ((Void) -> Void)?) {
+        fetchData { (fetchResult) in
+            do {
+                let (newStories, pageCount, nextPage) = try fetchResult()
+                
+                let storyCount = self.stories.count
+                let (start, end) = (storyCount, newStories.count + storyCount)
+                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
+                
+                self.stories.append(contentsOf: newStories)
+                self.numPages = pageCount
+                self.currentPage = nextPage
+                
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: indexPaths, with: .automatic)
+                self.tableView.endUpdates()
+            } catch {
+                self.showAlertWithError(error)
             }
+            
+            completionHandler?()
         }
     }
     
-    // MARK: - UITableViewDataSource
+    fileprivate func showAlertWithError(_ error: Error) {
+        let alert = UIAlertController(title: NSLocalizedString("tableView.errorAlert.title", comment: ""),
+                                      message: error.localizedDescription,
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.dismiss", comment: ""),
+                                      style: .cancel,
+                                      handler: nil))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.retry", comment: ""),
+                                      style: .default,
+                                      handler: { _ in self.performFetch(nil) }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
+}
+
+// MARK: - UITableViewDelegate
+
+extension TableViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let story = stories[indexPath.row]
+        let safariController = SFSafariViewController(url: story.url)
+        safariController.delegate = self
+        safariController.navigationItem.title = story.title
+        safariController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(safariController, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+}
+
+// MARK: - SFSafariViewControllerDelegate
+
+extension TableViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        _ = navigationController?.popViewController(animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+}
+
+// MARK: - UITableViewDataSource
+
+extension TableViewController {
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stories.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         let story = stories[indexPath.row]
         
         cell.textLabel?.text = story.title
         cell.detailTextLabel?.text = story.author
         
-        if useAutosizingCells && tableView.respondsToSelector(Selector("layoutMargins")) {
+        if useAutosizingCells && tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
             cell.textLabel?.numberOfLines = 0
             cell.detailTextLabel?.numberOfLines = 0
         }
         
         return cell
     }
-
-    // MARK: - Private
     
-    private func apiURL(numHits: Int, page: Int) -> NSURL {
+}
+
+// MARK: - API
+
+fileprivate enum ResponseError: Error {
+    case load
+    case noData
+    case deserialization
+}
+
+extension ResponseError: LocalizedError {
+    
+    var errorDescription: String? {
+        switch self {
+        case .load:
+            return NSLocalizedString("responseError.load", comment: "")
+        case .deserialization:
+            return NSLocalizedString("responseError.deserialization", comment: "")
+        case .noData:
+            return NSLocalizedString("responseError.noData", comment: "")
+        }
+    }
+    
+}
+
+typealias FetchResult = (Void) throws -> ([StoryModel], Int, Int)
+
+extension TableViewController {
+    
+    fileprivate func apiURL(_ numHits: Int, page: Int) -> URL {
         let string = "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)"
-        let url = NSURL(string: string)
+        let url = URL(string: string)
         
         return url!
     }
     
-    private func fetchData(handler: ((Void) -> Void)?) {
-        let hits: Int = Int(CGRectGetHeight(tableView.bounds)) / 44
+    fileprivate func fetchData(_ handler: @escaping ((FetchResult) -> Void)) {
+        let hits: Int = Int(tableView.bounds.height) / 44
         let requestURL = apiURL(hits, page: currentPage)
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: {
-            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.handleResponse(data, response: response, error: error)
+        let task = URLSession.shared.dataTask(with: requestURL, completionHandler: {
+            (data, _, error) -> Void in
+            DispatchQueue.main.async {
+                handler({ (Void) -> ([StoryModel], Int, Int) in
+                    return try self.handleResponse(data, error: error)
+                })
                 
-                UIApplication.sharedApplication().stopNetworkActivity()
-                
-                handler?()
-            });
+                UIApplication.shared.stopNetworkActivity()
+            }
         })
         
-        UIApplication.sharedApplication().startNetworkActivity()
+        UIApplication.shared.startNetworkActivity()
         
         // I run task.resume() with delay because my network is too fast
-        let delay = (stories.count == 0 ? 0 : 5) * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue(), {
+        let delay = (stories.count == 0 ? 0 : 5)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             task.resume()
         })
     }
     
-    private func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
-        if let _ = error {
-            showAlertWithError(error)
-            return;
-        }
+    fileprivate func handleResponse(_ data: Data?, error: Error?) throws -> ([StoryModel], Int, Int) {
+        let resultsKey = "hits"
+        let numPagesKey = "nbPages"
         
-        var jsonError: NSError?
-        var responseDict: [String: AnyObject]?
+        if error != nil { throw ResponseError.load }
         
-        do {
-            responseDict = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
-        } catch {
-            jsonError = NSError(domain: "JSONError", code: 1, userInfo: [ NSLocalizedDescriptionKey: "Failed to parse JSON." ])
-        }
+        guard let data = data else { throw ResponseError.noData }
+        let raw = try? JSONSerialization.jsonObject(with: data, options: [])
         
-        if let jsonError = jsonError {
-            showAlertWithError(jsonError)
-            return
-        }
+        guard let response = raw as? [String: AnyObject],
+              let pageCount = response[numPagesKey] as? Int,
+              let entries = response[resultsKey] as? [[String: AnyObject]] else { throw ResponseError.deserialization }
         
-        if let pages = responseDict?[JSONNumPagesKey] as? NSNumber {
-            numPages = pages as Int
-        }
+        let newStories = entries.flatMap { return StoryModel($0) }
         
-        var indexPaths = [NSIndexPath]()
-        var indexPathRow = stories.count
-        
-        if let results = responseDict?[JSONResultsKey] as? [[String: AnyObject]] {
-            currentPage += 1
-
-            for i in results {
-                guard let model = StoryModel(i) else {
-                    continue
-                }
-                
-                stories.append(model)
-                
-                indexPaths.append(NSIndexPath(forRow: indexPathRow, inSection: 0))
-                
-                indexPathRow += 1
-            }
-            
-            tableView.beginUpdates()
-            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            tableView.endUpdates()
-        }
+        return (newStories, pageCount, currentPage + 1)
     }
     
-    private func showAlertWithError(error: NSError) {
-        let alert = UIAlertController(title: NSLocalizedString("Error fetching data", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .Cancel, handler: { (action) -> Void in
-        }))
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .Default, handler: { (action) -> Void in
-            self.fetchData(nil)
-        }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-
 }

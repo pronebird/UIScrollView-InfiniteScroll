@@ -9,17 +9,17 @@
 import UIKit
 import Foundation
 
-private let downloadQueue = dispatch_queue_create("ru.codeispoetry.downloadQueue", nil)
+private let downloadQueue = DispatchQueue(label: "ru.codeispoetry.downloadQueue", attributes: [])
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    private let cellIdentifier = "PhotoCell"
-    private let showPhotoSegueIdentifier = "ShowPhoto"
-    private let apiURL = "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json"
+    fileprivate let cellIdentifier = "PhotoCell"
+    fileprivate let showPhotoSegueIdentifier = "ShowPhoto"
+    fileprivate let apiURL = "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json"
     
-    private var photos = [NSURL]()
-    private var modifiedAt = NSDate.distantPast() 
-    private var cache = NSCache()
+    fileprivate var photos = [URL]()
+    fileprivate var modifiedAt = Date.distantPast 
+    fileprivate var cache = NSCache<AnyObject, AnyObject>()
     
     // MARK: - Lifecycle
     
@@ -27,13 +27,13 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         super.viewDidLoad()
         
         // Set custom indicator
-        collectionView?.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
+        collectionView?.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         
         // Set custom indicator margin
         collectionView?.infiniteScrollIndicatorMargin = 40
         
         // Add infinite scroll handler
-        collectionView?.addInfiniteScrollWithHandler { [weak self] (scrollView) -> Void in
+        collectionView?.addInfiniteScroll { [weak self] (scrollView) -> Void in
             self?.fetchData() {
                 scrollView.finishInfiniteScroll()
             }
@@ -42,11 +42,11 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         fetchData(nil)
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == showPhotoSegueIdentifier {
-            if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
+            if let indexPath = collectionView?.indexPath(for: sender as! UICollectionViewCell) {
                 let url = photos[indexPath.item]
-                if let _ = cache.objectForKey(url) {
+                if let _ = cache.object(forKey: url as AnyObject) {
                     return true
                 }
             }
@@ -55,41 +55,41 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return true
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showPhotoSegueIdentifier {
-            if let indexPath = collectionView?.indexPathForCell(sender as! UICollectionViewCell) {
-                let controller = segue.destinationViewController as! PhotoViewController
+            if let indexPath = collectionView?.indexPath(for: sender as! UICollectionViewCell) {
+                let controller = segue.destination as! PhotoViewController
                 let url = photos[indexPath.item]
                 
-                controller.photo = cache.objectForKey(url) as? UIImage
+                controller.photo = cache.object(forKey: url as AnyObject) as? UIImage
             }
         }
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         
         collectionViewLayout.invalidateLayout()
     }
     
     // MARK: - UICollectionViewDataSource
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! PhotoCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PhotoCell
         let url = photos[indexPath.item]
-        let image = cache.objectForKey(url) as? UIImage
+        let image = cache.object(forKey: url as AnyObject) as? UIImage
         
         cell.imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         cell.imageView.image = image
         
         if image == nil {
             downloadPhoto(url, completion: { (url, image) -> Void in
-                let indexPath_ = collectionView.indexPathForCell(cell)
-                if indexPath.isEqual(indexPath_) {
+                let indexPath_ = collectionView.indexPath(for: cell)
+                if indexPath == indexPath_ {
                     cell.imageView.image = image
                 }
             })
@@ -100,80 +100,78 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let collectionWidth = CGRectGetWidth(collectionView.bounds);
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionWidth = collectionView.bounds.width;
         var itemWidth = collectionWidth / 3 - 1;
         
-        if(UI_USER_INTERFACE_IDIOM() == .Pad) {
+        if(UI_USER_INTERFACE_IDIOM() == .pad) {
             itemWidth = collectionWidth / 4 - 1;
         }
         
-        return CGSizeMake(itemWidth, itemWidth);
+        return CGSize(width: itemWidth, height: itemWidth);
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
     
     // MARK: - Private
     
-    private func downloadPhoto(url: NSURL, completion: (url: NSURL, image: UIImage) -> Void) {
-        dispatch_async(downloadQueue, { () -> Void in
-            if let data = NSData(contentsOfURL: url) {
+    fileprivate func downloadPhoto(_ url: URL, completion: @escaping (_ url: URL, _ image: UIImage) -> Void) {
+        downloadQueue.async(execute: { () -> Void in
+            if let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.cache.setObject(image, forKey: url)
-                        completion(url: url, image: image)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        self.cache.setObject(image, forKey: url as AnyObject)
+                        completion(url, image)
                     })
                 }
             }
         })
     }
     
-    private func fetchData(handler: (Void -> Void)?) {
-        let requestURL = NSURL(string: apiURL)!
+    fileprivate func fetchData(_ handler: ((Void) -> Void)?) {
+        let requestURL = URL(string: apiURL)!
         
-        let task = NSURLSession.sharedSession().dataTaskWithURL(requestURL, completionHandler: {
-            (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        let task = URLSession.shared.dataTask(with: requestURL, completionHandler: { (data, response, error) in
+            DispatchQueue.main.async {
                 self.handleResponse(data, response: response, error: error, completion: handler)
                 
-                UIApplication.sharedApplication().stopNetworkActivity()
-            });
+                UIApplication.shared.stopNetworkActivity()
+            }
         })
         
-        UIApplication.sharedApplication().startNetworkActivity()
+        UIApplication.shared.startNetworkActivity()
         
         // I run task.resume() with delay because my network is too fast
         let delay = (photos.count == 0 ? 0 : 5) * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue(), {
+        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time, execute: {
             task.resume()
         })
     }
     
-    private func handleResponse(data: NSData!, response: NSURLResponse!, error: NSError!, completion: (Void -> Void)?) {
-        if let _ = error {
+    fileprivate func handleResponse(_ data: Data!, response: URLResponse!, error: Error!, completion: ((Void) -> Void)?) {
+        if let error = error {
             showAlertWithError(error)
             completion?()
             return;
         }
         
         var jsonError: NSError?
-        var jsonString = NSString(data: data, encoding: NSUTF8StringEncoding)
+        var jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         var responseDict: [String: AnyObject]?
         
         // Fix broken Flickr JSON
-        jsonString = jsonString?.stringByReplacingOccurrencesOfString("\\'", withString: "'")
-        let fixedData = jsonString?.dataUsingEncoding(NSUTF8StringEncoding)
+        jsonString = jsonString?.replacingOccurrences(of: "\\'", with: "'") as NSString?
+        let fixedData = jsonString?.data(using: String.Encoding.utf8.rawValue)
         
         do {
-            responseDict = try NSJSONSerialization.JSONObjectWithData(fixedData!, options: NSJSONReadingOptions()) as? [String: AnyObject]
+            responseDict = try JSONSerialization.jsonObject(with: fixedData!, options: JSONSerialization.ReadingOptions()) as? [String: AnyObject]
         }
         catch {
             jsonError = NSError(domain: "JSONError", code: 1, userInfo: [ NSLocalizedDescriptionKey: "Failed to parse JSON." ])
@@ -185,26 +183,26 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             return
         }
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         
-        let modifiedAt_ = dateFormatter.dateFromString(responseDict?["modified"] as! String)
+        let modifiedAt_ = dateFormatter.date(from: responseDict?["modified"] as! String)
         
-        if modifiedAt_?.compare(modifiedAt) != NSComparisonResult.OrderedDescending {
+        if modifiedAt_?.compare(modifiedAt) != ComparisonResult.orderedDescending {
             completion?()
             return
         }
         
-        var indexPaths = [NSIndexPath]()
+        var indexPaths = [IndexPath]()
         let firstIndex = photos.count
         
         if let items = responseDict?["items"] as? NSArray {
-            if let urls = items.valueForKeyPath("media.m") as? [String] {
-                for (i, url) in urls.enumerate() {
-                    let indexPath = NSIndexPath(forItem: firstIndex + i, inSection: 0)
+            if let urls = items.value(forKeyPath: "media.m") as? [String] {
+                for (i, url) in urls.enumerated() {
+                    let indexPath = IndexPath(item: firstIndex + i, section: 0)
                     
-                    photos.append(NSURL(string: url)!)
+                    photos.append(URL(string: url)!)
                     indexPaths.append(indexPath)
                 }
             }
@@ -213,23 +211,26 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         modifiedAt = modifiedAt_!
         
         collectionView?.performBatchUpdates({ () -> Void in
-            self.collectionView?.insertItemsAtIndexPaths(indexPaths)
+            self.collectionView?.insertItems(at: indexPaths)
         }, completion: { (finished) -> Void in
             completion?()
         });
     }
     
-    private func showAlertWithError(error: NSError) {
-        let alert = UIAlertController(title: NSLocalizedString("Error fetching data", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
+    fileprivate func showAlertWithError(_ error: Error) {
+        let alert = UIAlertController(title: NSLocalizedString("collectionView.errorAlert.title", comment: ""),
+                                      message: error.localizedDescription,
+                                      preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Dismiss", comment: ""), style: .Cancel, handler: { (action) -> Void in
-        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("collectionView.errorAlert.dismiss", comment: ""),
+                                      style: .cancel,
+                                      handler: nil))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""), style: .Default, handler: { (action) -> Void in
-            self.fetchData(nil)
-        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("collectionView.errorAlert.retry", comment: ""),
+                                      style: .default,
+                                      handler: { _ in self.fetchData(nil) }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
