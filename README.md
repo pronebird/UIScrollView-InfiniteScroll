@@ -197,7 +197,7 @@ self.tableView.infiniteScrollIndicatorView = indicator;
 Swift: 
 ```swift
 // optionally you can use custom indicator view
-tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
+tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
 ```
 
 Please see example implementation of indicator view:
