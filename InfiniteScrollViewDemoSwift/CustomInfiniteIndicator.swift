@@ -5,7 +5,6 @@
 //  Created by pronebird on 5/3/15.
 //  Copyright (c) 2015 pronebird. All rights reserved.
 //
-
 import UIKit
 
 private let rotationAnimationKey = "rotation"
@@ -13,12 +12,12 @@ private let rotationAnimationKey = "rotation"
 class CustomInfiniteIndicator: UIView {
     
     var thickness: CGFloat = 2
-    var outerColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
+    var outerColor = UIColor.gray.withAlphaComponent(0.2)
     
     lazy var innerColor: UIColor = {
         return self.tintColor
     }()
-
+    
     private var animating = false
     private let innerCircle = CAShapeLayer()
     private let outerCircle = CAShapeLayer()
@@ -39,7 +38,7 @@ class CustomInfiniteIndicator: UIView {
         unregisterFromAppStateNotifications()
     }
     
-    override func layoutSublayersOfLayer(layer: CALayer) {
+    override func layoutSublayers(of layer: CALayer) {
         setupBezierPaths()
     }
     
@@ -56,15 +55,15 @@ class CustomInfiniteIndicator: UIView {
     private func commonInit() {
         registerForAppStateNotifications()
         
-        hidden = true
-        backgroundColor = UIColor.clearColor()
+        isHidden = true
+        backgroundColor = UIColor.clear
         
-        outerCircle.strokeColor = outerColor.CGColor
-        outerCircle.fillColor = UIColor.clearColor().CGColor
+        outerCircle.strokeColor = outerColor.cgColor
+        outerCircle.fillColor = UIColor.clear.cgColor
         outerCircle.lineWidth = thickness
         
-        innerCircle.strokeColor = innerColor.CGColor
-        innerCircle.fillColor = UIColor.clearColor().CGColor
+        innerCircle.strokeColor = innerColor.cgColor
+        innerCircle.fillColor = UIColor.clear.cgColor
         innerCircle.lineWidth = thickness
         
         layer.addSublayer(outerCircle)
@@ -75,19 +74,19 @@ class CustomInfiniteIndicator: UIView {
         let anim = animation()
         anim.timeOffset = stopTime - startTime
         
-        layer.addAnimation(anim, forKey: rotationAnimationKey)
+        layer.add(anim, forKey: rotationAnimationKey)
         
-        startTime = layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+        startTime = layer.convertTime(CACurrentMediaTime(), from: nil)
     }
     
     private func removeAnimation() {
-        layer.removeAnimationForKey(rotationAnimationKey)
+        layer.removeAnimation(forKey: rotationAnimationKey)
         
-        stopTime = layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+        stopTime = layer.convertTime(CACurrentMediaTime(), from: nil)
     }
     
     func restartAnimationIfNeeded() {
-        let anim = layer.animationForKey(rotationAnimationKey)
+        let anim = layer.animation(forKey: rotationAnimationKey)
         
         if animating && anim == nil {
             removeAnimation()
@@ -96,16 +95,16 @@ class CustomInfiniteIndicator: UIView {
     }
     
     private func registerForAppStateNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     private func unregisterFromAppStateNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func animation() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.toValue = NSNumber(double: M_PI * 2)
+        animation.toValue = NSNumber(value: M_PI * 2)
         animation.duration = 1
         animation.repeatCount = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
@@ -114,13 +113,13 @@ class CustomInfiniteIndicator: UIView {
     }
     
     private func setupBezierPaths() {
-        let center = CGPointMake(bounds.size.width * 0.5, bounds.size.height * 0.5)
+        let center = CGPoint(x: bounds.size.width * 0.5, y: bounds.size.height * 0.5)
         let radius = bounds.size.width * 0.5 - thickness
         let ringPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI * 2), clockwise: true)
         let quarterRingPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(-M_PI_4), endAngle: CGFloat(M_PI_2 - M_PI_4), clockwise: true)
         
-        outerCircle.path = ringPath.CGPath
-        innerCircle.path = quarterRingPath.CGPath
+        outerCircle.path = ringPath.cgPath
+        innerCircle.path = quarterRingPath.cgPath
     }
     
     // MARK: - Public
@@ -134,7 +133,7 @@ class CustomInfiniteIndicator: UIView {
             return
         }
         animating = true
-        hidden = false
+        isHidden = false
         addAnimation()
     }
     
@@ -143,8 +142,8 @@ class CustomInfiniteIndicator: UIView {
             return
         }
         animating = false
-        hidden = true
+        isHidden = true
         removeAnimation()
     }
-
+    
 }
