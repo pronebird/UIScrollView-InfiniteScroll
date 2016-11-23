@@ -552,8 +552,9 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
     if(state.loading) {
         return;
     }
-    
-    BOOL animate = self.infiniteScrollDirection == UIScrollViewInfiniteScrollDirectionBottom ? contentOffset.y > actionOffset : contentOffset.y < 0 && self.contentSize.height > CGRectGetHeight(self.frame);
+
+    BOOL validContentHeight = !self.allowTriggerOnUnfilledContent ? self.contentSize.height > CGRectGetHeight(self.frame) : YES;
+    BOOL animate = self.infiniteScrollDirection == UIScrollViewInfiniteScrollDirectionBottom ? contentOffset.y > actionOffset : contentOffset.y < 0 && validContentHeight;
     
     if(animate) {
         TRACE(@"Action.");

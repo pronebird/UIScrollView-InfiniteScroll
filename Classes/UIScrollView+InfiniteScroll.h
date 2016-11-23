@@ -62,6 +62,11 @@ typedef NS_ENUM(NSInteger, UIScrollViewInfiniteScrollDirection) {
 @property (nonatomic) CGFloat infiniteScrollIndicatorMargin;
 
 /**
+ *  If YES do not check if content is higher that view height. Default NO.
+ */
+@property (nonatomic) BOOL allowTriggerOnUnfilledContent;
+
+/**
  *  Setup infinite scroll handler
  *
  *  @param handler a handler block
