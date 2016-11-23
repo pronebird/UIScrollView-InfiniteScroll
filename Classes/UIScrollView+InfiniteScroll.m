@@ -86,6 +86,11 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
 @property CGFloat indicatorMargin;
 
 /**
+ *  A flag that indicates whether validate if content is higher that view height. Default NO.
+ */
+@property (nonatomic) BOOL allowTriggerOnUnfilledContent;
+
+/**
  *  Infinite scroll handler block
  */
 @property (copy) void(^infiniteScrollHandler)(id scrollView);
@@ -219,6 +224,14 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
 
 - (CGFloat)infiniteScrollIndicatorMargin {
     return self.pb_infiniteScrollState.indicatorMargin;
+}
+
+- (void)setAllowTriggerOnUnfilledContent:(BOOL)allowTriggerOnUnfilledContent {
+    return self.pb_infiniteScrollState.allowTriggerOnUnfilledContent = allowTriggerOnUnfilledContent;
+}
+
+- (BOOL)allowTriggerOnUnfilledContent {
+    return self.pb_infiniteScrollState.allowTriggerOnUnfilledContent
 }
 
 #pragma mark - Private dynamic properties
