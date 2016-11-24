@@ -227,11 +227,11 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
 }
 
 - (void)setAllowTriggerOnUnfilledContent:(BOOL)allowTriggerOnUnfilledContent {
-    return self.pb_infiniteScrollState.allowTriggerOnUnfilledContent = allowTriggerOnUnfilledContent;
+    self.pb_infiniteScrollState.allowTriggerOnUnfilledContent = allowTriggerOnUnfilledContent;
 }
 
 - (BOOL)allowTriggerOnUnfilledContent {
-    return self.pb_infiniteScrollState.allowTriggerOnUnfilledContent
+    return self.pb_infiniteScrollState.allowTriggerOnUnfilledContent;
 }
 
 #pragma mark - Private dynamic properties
@@ -565,7 +565,7 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
     if(state.loading) {
         return;
     }
-
+    
     BOOL validContentHeight = !self.allowTriggerOnUnfilledContent ? self.contentSize.height > CGRectGetHeight(self.frame) : YES;
     BOOL animate = self.infiniteScrollDirection == UIScrollViewInfiniteScrollDirectionBottom ? contentOffset.y > actionOffset : contentOffset.y < 0 && validContentHeight;
     
