@@ -14,7 +14,7 @@ extension UIApplication {
     
     func startNetworkActivity() {
         networkActivityCount += 1
-        networkActivityIndicatorVisible = true
+        isNetworkActivityIndicatorVisible = true
     }
     
     func stopNetworkActivity() {
@@ -24,7 +24,7 @@ extension UIApplication {
         
         networkActivityCount -= 1
         if networkActivityCount == 0 {
-            networkActivityIndicatorVisible = false
+            isNetworkActivityIndicatorVisible = false
         }
     }
     

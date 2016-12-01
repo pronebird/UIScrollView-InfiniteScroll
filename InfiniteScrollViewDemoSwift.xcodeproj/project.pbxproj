@@ -14,12 +14,12 @@
 		58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
 		58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
 		58279BF71AF6AEF70075D88A /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF61AF6AEF70075D88A /* PhotoViewController.swift */; };
-		58279BF91AF6AF110075D88A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF81AF6AF110075D88A /* BrowserViewController.swift */; };
 		58279BFB1AF6AF860075D88A /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFA1AF6AF860075D88A /* PhotoCell.swift */; };
 		58279BFD1AF6B2730075D88A /* StoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFC1AF6B2730075D88A /* StoryModel.swift */; };
 		58279BFF1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */; };
 		58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */; };
+		582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582A4AC11DD8AB2D008203BA /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,13 +33,13 @@
 		58279BF21AF6ADCA0075D88A /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		58279BF61AF6AEF70075D88A /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		58279BF81AF6AF110075D88A /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		58279BFA1AF6AF860075D88A /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		58279BFC1AF6B2730075D88A /* StoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryModel.swift; sourceTree = "<group>"; };
 		58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+NetworkIndicator.swift"; sourceTree = "<group>"; };
 		58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfiniteIndicator.swift; sourceTree = "<group>"; };
 		58279C061AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
+		582A4AC01DD8AB2D008203BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,20 +72,20 @@
 		58279BC01AF6AC5D0075D88A /* InfiniteScrollViewDemoSwift */ = {
 			isa = PBXGroup;
 			children = (
-				58279BEF1AF6AD2C0075D88A /* Classes */,
-				58279BC31AF6AC5D0075D88A /* AppDelegate.swift */,
-				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
-				58279BF01AF6ADA60075D88A /* Main.storyboard */,
 				5809B37A1D247F980029136A /* Launch Screen.storyboard */,
-				58279BC11AF6AC5D0075D88A /* Supporting Files */,
-				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
+				58279BF01AF6ADA60075D88A /* Main.storyboard */,
+				58279BC31AF6AC5D0075D88A /* AppDelegate.swift */,
 				58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */,
-				58279BF61AF6AEF70075D88A /* PhotoViewController.swift */,
-				58279BF81AF6AF110075D88A /* BrowserViewController.swift */,
-				58279BFA1AF6AF860075D88A /* PhotoCell.swift */,
-				58279BFC1AF6B2730075D88A /* StoryModel.swift */,
-				58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */,
 				58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */,
+				58279BFA1AF6AF860075D88A /* PhotoCell.swift */,
+				58279BF61AF6AEF70075D88A /* PhotoViewController.swift */,
+				58279BFC1AF6B2730075D88A /* StoryModel.swift */,
+				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
+				58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */,
+				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
+				58279BEF1AF6AD2C0075D88A /* Classes */,
+				582A4AC11DD8AB2D008203BA /* Localizable.strings */,
+				58279BC11AF6AC5D0075D88A /* Supporting Files */,
 			);
 			path = InfiniteScrollViewDemoSwift;
 			sourceTree = "<group>";
@@ -136,11 +136,13 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = pronebird;
 				TargetAttributes = {
 					58279BBD1AF6AC5D0075D88A = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = PR2A98QJ89;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -168,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5809B37B1D247F980029136A /* Launch Screen.storyboard in Resources */,
+				582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */,
 				58279BCD1AF6AC5D0075D88A /* Images.xcassets in Resources */,
 				58279BF11AF6ADA60075D88A /* Main.storyboard in Resources */,
 			);
@@ -184,7 +187,6 @@
 				58279BFB1AF6AF860075D88A /* PhotoCell.swift in Sources */,
 				58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */,
 				58279BFF1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift in Sources */,
-				58279BF91AF6AF110075D88A /* BrowserViewController.swift in Sources */,
 				58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */,
 				58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */,
 				58279BFD1AF6B2730075D88A /* StoryModel.swift in Sources */,
@@ -194,6 +196,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		582A4AC11DD8AB2D008203BA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				582A4AC01DD8AB2D008203BA /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		58279BDD1AF6AC5D0075D88A /* Debug */ = {
@@ -209,8 +222,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -233,7 +248,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -255,8 +270,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -272,9 +289,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -285,13 +303,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = PR2A98QJ89;
 				INFOPLIST_FILE = InfiniteScrollViewDemoSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.Infinite-Scroll-Swift";
 				PRODUCT_NAME = "Infinite Scroll";
 				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -301,12 +320,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = PR2A98QJ89;
 				INFOPLIST_FILE = InfiniteScrollViewDemoSwift/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.Infinite-Scroll-Swift";
 				PRODUCT_NAME = "Infinite Scroll";
 				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

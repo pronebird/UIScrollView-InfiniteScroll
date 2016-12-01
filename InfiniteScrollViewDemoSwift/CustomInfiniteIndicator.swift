@@ -5,6 +5,7 @@
 //  Created by pronebird on 5/3/15.
 //  Copyright (c) 2015 pronebird. All rights reserved.
 //
+
 import UIKit
 
 private let rotationAnimationKey = "rotation"
@@ -17,12 +18,12 @@ class CustomInfiniteIndicator: UIView {
     lazy var innerColor: UIColor = {
         return self.tintColor
     }()
-    
-    private var animating = false
-    private let innerCircle = CAShapeLayer()
-    private let outerCircle = CAShapeLayer()
-    private var startTime = CFTimeInterval(0)
-    private var stopTime = CFTimeInterval(0)
+
+    fileprivate var animating = false
+    fileprivate let innerCircle = CAShapeLayer()
+    fileprivate let outerCircle = CAShapeLayer()
+    fileprivate var startTime = CFTimeInterval(0)
+    fileprivate var stopTime = CFTimeInterval(0)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,6 +40,7 @@ class CustomInfiniteIndicator: UIView {
     }
     
     override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
         setupBezierPaths()
     }
     
@@ -52,7 +54,7 @@ class CustomInfiniteIndicator: UIView {
     
     // MARK: - Private
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         registerForAppStateNotifications()
         
         isHidden = true
@@ -70,7 +72,7 @@ class CustomInfiniteIndicator: UIView {
         layer.addSublayer(innerCircle)
     }
     
-    private func addAnimation() {
+    fileprivate func addAnimation() {
         let anim = animation()
         anim.timeOffset = stopTime - startTime
         
@@ -79,7 +81,7 @@ class CustomInfiniteIndicator: UIView {
         startTime = layer.convertTime(CACurrentMediaTime(), from: nil)
     }
     
-    private func removeAnimation() {
+    fileprivate func removeAnimation() {
         layer.removeAnimation(forKey: rotationAnimationKey)
         
         stopTime = layer.convertTime(CACurrentMediaTime(), from: nil)
@@ -94,17 +96,17 @@ class CustomInfiniteIndicator: UIView {
         }
     }
     
-    private func registerForAppStateNotifications() {
+    fileprivate func registerForAppStateNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
-    private func unregisterFromAppStateNotifications() {
+    fileprivate func unregisterFromAppStateNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private func animation() -> CABasicAnimation {
+    fileprivate func animation() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.toValue = NSNumber(value: M_PI * 2)
+        animation.toValue = NSNumber(value: M_PI * 2 as Double)
         animation.duration = 1
         animation.repeatCount = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
@@ -112,7 +114,7 @@ class CustomInfiniteIndicator: UIView {
         return animation
     }
     
-    private func setupBezierPaths() {
+    fileprivate func setupBezierPaths() {
         let center = CGPoint(x: bounds.size.width * 0.5, y: bounds.size.height * 0.5)
         let radius = bounds.size.width * 0.5 - thickness
         let ringPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI * 2), clockwise: true)
@@ -145,5 +147,5 @@ class CustomInfiniteIndicator: UIView {
         isHidden = true
         removeAnimation()
     }
-    
+
 }
