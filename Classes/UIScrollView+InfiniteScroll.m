@@ -256,6 +256,18 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     self.pb_infiniteScrollState.triggerOffset = fabs(infiniteScrollTriggerOffset);
 }
 
+- (void)startInfiniteScrollHandler {
+
+	// Only show the infinite scroll if it is allowed
+	if([self pb_shouldShowInfiniteScroll]) {
+		
+		[self pb_startAnimatingInfiniteScroll];
+		
+		// This will delay handler execution until scroll deceleration
+		[self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
+	}
+}
+
 #pragma mark - Private dynamic properties
 #pragma mark -
 
@@ -571,13 +583,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     if(contentOffset.y > actionOffset.y) {
         TRACE(@"Action.");
         
-        // Only show the infinite scroll if it is allowed
-        if([self pb_shouldShowInfiniteScroll]) {
-            [self pb_startAnimatingInfiniteScroll];
-            
-            // This will delay handler execution until scroll deceleration
-            [self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
-        }
+		[self startInfiniteScrollHandler];
     }
 }
 
