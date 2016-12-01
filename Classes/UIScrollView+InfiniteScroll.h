@@ -67,6 +67,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeInfiniteScroll;
 
 /**
+ *  Manually begin infinite scroll animations
+ *
+ *  This method provides identical behavior to user initiated scrolling.
+ *
+ *  @param forceScroll pass YES to scroll to indicator view
+ */
+- (void)beginInfiniteScroll:(BOOL)forceScroll;
+
+/**
  *  Finish infinite scroll animations
  *
  *  You must call this method from your infinite scroll handler to finish all
