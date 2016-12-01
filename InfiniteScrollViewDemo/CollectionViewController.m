@@ -19,9 +19,9 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 
 @interface CollectionViewController()
 
-@property NSMutableArray *photos;
-@property NSDate *modifiedAt;
-@property NSCache *cache;
+@property (nonatomic) NSMutableArray *photos;
+@property (nonatomic) NSDate *modifiedAt;
+@property (nonatomic) NSCache *cache;
 
 @end
 
@@ -64,7 +64,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     }];
     
     // Load initial data
-    [self fetchData:nil];
+    [self.collectionView beginInfiniteScroll:YES];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
@@ -96,6 +96,12 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     
     // invalidate layout on rotation
     [self.collectionViewLayout invalidateLayout];
+}
+
+#pragma mark - Actions
+
+- (IBAction)handleRefresh {
+    [self.collectionView beginInfiniteScroll:YES];
 }
 
 #pragma mark - Private
@@ -174,7 +180,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     }];
 }
 
-- (void)downloadPhotoFromURL:(NSURL*)URL completion:(void(^)(NSURL *URL, UIImage *image))completion {
+- (void)downloadPhotoFromURL:(NSURL *)URL completion:(void(^)(NSURL *URL, UIImage *image))completion {
     static dispatch_queue_t downloadQueue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -182,8 +188,20 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     });
     
     dispatch_async(downloadQueue, ^{
+        // already loaded?
+        UIImage *image = [self.cache objectForKey:URL];
+        if(image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(completion) {
+                    completion(URL, image);
+                }
+            });
+            
+            return;
+        }
+        
         NSData *data = [NSData dataWithContentsOfURL:URL];
-        UIImage *image = [UIImage imageWithData:data];
+        image = [UIImage imageWithData:data];
         
         if(image) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -216,7 +234,7 @@ static NSString *const kCellIdentifier = @"PhotoCell";
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotoCell *cell = (PhotoCell*)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
+    PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
     NSURL *photoURL = self.photos[indexPath.item];
     UIImage *image = [self.cache objectForKey:photoURL];
     
@@ -224,11 +242,8 @@ static NSString *const kCellIdentifier = @"PhotoCell";
     cell.imageView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     
     if(!image) {
-        [self downloadPhotoFromURL:photoURL completion:^(__unused NSURL *URL, UIImage *image) {
-            NSIndexPath *indexPath_ = [collectionView indexPathForCell:cell];
-            if([indexPath isEqual:indexPath_]) {
-                cell.imageView.image = image;
-            }
+        [self downloadPhotoFromURL:photoURL completion:^(__unused NSURL *URL, __unused UIImage *image) {
+            [collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
         }];
     }
     

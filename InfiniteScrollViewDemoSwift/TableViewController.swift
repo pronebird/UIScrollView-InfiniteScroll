@@ -52,7 +52,8 @@ class TableViewController: UITableViewController {
         }
         */
         
-        performFetch(nil)
+        // load initial data
+        tableView.beginInfiniteScroll(true)
     }
     
     fileprivate func performFetch(_ completionHandler: ((Void) -> Void)?) {
@@ -97,6 +98,16 @@ class TableViewController: UITableViewController {
 
 }
 
+// MARK: - Actions
+
+extension TableViewController {
+    
+    @IBAction func handleRefresh() {
+        tableView.beginInfiniteScroll(true)
+    }
+    
+}
+
 // MARK: - UITableViewDelegate
 
 extension TableViewController {
@@ -105,7 +116,6 @@ extension TableViewController {
         let story = stories[indexPath.row]
         let safariController = SFSafariViewController(url: story.url)
         safariController.delegate = self
-        safariController.navigationItem.title = story.title
         safariController.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(safariController, animated: true)
@@ -185,7 +195,7 @@ extension TableViewController {
     }
     
     fileprivate func fetchData(_ handler: @escaping ((FetchResult) -> Void)) {
-        let hits: Int = Int(tableView.bounds.height) / 44
+        let hits = Int(tableView.bounds.height) / 44
         let requestURL = apiURL(hits, page: currentPage)
         
         let task = URLSession.shared.dataTask(with: requestURL, completionHandler: {

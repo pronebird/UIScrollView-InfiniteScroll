@@ -9,9 +9,9 @@
 import UIKit
 import Foundation
 
-private let downloadQueue = DispatchQueue(label: "ru.codeispoetry.downloadQueue", attributes: [])
-
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    fileprivate let downloadQueue = DispatchQueue(label: "ru.codeispoetry.downloadQueue", qos: DispatchQoS.background)
     
     fileprivate let cellIdentifier = "PhotoCell"
     fileprivate let showPhotoSegueIdentifier = "ShowPhoto"
@@ -19,7 +19,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     
     fileprivate var photos = [URL]()
     fileprivate var modifiedAt = Date.distantPast 
-    fileprivate var cache = NSCache<AnyObject, AnyObject>()
+    fileprivate var cache = NSCache<NSURL, UIImage>()
     
     // MARK: - Lifecycle
     
@@ -39,14 +39,15 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             }
         }
         
-        fetchData(nil)
+        // load initial data
+        collectionView?.beginInfiniteScroll(true)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == showPhotoSegueIdentifier {
             if let indexPath = collectionView?.indexPath(for: sender as! UICollectionViewCell) {
                 let url = photos[indexPath.item]
-                if let _ = cache.object(forKey: url as AnyObject) {
+                if let _ = cache.object(forKey: url as NSURL) {
                     return true
                 }
             }
@@ -61,7 +62,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                 let controller = segue.destination as! PhotoViewController
                 let url = photos[indexPath.item]
                 
-                controller.photo = cache.object(forKey: url as AnyObject) as? UIImage
+                controller.photo = cache.object(forKey: url as NSURL)
             }
         }
     }
@@ -81,17 +82,14 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PhotoCell
         let url = photos[indexPath.item]
-        let image = cache.object(forKey: url as AnyObject) as? UIImage
+        let image = cache.object(forKey: url as NSURL)
         
         cell.imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         cell.imageView.image = image
         
         if image == nil {
             downloadPhoto(url, completion: { (url, image) -> Void in
-                let indexPath_ = collectionView.indexPath(for: cell)
-                if indexPath == indexPath_ {
-                    cell.imageView.image = image
-                }
+                collectionView.reloadItems(at: [indexPath])
             })
         }
         
@@ -123,13 +121,27 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     
     fileprivate func downloadPhoto(_ url: URL, completion: @escaping (_ url: URL, _ image: UIImage) -> Void) {
         downloadQueue.async(execute: { () -> Void in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        self.cache.setObject(image, forKey: url as AnyObject)
-                        completion(url, image)
-                    })
+            if let image = self.cache.object(forKey: url as NSURL) {
+                DispatchQueue.main.async {
+                    completion(url, image)
                 }
+                
+                return
+            }
+            
+            do {
+                let data = try Data(contentsOf: url)
+                
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.cache.setObject(image, forKey: url as NSURL)
+                        completion(url, image)
+                    }
+                } else {
+                    print("Could not decode image")
+                }
+            } catch {
+                print("Could not load URL: \(url): \(error)")
             }
         })
     }
@@ -233,4 +245,14 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         self.present(alert, animated: true, completion: nil)
     }
 
+}
+
+// MARK: - Actions
+
+extension CollectionViewController {
+    
+    @IBAction func handleRefresh() {
+        collectionView?.beginInfiniteScroll(true)
+    }
+    
 }

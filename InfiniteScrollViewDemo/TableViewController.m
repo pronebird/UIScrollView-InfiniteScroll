@@ -7,11 +7,10 @@
 //
 
 #import "TableViewController.h"
-#import "UIApplication+NetworkIndicator.h"
 
-#if !TARGET_OS_TV
-#import "BrowserViewController.h"
-#endif
+#import <SafariServices/SafariServices.h>
+
+#import "UIApplication+NetworkIndicator.h"
 
 #import "StoryModel.h"
 
@@ -20,22 +19,18 @@
 
 #define USE_AUTOSIZING_CELLS 1
 
-static NSString *const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%ld&page=%ld";
-
-#if !TARGET_OS_TV
-static NSString *const kShowBrowserSegueIdentifier = @"ShowBrowser";
-#endif
+static NSString *const kAPIEndpointURL = @"https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=%@&page=%@";
 
 static NSString *const kCellIdentifier = @"Cell";
 
 static NSString *const kJSONResultsKey = @"hits";
 static NSString *const kJSONNumPagesKey = @"nbPages";
 
-@interface TableViewController()
+@interface TableViewController() <SFSafariViewControllerDelegate>
 
-@property NSMutableArray *stories;
-@property NSInteger currentPage;
-@property NSInteger numPages;
+@property (nonatomic) NSMutableArray *stories;
+@property (nonatomic) NSInteger currentPage;
+@property (nonatomic) NSInteger numPages;
 
 @end
 
@@ -97,17 +92,13 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
      */
     
     // Load initial data
-    [self fetchData:nil];
+    [self.tableView beginInfiniteScroll:YES];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender {
-#if !TARGET_OS_TV
-    if([segue.identifier isEqualToString:kShowBrowserSegueIdentifier]) {
-        NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
-        BrowserViewController *controller = (BrowserViewController *)segue.destinationViewController;
-        controller.story = self.stories[selectedRow.row];
-    }
-#endif
+#pragma mark - Actions
+
+- (IBAction)handleRefresh {
+    [self.tableView beginInfiniteScroll:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -132,6 +123,25 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 #endif
     
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(__unused UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    StoryModel *story = self.stories[indexPath.row];
+    SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:story.url];
+    safariController.delegate = self;
+    safariController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:safariController animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+#pragma mark - SFSafariViewControllerDelegate
+
+- (void)safariViewControllerDidFinish:(__unused SFSafariViewController *)controller {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - Private methods
@@ -193,7 +203,7 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 
 - (void)fetchData:(void(^)(void))completion {
     NSInteger hits = CGRectGetHeight(self.tableView.bounds) / 44.0;
-    NSString *URLString = [NSString stringWithFormat:kAPIEndpointURL, (long)hits, (long)self.currentPage];
+    NSString *URLString = [NSString stringWithFormat:kAPIEndpointURL, @(hits), @(self.currentPage)];
     NSURL *requestURL = [NSURL URLWithString:URLString];
 
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:requestURL completionHandler:^(NSData *data, __unused NSURLResponse *response, NSError *error) {

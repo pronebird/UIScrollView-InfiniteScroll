@@ -72,7 +72,13 @@
                             <outlet property="delegate" destination="xKS-uc-UjR" id="MXn-5a-m3M"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Table Demo" id="2aZ-Qb-f3P"/>
+                    <navigationItem key="navigationItem" title="Table Demo" id="2aZ-Qb-f3P">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="9dL-ud-kzL">
+                            <connections>
+                                <action selector="handleRefresh" destination="xKS-uc-UjR" id="sL0-yB-A89"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qSb-1P-koz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -124,7 +130,13 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Collection" id="tb6-HC-3J8"/>
-                    <navigationItem key="navigationItem" title="Collection Demo" id="ms4-Z7-dqL"/>
+                    <navigationItem key="navigationItem" title="Collection Demo" id="ms4-Z7-dqL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="YBQ-fy-cz0">
+                            <connections>
+                                <action selector="handleRefresh" destination="Ugq-Q8-x6w" id="U1s-uf-fNh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJM-6g-s14" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
