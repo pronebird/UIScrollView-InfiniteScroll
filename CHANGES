@@ -1,3 +1,7 @@
+= 1.0.0 (2016-12-20)
+
+* Added programmatic way of starting infinite scroll handler (@pronebird)
+
 = 0.9.1 (2016-07-03)
 
 * Fixed issue with activity indicator teleportation in table views
