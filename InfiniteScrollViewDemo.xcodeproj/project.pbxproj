@@ -21,7 +21,6 @@
 		5874FD7E191D5E6E0041FBF8 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD7D191D5E6E0041FBF8 /* TableViewController.m */; };
 		5874FD81191E752B0041FBF8 /* StoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD80191E752B0041FBF8 /* StoryModel.m */; };
 		5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */; };
-		587983EB1AD020C200D736C9 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587983EA1AD020C200D736C9 /* PhotoViewController.m */; };
 		5898E55B1BC531C900DB2ECC /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */; };
 		5898E55C1BC531CB00DB2ECC /* UIApplication+NetworkIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */; };
 		5898E55D1BC531CE00DB2ECC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58481532191D5D290019C583 /* AppDelegate.m */; };
@@ -29,7 +28,6 @@
 		5898E55F1BC531D100DB2ECC /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */; };
 		5898E5601BC531D200DB2ECC /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5874FD7D191D5E6E0041FBF8 /* TableViewController.m */; };
 		5898E5621BC531D500DB2ECC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A028691A741ECD00D79E2F /* CollectionViewController.m */; };
-		5898E5631BC531D700DB2ECC /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587983EA1AD020C200D736C9 /* PhotoViewController.m */; };
 		5898E5641BC531D900DB2ECC /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
 		5898E5651BC532DE00DB2ECC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5848152E191D5D290019C583 /* main.m */; };
 		5898E5691BC536E300DB2ECC /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5898E5681BC536E300DB2ECC /* Main-tvOS.storyboard */; };
@@ -37,6 +35,8 @@
 		58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
 		58A67D491BC5547700C9A7A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58481534191D5D290019C583 /* Images.xcassets */; };
 		58A7C91C1E0954400084C93C /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 582A4AC21DD8D74D008203BA /* SafariServices.framework */; };
+		58A7C9211E0969D90084C93C /* FlickrModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C9201E0969D90084C93C /* FlickrModel.m */; };
+		58A7C9251E0972100084C93C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58A7C9241E0972100084C93C /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,8 +63,6 @@
 		5874FD80191E752B0041FBF8 /* StoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryModel.m; sourceTree = "<group>"; };
 		5874FD86191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		5874FD87191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
-		587983E91AD020C200D736C9 /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
-		587983EA1AD020C200D736C9 /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		5898E5421BC52C8600DB2ECC /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5898E5551BC52C8600DB2ECC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5898E5681BC536E300DB2ECC /* Main-tvOS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-tvOS.storyboard"; sourceTree = "<group>"; };
@@ -72,6 +70,9 @@
 		58A028691A741ECD00D79E2F /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		58A0286B1A74305000D79E2F /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCell.h; sourceTree = "<group>"; };
 		58A0286C1A74305000D79E2F /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCell.m; sourceTree = "<group>"; };
+		58A7C91F1E0969D90084C93C /* FlickrModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrModel.h; sourceTree = "<group>"; };
+		58A7C9201E0969D90084C93C /* FlickrModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrModel.m; sourceTree = "<group>"; };
+		58A7C9241E0972100084C93C /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,27 +130,25 @@
 		58481528191D5D290019C583 /* InfiniteScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
-				5874FD85191E7EB10041FBF8 /* Classes */,
-				5874FD7A191D5E080041FBF8 /* Main.storyboard */,
-				5809B3781D2474EA0029136A /* Launch Screen.storyboard */,
-				5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */,
-				5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */,
 				58481531191D5D290019C583 /* AppDelegate.h */,
 				58481532191D5D290019C583 /* AppDelegate.m */,
-				5874FD7F191E752B0041FBF8 /* StoryModel.h */,
-				5874FD80191E752B0041FBF8 /* StoryModel.m */,
-				583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */,
-				583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */,
-				5874FD7C191D5E6E0041FBF8 /* TableViewController.h */,
-				5874FD7D191D5E6E0041FBF8 /* TableViewController.m */,
+				5874FD85191E7EB10041FBF8 /* Classes */,
 				58A028681A741ECD00D79E2F /* CollectionViewController.h */,
 				58A028691A741ECD00D79E2F /* CollectionViewController.m */,
-				587983E91AD020C200D736C9 /* PhotoViewController.h */,
-				587983EA1AD020C200D736C9 /* PhotoViewController.m */,
+				583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */,
+				583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */,
+				58481534191D5D290019C583 /* Images.xcassets */,
+				5809B3781D2474EA0029136A /* Launch Screen.storyboard */,
+				58A7C9241E0972100084C93C /* Localizable.strings */,
+				5874FD7A191D5E080041FBF8 /* Main.storyboard */,
+				58A7C9221E0969E00084C93C /* Models */,
 				58A0286B1A74305000D79E2F /* PhotoCell.h */,
 				58A0286C1A74305000D79E2F /* PhotoCell.m */,
-				58481534191D5D290019C583 /* Images.xcassets */,
 				58481529191D5D290019C583 /* Supporting Files */,
+				5874FD7C191D5E6E0041FBF8 /* TableViewController.h */,
+				5874FD7D191D5E6E0041FBF8 /* TableViewController.m */,
+				5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */,
+				5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */,
 			);
 			path = InfiniteScrollViewDemo;
 			sourceTree = "<group>";
@@ -180,6 +179,17 @@
 				5898E5551BC52C8600DB2ECC /* Info.plist */,
 			);
 			path = InfiniteScrollViewDemo_tvOS;
+			sourceTree = "<group>";
+		};
+		58A7C9221E0969E00084C93C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5874FD7F191E752B0041FBF8 /* StoryModel.h */,
+				5874FD80191E752B0041FBF8 /* StoryModel.m */,
+				58A7C91F1E0969D90084C93C /* FlickrModel.h */,
+				58A7C9201E0969D90084C93C /* FlickrModel.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58A7C9251E0972100084C93C /* Localizable.strings in Resources */,
 				5848152D191D5D290019C583 /* InfoPlist.strings in Resources */,
 				58481535191D5D290019C583 /* Images.xcassets in Resources */,
 				5809B3791D2474EA0029136A /* Launch Screen.storyboard in Resources */,
@@ -288,11 +299,11 @@
 				5874FD7E191D5E6E0041FBF8 /* TableViewController.m in Sources */,
 				583DCB9E1A2776E60049577B /* CustomInfiniteIndicator.m in Sources */,
 				5874FD88191E7EBF0041FBF8 /* UIScrollView+InfiniteScroll.m in Sources */,
+				58A7C9211E0969D90084C93C /* FlickrModel.m in Sources */,
 				5865765D197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m in Sources */,
 				58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */,
 				5874FD81191E752B0041FBF8 /* StoryModel.m in Sources */,
 				5848152F191D5D290019C583 /* main.m in Sources */,
-				587983EB1AD020C200D736C9 /* PhotoViewController.m in Sources */,
 				58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,7 +321,6 @@
 				5898E55C1BC531CB00DB2ECC /* UIApplication+NetworkIndicator.m in Sources */,
 				5898E5621BC531D500DB2ECC /* CollectionViewController.m in Sources */,
 				5898E5651BC532DE00DB2ECC /* main.m in Sources */,
-				5898E5631BC531D700DB2ECC /* PhotoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +376,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -403,7 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -18,6 +18,19 @@ static NSString * const StoryModelAttributeURL    = @"url";
     return [[self alloc] initWithDictionary:dictionary];
 }
 
++ (NSArray<StoryModel *> *)modelsFromArray:(NSArray<NSDictionary *> *)array {
+    NSMutableArray *models = [[NSMutableArray alloc] init];
+    
+    for(NSDictionary *dict in array) {
+        StoryModel *model = [self modelWithDictionary:dict];
+        if(model) {
+            [models addObject:model];
+        }
+    }
+    
+    return [models copy];
+}
+
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if(!self) {

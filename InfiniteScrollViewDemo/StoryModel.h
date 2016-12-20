@@ -10,11 +10,13 @@
 
 @interface StoryModel : NSObject
 
-@property NSString *title;
-@property NSString *author;
-@property NSURL *url;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *author;
+@property (nonatomic) NSURL *url;
 
 + (instancetype)modelWithDictionary:(NSDictionary *)dictionary;
++ (NSArray<StoryModel *> *)modelsFromArray:(NSArray<NSDictionary *> *)array;
+
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

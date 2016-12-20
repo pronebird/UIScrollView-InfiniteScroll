@@ -61,14 +61,17 @@ class TableViewController: UITableViewController {
             do {
                 let (newStories, pageCount, nextPage) = try fetchResult()
                 
+                // create new index paths
                 let storyCount = self.stories.count
                 let (start, end) = (storyCount, newStories.count + storyCount)
                 let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
                 
+                // update data source
                 self.stories.append(contentsOf: newStories)
                 self.numPages = pageCount
                 self.currentPage = nextPage
                 
+                // update table view
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
                 self.tableView.endUpdates()
@@ -115,19 +118,26 @@ extension TableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let story = stories[indexPath.row]
         
-        let safariController = SFSafariViewController(url: story.url)
-        safariController.delegate = self
+        if #available(iOS 9.0, *) {
+            let safariController = SFSafariViewController(url: story.url)
+            safariController.delegate = self
+            
+            let safariNavigationController = UINavigationController(rootViewController: safariController)
+            safariNavigationController.setNavigationBarHidden(true, animated: false)
+            
+            present(safariNavigationController, animated: true)
+        } else {
+            UIApplication.shared.openURL(story.url)
+        }
         
-        let safariNavigationController = UINavigationController(rootViewController: safariController)
-        safariNavigationController.setNavigationBarHidden(true, animated: false)
-        
-        present(safariNavigationController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
 
 // MARK: - SFSafariViewControllerDelegate
 
+@available(iOS 9.0, *)
 extension TableViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {

@@ -24,7 +24,7 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 
 @interface TableViewController()
 
-@property (nonatomic) NSMutableArray *stories;
+@property (nonatomic) NSArray *stories;
 @property (nonatomic) NSInteger currentPage;
 @property (nonatomic) NSInteger numPages;
 
@@ -45,7 +45,7 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     }
 #endif
     
-    self.stories = [[NSMutableArray alloc] init];
+    self.stories = [NSArray array];
     self.currentPage = 0;
     self.numPages = 0;
     
@@ -123,15 +123,23 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(__unused UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     StoryModel *story = self.stories[indexPath.row];
-    SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:story.url];
-    safariController.delegate = self;
+
+    // iOS 9.0+
+    if([SFSafariViewController class]) {
+        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:story.url];
+        safariController.delegate = self;
+        
+        UINavigationController *safariNavigationController = [[UINavigationController alloc] initWithRootViewController:safariController];
+        [safariNavigationController setNavigationBarHidden:YES animated:NO];
+        
+        [self presentViewController:safariNavigationController animated:YES completion:nil];
+    } else {
+        [[UIApplication sharedApplication] openURL:story.url];
+    }
     
-    UINavigationController *safariNavigationController = [[UINavigationController alloc] initWithRootViewController:safariController];
-    [safariNavigationController setNavigationBarHidden:YES animated:NO];
-    
-    [self presentViewController:safariNavigationController animated:YES completion:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - SFSafariViewControllerDelegate
@@ -143,13 +151,13 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
 #pragma mark - Private methods
 
 - (void)showRetryAlertWithError:(NSError *)error {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error fetching data", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"tableView.errorAlert.title", @"") message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", @"") style:UIAlertActionStyleCancel handler:^(__unused UIAlertAction *action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"tableView.errorAlert.dismiss", @"") style:UIAlertActionStyleCancel handler:^(__unused UIAlertAction *action) {
         
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", @"") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"tableView.errorAlert.retry", @"") style:UIAlertActionStyleDefault handler:^(__unused UIAlertAction *action) {
         [self fetchData:nil];
     }]];
     
@@ -170,30 +178,26 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
         return;
     }
     
-    self.numPages = [responseDict[kJSONNumPagesKey] integerValue];
-    self.currentPage++;
-    
+    // parse data into models
     NSArray *results = responseDict[kJSONResultsKey];
-    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+    NSArray *newModels = [StoryModel modelsFromArray:results];
     
-    NSInteger indexPathRow = self.stories.count;
+    // create new index paths
+    NSIndexSet *newIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.stories.count, newModels.count)];
+    NSMutableArray *newIndexPaths = [[NSMutableArray alloc] init];
     
-    for(NSDictionary *i in results)
-    {
-        StoryModel *model = [StoryModel modelWithDictionary:i];
-        if(!model) {
-            continue;
-        }
-        
-        [self.stories addObject:model];
-        
-        [indexPaths addObject:[NSIndexPath indexPathForRow:indexPathRow inSection:0]];
-        
-        indexPathRow++;
-    }
+    [newIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, __unused BOOL *stop) {
+        [newIndexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:0]];
+    }];
     
+    // update data source
+    self.numPages = [responseDict[kJSONNumPagesKey] integerValue];
+    self.currentPage += 1;
+    self.stories = [self.stories arrayByAddingObjectsFromArray:newModels];
+    
+    // update table view
     [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView insertRowsAtIndexPaths:newIndexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 
