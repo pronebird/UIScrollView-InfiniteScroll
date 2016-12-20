@@ -10,12 +10,6 @@
 #import "UIScrollView+InfiniteScroll.h"
 #import <objc/runtime.h>
 
-// Main thread guard that will throw exception if executed not on main thread.
-// Original idea: https://gist.github.com/steipete/5664345
-NS_INLINE void PBAssertIfNotMainThread() {
-    NSCAssert([NSThread isMainThread], @"ERROR: All UIKit calls must happen on main thread. You have a bug in your code. Please you dispatch_async(dispatch_get_main_queue(), { ... }) if you're unsure what thread you're in.\n\nStacktrace: %@", NSThread.callStackSymbols);
-}
-
 #define TRACE_ENABLED 0
 
 #if TRACE_ENABLED
@@ -163,8 +157,6 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 #pragma mark -
 
 - (void)addInfiniteScrollWithHandler:(void(^)(UIScrollView *scrollView))handler {
-    PBAssertIfNotMainThread();
-    
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Save handler block
@@ -184,8 +176,6 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 - (void)removeInfiniteScroll {
-    PBAssertIfNotMainThread();
-    
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Ignore multiple calls to remove infinite scroll
@@ -208,20 +198,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 - (void)beginInfiniteScroll:(BOOL)forceScroll {
-    PBAssertIfNotMainThread();
-    
     [self pb_beginInfinitScrollIfNeeded:forceScroll];
 }
 
 - (void)finishInfiniteScroll {
-    PBAssertIfNotMainThread();
-    
     [self finishInfiniteScrollWithCompletion:nil];
 }
 
 - (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UIScrollView *scrollView))handler {
-    PBAssertIfNotMainThread();
-    
     if(self.pb_infiniteScrollState.loading) {
         [self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
     }
@@ -231,14 +215,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 #pragma mark -
 
 - (BOOL)isAnimatingInfiniteScroll {
-    PBAssertIfNotMainThread();
-    
     return self.pb_infiniteScrollState.loading;
 }
 
 - (void)setInfiniteScrollIndicatorStyle:(UIActivityIndicatorViewStyle)infiniteScrollIndicatorStyle {
-    PBAssertIfNotMainThread();
-    
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     state.indicatorStyle = infiniteScrollIndicatorStyle;
     
@@ -249,14 +229,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 - (UIActivityIndicatorViewStyle)infiniteScrollIndicatorStyle {
-    PBAssertIfNotMainThread();
-    
     return self.pb_infiniteScrollState.indicatorStyle;
 }
 
 - (void)setInfiniteScrollIndicatorView:(UIView *)indicatorView {
-    PBAssertIfNotMainThread();
-    
     // make sure indicator is initially hidden
     indicatorView.hidden = YES;
 
@@ -264,26 +240,18 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 - (UIView *)infiniteScrollIndicatorView {
-    PBAssertIfNotMainThread();
-    
     return self.pb_infiniteScrollState.indicatorView;
 }
 
 - (void)setInfiniteScrollIndicatorMargin:(CGFloat)infiniteScrollIndicatorMargin {
-    PBAssertIfNotMainThread();
-    
     self.pb_infiniteScrollState.indicatorMargin = infiniteScrollIndicatorMargin;
 }
 
 - (CGFloat)infiniteScrollIndicatorMargin {
-    PBAssertIfNotMainThread();
-    
     return self.pb_infiniteScrollState.indicatorMargin;
 }
 
 - (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UIScrollView *scrollView))handler{
-    PBAssertIfNotMainThread();
-    
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Save handler block
@@ -291,14 +259,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 - (CGFloat)infiniteScrollTriggerOffset {
-    PBAssertIfNotMainThread();
-    
     return self.pb_infiniteScrollState.triggerOffset;
 }
 
 - (void)setInfiniteScrollTriggerOffset:(CGFloat)infiniteScrollTriggerOffset {
-    PBAssertIfNotMainThread();
-    
     self.pb_infiniteScrollState.triggerOffset = fabs(infiniteScrollTriggerOffset);
 }
 
