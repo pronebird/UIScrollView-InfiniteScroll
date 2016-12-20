@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SafariServices/SafariServices.h>
 
-@interface TableViewController : UITableViewController
+@interface TableViewController : UITableViewController<SFSafariViewControllerDelegate>
 
 @end

@@ -8,14 +8,10 @@
 
 #import "TableViewController.h"
 
-#import <SafariServices/SafariServices.h>
-
-#import "UIApplication+NetworkIndicator.h"
-
-#import "StoryModel.h"
-
-#import "CustomInfiniteIndicator.h"
 #import "UIScrollView+InfiniteScroll.h"
+#import "UIApplication+NetworkIndicator.h"
+#import "StoryModel.h"
+#import "CustomInfiniteIndicator.h"
 
 #define USE_AUTOSIZING_CELLS 1
 
@@ -26,7 +22,7 @@ static NSString *const kCellIdentifier = @"Cell";
 static NSString *const kJSONResultsKey = @"hits";
 static NSString *const kJSONNumPagesKey = @"nbPages";
 
-@interface TableViewController() <SFSafariViewControllerDelegate>
+@interface TableViewController()
 
 @property (nonatomic) NSMutableArray *stories;
 @property (nonatomic) NSInteger currentPage;
@@ -131,17 +127,17 @@ static NSString *const kJSONNumPagesKey = @"nbPages";
     StoryModel *story = self.stories[indexPath.row];
     SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:story.url];
     safariController.delegate = self;
-    safariController.hidesBottomBarWhenPushed = YES;
     
-    [self.navigationController pushViewController:safariController animated:YES];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    UINavigationController *safariNavigationController = [[UINavigationController alloc] initWithRootViewController:safariController];
+    [safariNavigationController setNavigationBarHidden:YES animated:NO];
+    
+    [self presentViewController:safariNavigationController animated:YES completion:nil];
 }
 
 #pragma mark - SFSafariViewControllerDelegate
 
-- (void)safariViewControllerDidFinish:(__unused SFSafariViewController *)controller {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+- (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private methods

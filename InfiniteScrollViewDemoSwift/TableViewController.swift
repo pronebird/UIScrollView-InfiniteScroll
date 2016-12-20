@@ -114,12 +114,14 @@ extension TableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let story = stories[indexPath.row]
+        
         let safariController = SFSafariViewController(url: story.url)
         safariController.delegate = self
-        safariController.hidesBottomBarWhenPushed = true
         
-        navigationController?.pushViewController(safariController, animated: true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        let safariNavigationController = UINavigationController(rootViewController: safariController)
+        safariNavigationController.setNavigationBarHidden(true, animated: false)
+        
+        present(safariNavigationController, animated: true)
     }
     
 }
@@ -129,8 +131,7 @@ extension TableViewController {
 extension TableViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        _ = navigationController?.popViewController(animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        controller.dismiss(animated: true)
     }
     
 }

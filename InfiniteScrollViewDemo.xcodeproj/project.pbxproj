@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5809B3791D2474EA0029136A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5809B3781D2474EA0029136A /* Launch Screen.storyboard */; };
-		582A4AC31DD8D74D008203BA /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 582A4AC21DD8D74D008203BA /* SafariServices.framework */; };
 		583DCB9E1A2776E60049577B /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 583DCB9D1A2776E60049577B /* CustomInfiniteIndicator.m */; };
 		58481523191D5D290019C583 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481522191D5D290019C583 /* Foundation.framework */; };
 		58481525191D5D290019C583 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58481524191D5D290019C583 /* CoreGraphics.framework */; };
@@ -37,10 +36,10 @@
 		58A0286A1A741ECD00D79E2F /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A028691A741ECD00D79E2F /* CollectionViewController.m */; };
 		58A0286D1A74305000D79E2F /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A0286C1A74305000D79E2F /* PhotoCell.m */; };
 		58A67D491BC5547700C9A7A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58481534191D5D290019C583 /* Images.xcassets */; };
+		58A7C91C1E0954400084C93C /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 582A4AC21DD8D74D008203BA /* SafariServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		31E76BFBDEA2456E98943CE8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5809B3781D2474EA0029136A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		582A4AC21DD8D74D008203BA /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		583DCB9C1A2776E60049577B /* CustomInfiniteIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfiniteIndicator.h; sourceTree = "<group>"; };
@@ -55,7 +54,6 @@
 		58481531191D5D290019C583 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		58481532191D5D290019C583 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		58481534191D5D290019C583 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5848153B191D5D290019C583 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5865765B197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+NetworkIndicator.h"; sourceTree = "<group>"; };
 		5865765C197D8CCF00E7AF20 /* UIApplication+NetworkIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+NetworkIndicator.m"; sourceTree = "<group>"; };
 		5874FD7A191D5E080041FBF8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -81,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				582A4AC31DD8D74D008203BA /* SafariServices.framework in Frameworks */,
+				58A7C91C1E0954400084C93C /* SafariServices.framework in Frameworks */,
 				58481525191D5D290019C583 /* CoreGraphics.framework in Frameworks */,
 				58481527191D5D290019C583 /* UIKit.framework in Frameworks */,
 				58481523191D5D290019C583 /* Foundation.framework in Frameworks */,
@@ -124,8 +122,6 @@
 				58481522191D5D290019C583 /* Foundation.framework */,
 				58481524191D5D290019C583 /* CoreGraphics.framework */,
 				58481526191D5D290019C583 /* UIKit.framework */,
-				5848153B191D5D290019C583 /* XCTest.framework */,
-				31E76BFBDEA2456E98943CE8 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -229,7 +225,7 @@
 		58481517191D5D290019C583 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = codeispoetry.ru;
 				TargetAttributes = {
 					5848151E191D5D290019C583 = {
@@ -345,14 +341,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -384,13 +385,18 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
