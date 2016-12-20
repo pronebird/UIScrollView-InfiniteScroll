@@ -52,7 +52,8 @@ class TableViewController: UITableViewController {
         }
         */
         
-        performFetch(nil)
+        // load initial data
+        tableView.beginInfiniteScroll(true)
     }
     
     fileprivate func performFetch(_ completionHandler: ((Void) -> Void)?) {
@@ -60,14 +61,17 @@ class TableViewController: UITableViewController {
             do {
                 let (newStories, pageCount, nextPage) = try fetchResult()
                 
+                // create new index paths
                 let storyCount = self.stories.count
                 let (start, end) = (storyCount, newStories.count + storyCount)
                 let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
                 
+                // update data source
                 self.stories.append(contentsOf: newStories)
                 self.numPages = pageCount
                 self.currentPage = nextPage
                 
+                // update table view
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
                 self.tableView.endUpdates()
@@ -97,30 +101,47 @@ class TableViewController: UITableViewController {
 
 }
 
+// MARK: - Actions
+
+extension TableViewController {
+    
+    @IBAction func handleRefresh() {
+        tableView.beginInfiniteScroll(true)
+    }
+    
+}
+
 // MARK: - UITableViewDelegate
 
 extension TableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let story = stories[indexPath.row]
-        let safariController = SFSafariViewController(url: story.url)
-        safariController.delegate = self
-        safariController.navigationItem.title = story.title
-        safariController.hidesBottomBarWhenPushed = true
         
-        navigationController?.pushViewController(safariController, animated: true)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        if #available(iOS 9.0, *) {
+            let safariController = SFSafariViewController(url: story.url)
+            safariController.delegate = self
+            
+            let safariNavigationController = UINavigationController(rootViewController: safariController)
+            safariNavigationController.setNavigationBarHidden(true, animated: false)
+            
+            present(safariNavigationController, animated: true)
+        } else {
+            UIApplication.shared.openURL(story.url)
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
 
 // MARK: - SFSafariViewControllerDelegate
 
+@available(iOS 9.0, *)
 extension TableViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        _ = navigationController?.popViewController(animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        controller.dismiss(animated: true)
     }
     
 }
@@ -185,7 +206,7 @@ extension TableViewController {
     }
     
     fileprivate func fetchData(_ handler: @escaping ((FetchResult) -> Void)) {
-        let hits: Int = Int(tableView.bounds.height) / 44
+        let hits = Int(tableView.bounds.height) / 44
         let requestURL = apiURL(hits, page: currentPage)
         
         let task = URLSession.shared.dataTask(with: requestURL, completionHandler: {

@@ -13,13 +13,13 @@
 		58279BF11AF6ADA60075D88A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58279BF01AF6ADA60075D88A /* Main.storyboard */; };
 		58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
 		58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
-		58279BF71AF6AEF70075D88A /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF61AF6AEF70075D88A /* PhotoViewController.swift */; };
 		58279BFB1AF6AF860075D88A /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFA1AF6AF860075D88A /* PhotoCell.swift */; };
 		58279BFD1AF6B2730075D88A /* StoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFC1AF6B2730075D88A /* StoryModel.swift */; };
 		58279BFF1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */; };
 		58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */; };
 		582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582A4AC11DD8AB2D008203BA /* Localizable.strings */; };
+		58A7C91E1E09641A0084C93C /* FlickrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,6 @@
 		58279BF01AF6ADA60075D88A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		58279BF21AF6ADCA0075D88A /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
-		58279BF61AF6AEF70075D88A /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		58279BFA1AF6AF860075D88A /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		58279BFC1AF6B2730075D88A /* StoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryModel.swift; sourceTree = "<group>"; };
 		58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+NetworkIndicator.swift"; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		58279C061AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
 		582A4AC01DD8AB2D008203BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		58A7C91D1E09641A0084C93C /* FlickrModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,13 +78,12 @@
 				58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */,
 				58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */,
 				58279BFA1AF6AF860075D88A /* PhotoCell.swift */,
-				58279BF61AF6AEF70075D88A /* PhotoViewController.swift */,
-				58279BFC1AF6B2730075D88A /* StoryModel.swift */,
 				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
 				58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */,
 				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
 				58279BEF1AF6AD2C0075D88A /* Classes */,
 				582A4AC11DD8AB2D008203BA /* Localizable.strings */,
+				58A7C9231E0969E80084C93C /* Models */,
 				58279BC11AF6AC5D0075D88A /* Supporting Files */,
 			);
 			path = InfiniteScrollViewDemoSwift;
@@ -106,6 +105,15 @@
 				58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		58A7C9231E0969E80084C93C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				58279BFC1AF6B2730075D88A /* StoryModel.swift */,
+				58A7C91D1E09641A0084C93C /* FlickrModel.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58A7C91E1E09641A0084C93C /* FlickrModel.swift in Sources */,
 				58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */,
 				58279BFB1AF6AF860075D88A /* PhotoCell.swift in Sources */,
 				58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */,
@@ -191,7 +200,6 @@
 				58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */,
 				58279BFD1AF6B2730075D88A /* StoryModel.swift in Sources */,
 				58279BC41AF6AC5D0075D88A /* AppDelegate.swift in Sources */,
-				58279BF71AF6AEF70075D88A /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +256,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -289,7 +297,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

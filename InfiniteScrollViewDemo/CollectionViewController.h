@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SafariServices/SafariServices.h>
 
-@interface CollectionViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout>
+@interface CollectionViewController : UICollectionViewController<UICollectionViewDelegateFlowLayout, SFSafariViewControllerDelegate>
 
 @end

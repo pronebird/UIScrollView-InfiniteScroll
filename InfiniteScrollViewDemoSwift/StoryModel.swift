@@ -14,12 +14,12 @@ private struct StoryModelAttributes {
     static let author = "author"
 }
 
-class StoryModel: NSObject {
+class StoryModel {
     var title: String?
     var author: String?
     var url: URL
     
-    init?(_ dictionary: [String: AnyObject]) {
+    init?(_ dictionary: [String: Any]) {
         // sometimes HN returns some trash
         guard let urlString = dictionary[StoryModelAttributes.url] as? String,
               let urlObject = URL(string: urlString)
@@ -30,8 +30,6 @@ class StoryModel: NSObject {
         title = dictionary[StoryModelAttributes.title] as? String
         author = dictionary[StoryModelAttributes.author] as? String
         url = urlObject
-        
-        super.init()
     }
 
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uwD-LM-gNq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uwD-LM-gNq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,16 +37,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="otC-6K-PTT">
-                            <rect key="frame" x="0.0" y="130" width="375" height="1"/>
+                            <rect key="frame" x="0.0" y="66" width="375" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="PFf-BQ-hKX" detailTextLabel="wPu-bB-dmW" style="IBUITableViewCellStyleSubtitle" id="q1u-I3-ZAd">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="PFf-BQ-hKX" detailTextLabel="wPu-bB-dmW" style="IBUITableViewCellStyleSubtitle" id="q1u-I3-ZAd">
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q1u-I3-ZAd" id="fYM-Nw-WJN">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PFf-BQ-hKX">
@@ -72,7 +72,13 @@
                             <outlet property="delegate" destination="xKS-uc-UjR" id="MXn-5a-m3M"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Table Demo" id="2aZ-Qb-f3P"/>
+                    <navigationItem key="navigationItem" title="Table Demo" id="2aZ-Qb-f3P">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="9dL-ud-kzL">
+                            <connections>
+                                <action selector="handleRefresh" destination="xKS-uc-UjR" id="sL0-yB-A89"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qSb-1P-koz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -114,7 +120,6 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="4A3-eV-JGE" id="Rwm-k3-gVQ"/>
-                                    <segue destination="6uv-Bs-3h2" kind="show" identifier="ShowPhoto" id="2PC-1n-29o"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -124,44 +129,17 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Collection" id="tb6-HC-3J8"/>
-                    <navigationItem key="navigationItem" title="Collection Demo" id="ms4-Z7-dqL"/>
+                    <navigationItem key="navigationItem" title="Collection Demo" id="ms4-Z7-dqL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="YBQ-fy-cz0">
+                            <connections>
+                                <action selector="handleRefresh" destination="Ugq-Q8-x6w" id="U1s-uf-fNh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJM-6g-s14" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1051.875" y="-736.26760563380276"/>
-        </scene>
-        <!--Photo View Controller-->
-        <scene sceneID="E7I-Fp-jTu">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="6uv-Bs-3h2" customClass="PhotoViewController" customModule="Infinite_Scroll" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="sTa-yH-qLO"/>
-                        <viewControllerLayoutGuide type="bottom" id="08n-RG-DaU"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XJg-uh-LfB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p1J-Hx-DRl">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="p1J-Hx-DRl" firstAttribute="top" secondItem="XJg-uh-LfB" secondAttribute="top" id="Loc-Yr-U3T"/>
-                            <constraint firstItem="p1J-Hx-DRl" firstAttribute="leading" secondItem="XJg-uh-LfB" secondAttribute="leading" id="RG5-W0-zzE"/>
-                            <constraint firstAttribute="bottom" secondItem="p1J-Hx-DRl" secondAttribute="bottom" id="fMv-cQ-mtO"/>
-                            <constraint firstAttribute="trailing" secondItem="p1J-Hx-DRl" secondAttribute="trailing" id="tOw-wc-IrO"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="3Wt-EH-oFT"/>
-                    <connections>
-                        <outlet property="imageView" destination="p1J-Hx-DRl" id="trK-ML-cEO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mm0-Em-vHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1999.2" y="-736.28185907046486"/>
         </scene>
         <!--Collection-->
         <scene sceneID="9UF-m8-CVR">
@@ -191,6 +169,7 @@
                 <navigationController definesPresentationContext="YES" id="SEo-9M-rz0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Table" image="first" id="hNC-Ej-8v6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LUE-Qf-1hi">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <userDefinedRuntimeAttributes>
