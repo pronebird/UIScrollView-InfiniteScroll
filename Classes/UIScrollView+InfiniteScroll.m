@@ -434,10 +434,10 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
         contentInset.top += indicatorInset;
         
         // Add empty space padding
-        contentInset.top += extraInset;
+        contentInset.top += 0.0f;
         
         //
-        state.extraTopInset = extraInset;
+        state.extraTopInset = 0.0f;
     }
     
     // bottom
