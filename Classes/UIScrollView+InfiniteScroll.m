@@ -94,6 +94,13 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 @property (nonatomic) CGFloat indicatorInset;
 
 /**
+ * Flag used to allow adding botton inset (because 
+ * it should be added only once)
+ * Default value is YES
+ */
+@property (nonatomic) BOOL addBottomInset;
+    
+/**
  *  Indicator view margin (top and bottom)
  */
 @property (nonatomic) CGFloat indicatorMargin;
@@ -129,6 +136,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 #else
     _indicatorStyle = UIActivityIndicatorViewStyleGray;
 #endif
+    _addBottomInset = YES;
     
     // Default row height (44) minus activity indicator height (22) / 2
     _indicatorMargin = 11;
@@ -209,6 +217,22 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     if(self.pb_infiniteScrollState.loading) {
         [self pb_stopAnimatingInfiniteScrollWithCompletion:handler];
     }
+}
+    
+- (void)scrollableContentDidEnd{
+    UIEdgeInsets contentInset = self.contentInset;
+    _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
+    
+    if (state.addBottomInset == NO){
+        contentInset.bottom -= state.indicatorInset;
+        state.addBottomInset = YES;
+    }
+    
+    [self pb_setScrollViewContentInset:contentInset animated:YES completion:^(BOOL finished) {
+        if(finished) {
+            [self pb_scrollToInfiniteIndicatorIfNeeded:YES force:YES];
+        }
+    }];
 }
 
 #pragma mark - Accessors
@@ -482,7 +506,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     UIEdgeInsets contentInset = self.contentInset;
     
     // Make a room to accommodate indicator view
-    contentInset.bottom += indicatorInset;
+    if (state.addBottomInset){
+        contentInset.bottom += indicatorInset;
+        state.addBottomInset = false;
+    }
     
     // We have to pad scroll view when content height is smaller than view bounds.
     // This will guarantee that indicator view appears at the very bottom of scroll view.
@@ -536,13 +563,13 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     }
     
     // Remove row height inset
-    contentInset.bottom -= state.indicatorInset;
+    //contentInset.bottom -= state.indicatorInset;
     
     // Remove extra inset added to pad infinite scroll
     contentInset.bottom -= state.extraBottomInset;
     
     // Reset indicator view inset
-    state.indicatorInset = 0;
+    //state.indicatorInset = 0;
     
     // Reset extra bottom inset
     state.extraBottomInset = 0;
@@ -716,5 +743,5 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
         }
     }
 }
-
+    
 @end
