@@ -621,6 +621,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  */
 - (void)pb_scrollToTop {
     CGPoint pt = CGPointZero;
+    pt.x = self.contentOffset.x;
     pt.y = self.contentInset.top * -1;
     
     [self setContentOffset:pt animated:YES];
