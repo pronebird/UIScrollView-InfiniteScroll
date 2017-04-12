@@ -207,24 +207,7 @@ At the moment InfiniteScroll uses indicator's frame directly so make sure you si
 
 ### Contributors
 
-* [@GorkaMM](https://github.com/GorkaMM)<br/>
-  Added custom trigger offset
-* [@intrepidmatt](https://github.com/intrepidmatt)<br/>
-  Solved longstanding issue with dynamic updates in table views (see [#31](https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31))
-* Ryan Bertrand [@RyanBertrand](https://github.com/RyanBertrand)<br/>
-  Added a handler to conditionally prevent the infinite scroll from showing
-* Maxim Veksler [@maximveksler](https://github.com/maximveksler)<br/>
-  Swift 2.2 upgrade
-* Shigeyuki Takeuchi [@takeshig](https://github.com/takeshig)<br/>
-  Add Carthage support
-* Ivan Chirkov [@nsleader](https://github.com/nsleader)<br/>
-  Custom indicators support
-* Alex Shevchenko [@skeeet](https://github.com/skeeet)<br/>
-  Fix for bounce back glitch when content size is smaller than view bounds
-* Vlad [brightsider](https://github.com/brightsider)<br/>
-  Add access to check loading status
-
-.. and many others who reported issues and participated in conversations
+Please see [CHANGES](https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/CHANGES)
 
 ### Attributions
 

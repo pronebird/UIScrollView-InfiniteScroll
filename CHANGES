@@ -1,3 +1,8 @@
+= 1.0.1 (2017-04-12)
+
+* Fixed bug when there was weird animation which shifts offset (@rr-dw)
+* Retain contentOffset.x in scroll to top – based on @rr-dw's fix (@pronebird)
+
 = 1.0.0 (2016-12-20)
 
 * Added programmatic way of starting infinite scroll handler (@pronebird)
