@@ -45,8 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat infiniteScrollIndicatorMargin;
 
 /**
- *  Sets the offset between the real end of the scroll view content and the scroll position, so the handler can be triggered before reaching end.
- *  Defaults to 0.0;
+ *  Set vertical adjustment for scroll coordinate used to determine when to call handler block.
+ *  Non-zero value advances the point when handler block is being called 
+ *  making it fire by N points earlier before scroll view reaches the bottom.
+ *  This value is measured in points and must be positive number.
+ *  Default: 0.0
  */
 @property (nonatomic) CGFloat infiniteScrollTriggerOffset;
 
