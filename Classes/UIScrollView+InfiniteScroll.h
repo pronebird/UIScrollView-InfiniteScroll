@@ -99,67 +99,30 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)finishInfiniteScroll;
 
+/**
+ * Removes the extra bottom inset 
+ * You must call this method when the scrollable content has been ended.
+ */
+- (void)scrollableContentDidEnd;
+    
 @end
 
-/**
- Convenience interface for UIScrollView+InfiniteScroll category.
+/*
+ Convenience interface to avoid cast from UIScrollView to common subclasses such as UITableView and UICollectionView.
  */
+
 @interface UITableView (InfiniteScrollConvenienceInterface)
 
-/**
- *  Setup infinite scroll handler
- *
- *  @param handler a handler block
- */
 - (void)addInfiniteScrollWithHandler:(void(^)(UITableView *tableView))handler;
-
-/**
- *  Set a handler to be called to check if the infinite scroll should be shown
- *
- *  @param handler a handler block
- */
 - (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UITableView *tableView))handler;
-
-/**
- *  Finish infinite scroll animations
- *
- *  You must call this method from your infinite scroll handler to finish all
- *  animations properly and reset infinite scroll state
- *
- *  @param handler a completion block handler called when animation finished
- */
 - (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UITableView *tableView))handler;
-
+    
 @end
 
-
-/**
- Convenience interface for UIScrollView+InfiniteScroll category.
- */
 @interface UICollectionView (InfiniteScrollConvenienceInterface)
 
-/**
- *  Setup infinite scroll handler
- *
- *  @param handler a handler block
- */
 - (void)addInfiniteScrollWithHandler:(void(^)(UICollectionView *collectionView))handler;
-
-/**
- *  Set a handler to be called to check if the infinite scroll should be shown
- *
- *  @param handler a handler block
- */
 - (void)setShouldShowInfiniteScrollHandler:(BOOL(^)(UICollectionView *collectionView))handler;
-
-/**
- *  Finish infinite scroll animations
- *
- *  You must call this method from your infinite scroll handler to finish all
- *  animations properly and reset infinite scroll state
- *
- *  @param handler a completion block handler called when animation finished
- */
 - (void)finishInfiniteScrollWithCompletion:(nullable void(^)(UICollectionView *collectionView))handler;
 
 @end
