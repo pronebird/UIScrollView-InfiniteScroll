@@ -164,7 +164,7 @@ static const void *kPBInfiniteScrollDirectionKey = &kPBInfiniteScrollDirectionKe
     state.initialized = YES;
 }
 
-- (void)removeInfiniteScroll {
+- (void)removeInfiniteScroll_ {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
     
     // Ignore multiple calls to remove infinite scroll

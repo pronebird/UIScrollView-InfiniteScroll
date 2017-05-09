@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, UIScrollViewInfiniteScrollDirection) {
 /**
  *  Unregister infinite scroll
  */
-- (void)removeInfiniteScroll;
+- (void)removeInfiniteScroll_;
 
 /**
  *  Finish infinite scroll animations
