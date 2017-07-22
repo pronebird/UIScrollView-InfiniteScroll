@@ -34,7 +34,7 @@ static void PBSwizzleMethod(Class c, SEL original, SEL alternate) {
  *
  *  See https://github.com/pronebird/UIScrollView-InfiniteScroll/issues/31
  *
- *  @param tableView
+ *  @param tableView A helper function to force table view to update its content size.
  */
 static void PBForceUpdateTableViewContentSize(UITableView *tableView) {
     tableView.contentSize = [tableView sizeThatFits:CGSizeMake(CGRectGetWidth(tableView.frame), CGFLOAT_MAX)];
@@ -76,8 +76,8 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 @property (nonatomic) UIActivityIndicatorViewStyle indicatorStyle;
 
 /**
- *  Flag used to return user back to top of scroll view 
- *  when loading initial content
+ *  Flag used to return user back to top of scroll view
+ *  when loading initial content.
  */
 @property (nonatomic) BOOL scrollToTopWhenFinished;
 
@@ -298,7 +298,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 /**
  *  Additional pan gesture handler used to adjust content offset to reveal or hide indicator view.
  *
- *  @param gestureRecognizer
+ *  @param gestureRecognizer Additional pan gesture handler used to adjust content offset to reveal or hide indicator view.
  */
 - (void)pb_handlePanGesture:(UITapGestureRecognizer *)gestureRecognizer {
     if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
@@ -309,7 +309,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 /**
  *  This is a swizzled proxy method for setContentOffset of UIScrollView.
  *
- *  @param contentOffset
+ *  @param contentOffset This is a swizzled proxy method for setContentOffset of UIScrollView.
  */
 - (void)pb_setContentOffset:(CGPoint)contentOffset {
     [self pb_setContentOffset:contentOffset];
@@ -322,7 +322,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 /**
  *  This is a swizzled proxy method for setContentSize of UIScrollView
  *
- *  @param contentSize
+ *  @param contentSize This is a swizzled proxy method for setContentSize of UIScrollView
  */
 - (void)pb_setContentSize:(CGSize)contentSize {
     [self pb_setContentSize:contentSize];
@@ -336,7 +336,8 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  Clamp content size to fit visible bounds of scroll view.
  *  Visible area is a scroll view size minus original top and bottom insets.
  *
- *  @param contentSize content size
+ *  @param contentSize Clamp content size to fit visible bounds of scroll view.
+ *  Visible area is a scroll view size minus original top and bottom insets.
  *
  *  @return CGFloat
  */
@@ -591,7 +592,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 /**
  *  Called whenever content offset changes.
  *
- *  @param contentOffset
+ *  @param contentOffset Called whenever content offset changes.
  */
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
