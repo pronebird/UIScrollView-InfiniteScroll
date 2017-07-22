@@ -1,3 +1,7 @@
+= 1.0.2 (2017-07-22)
+
+* Fixed documentation warnings (@musbaalbaki, @pronebird)
+
 = 1.0.1 (2017-04-12)
 
 * Fixed bug when there was weird animation which shifts offset (@rr-dw)
