@@ -87,7 +87,7 @@ class CustomInfiniteIndicator: UIView {
         stopTime = layer.convertTime(CACurrentMediaTime(), from: nil)
     }
     
-    func restartAnimationIfNeeded() {
+    @objc func restartAnimationIfNeeded() {
         let anim = layer.animation(forKey: rotationAnimationKey)
         
         if animating && anim == nil {
@@ -106,7 +106,7 @@ class CustomInfiniteIndicator: UIView {
     
     fileprivate func animation() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.toValue = NSNumber(value: M_PI * 2 as Double)
+        animation.toValue = NSNumber(value: Double.pi * 2)
         animation.duration = 1
         animation.repeatCount = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
@@ -117,8 +117,8 @@ class CustomInfiniteIndicator: UIView {
     fileprivate func setupBezierPaths() {
         let center = CGPoint(x: bounds.size.width * 0.5, y: bounds.size.height * 0.5)
         let radius = bounds.size.width * 0.5 - thickness
-        let ringPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI * 2), clockwise: true)
-        let quarterRingPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(-M_PI_4), endAngle: CGFloat(M_PI_2 - M_PI_4), clockwise: true)
+        let ringPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat.pi * 2, clockwise: true)
+        let quarterRingPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: -CGFloat.pi / 4, endAngle: CGFloat.pi / 2 - CGFloat.pi / 4, clockwise: true)
         
         outerCircle.path = ringPath.cgPath
         innerCircle.path = quarterRingPath.cgPath
@@ -130,7 +130,7 @@ class CustomInfiniteIndicator: UIView {
         return animating
     }
     
-    func startAnimating() {
+    @objc func startAnimating() {
         if animating {
             return
         }
@@ -139,7 +139,7 @@ class CustomInfiniteIndicator: UIView {
         addAnimation()
     }
     
-    func stopAnimationg() {
+    @objc func stopAnimationg() {
         if !animating {
             return
         }

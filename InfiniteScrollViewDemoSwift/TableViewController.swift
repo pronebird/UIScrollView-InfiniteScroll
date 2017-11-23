@@ -56,7 +56,7 @@ class TableViewController: UITableViewController {
         tableView.beginInfiniteScroll(true)
     }
     
-    fileprivate func performFetch(_ completionHandler: ((Void) -> Void)?) {
+    fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
         fetchData { (fetchResult) in
             do {
                 let (newStories, pageCount, nextPage) = try fetchResult()
@@ -194,7 +194,7 @@ extension ResponseError: LocalizedError {
     
 }
 
-typealias FetchResult = (Void) throws -> ([StoryModel], Int, Int)
+typealias FetchResult = () throws -> ([StoryModel], Int, Int)
 
 extension TableViewController {
     
@@ -212,7 +212,7 @@ extension TableViewController {
         let task = URLSession.shared.dataTask(with: requestURL, completionHandler: {
             (data, _, error) -> Void in
             DispatchQueue.main.async {
-                handler({ (Void) -> ([StoryModel], Int, Int) in
+                handler({ () -> ([StoryModel], Int, Int) in
                     return try self.handleResponse(data, error: error)
                 })
                 

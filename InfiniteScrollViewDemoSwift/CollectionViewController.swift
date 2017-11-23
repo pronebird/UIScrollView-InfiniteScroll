@@ -76,7 +76,7 @@ class CollectionViewController: UICollectionViewController {
         })
     }
     
-    fileprivate func fetchData(_ handler: ((Void) -> Void)?) {
+    fileprivate func fetchData(_ handler: (() -> Void)?) {
         let requestURL = URL(string: apiURL)!
         
         let task = URLSession.shared.dataTask(with: requestURL, completionHandler: { (data, response, error) in
@@ -97,14 +97,14 @@ class CollectionViewController: UICollectionViewController {
         })
     }
     
-    fileprivate func handleResponse(_ data: Data!, response: URLResponse!, error: Error!, completion: ((Void) -> Void)?) {
+    fileprivate func handleResponse(_ data: Data?, response: URLResponse?, error: Error?, completion: (() -> Void)?) {
         if let error = error {
             showAlertWithError(error)
             completion?()
             return;
         }
         
-        var jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        var jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
         
         // Fix broken Flickr JSON
         jsonString = jsonString?.replacingOccurrences(of: "\\'", with: "'") as NSString?
