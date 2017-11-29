@@ -11,10 +11,30 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, InfiniteScrollDirection) {
+	/**
+	 *  Trigger infinite scroll when the scroll view reaches the bottom.
+	 *  This is the default. It is also the only supported direction for
+	 *  table views.
+	 */
+	InfiniteScrollDirectionVertical,
+
+	/**
+	 *  Trigger infinite scroll when the scroll view reaches the right edge.
+	 *  This should be used for horizontally scrolling collection views.
+	 */
+	InfiniteScrollDirectionHorizontal,
+};
+
 /**
  UIScrollView infinite scroll category
  */
 @interface UIScrollView (InfiniteScroll)
+
+/**
+ * The direction that the infinite scroll should work in (default: InfiniteScrollDirectionVertical).
+ */
+@property (nonatomic) InfiniteScrollDirection infiniteScrollDirection;
 
 /**
  *  Flag that indicates whether infinite scroll is animating
@@ -40,14 +60,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) UIView *infiniteScrollIndicatorView;
 
 /**
- *  Vertical margin around indicator view (Default: 11)
+ *  The margin from the scroll view content to the indicator view (Default: 11)
  */
 @property (nonatomic) CGFloat infiniteScrollIndicatorMargin;
 
 /**
- *  Set vertical adjustment for scroll coordinate used to determine when to call handler block.
+ *  Set adjustment for scroll coordinate used to determine when to call handler block.
  *  Non-zero value advances the point when handler block is being called 
- *  making it fire by N points earlier before scroll view reaches the bottom.
+ *  making it fire by N points earlier before scroll view reaches the bottom or right edge.
  *  This value is measured in points and must be positive number.
  *  Default: 0.0
  */
