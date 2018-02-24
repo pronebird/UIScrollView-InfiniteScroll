@@ -91,9 +91,9 @@ Many people make mistake by using external reference to table view or collection
 #### Swift
 
 ```swift
-tableView.addInfiniteScrollWithHandler { (tableView) -> Void in
+tableView.addInfiniteScroll { (tableView) -> Void in
     // update table view
-    
+            
     // finish infinite scroll animation
     tableView.finishInfiniteScroll()
 }
