@@ -119,7 +119,7 @@ tableView.addInfiniteScroll { (tableView) -> Void in
 #### Swift
 
 ```swift
-collectionView.addInfiniteScrollWithHandler { (collectionView) -> Void in
+collectionView.addInfiniteScroll { (collectionView) -> Void in
     collectionView.performBatchUpdates({ () -> Void in
         // update collection view
     }, completion: { (finished) -> Void in
