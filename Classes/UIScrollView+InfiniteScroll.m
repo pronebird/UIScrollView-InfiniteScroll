@@ -611,7 +611,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
         return;
     }
     
-    if(contentOffset.y > actionOffset.y) {
+    if(contentOffset.y > actionOffset.y && [[self panGestureRecognizer] velocityInView: self].y <= 0) {
         [self pb_beginInfinitScrollIfNeeded:NO];
     }
 }
