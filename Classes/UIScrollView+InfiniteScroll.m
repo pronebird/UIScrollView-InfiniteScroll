@@ -457,7 +457,17 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
         
         // This will delay handler execution until scroll deceleration
         [self performSelector:@selector(pb_callInfiniteScrollHandler) withObject:self afterDelay:0.1 inModes:@[ NSDefaultRunLoopMode ]];
+    } else {
+        [self pb_hideActivityIndicator];
     }
+}
+
+/**
+ * Hide activity indicator
+ */
+- (void)pb_hideActivityIndicator {
+    UIView *activityIndicator = [self pb_getOrCreateActivityIndicatorView];
+    activityIndicator.hidden = YES;
 }
 
 /**
