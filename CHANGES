@@ -1,3 +1,7 @@
+= 1.1.0 (2018-04-15)
+
+* Add support for horizontally scrolling views. (@Boerworz)
+
 = 1.0.2 (2017-07-22)
 
 * Fix documentation warnings (@musbaalbaki, @pronebird)
