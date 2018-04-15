@@ -11,6 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Enum that describes the infinite scroll direction.
+ */
 typedef NS_ENUM(NSUInteger, InfiniteScrollDirection) {
 	/**
 	 *  Trigger infinite scroll when the scroll view reaches the bottom.
