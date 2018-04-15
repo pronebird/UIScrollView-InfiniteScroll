@@ -8,22 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		5809B37B1D247F980029136A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5809B37A1D247F980029136A /* Launch Screen.storyboard */; };
+		581FB78B2083B7E0009BF7B8 /* HackerNewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */; };
+		581FB78D2083B850009BF7B8 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78C2083B850009BF7B8 /* Support.swift */; };
 		58279BC41AF6AC5D0075D88A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BC31AF6AC5D0075D88A /* AppDelegate.swift */; };
 		58279BCD1AF6AC5D0075D88A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58279BCC1AF6AC5D0075D88A /* Images.xcassets */; };
 		58279BF11AF6ADA60075D88A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58279BF01AF6ADA60075D88A /* Main.storyboard */; };
 		58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
 		58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
-		58279BFB1AF6AF860075D88A /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFA1AF6AF860075D88A /* PhotoCell.swift */; };
-		58279BFD1AF6B2730075D88A /* StoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFC1AF6B2730075D88A /* StoryModel.swift */; };
-		58279BFF1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */; };
 		58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */; };
 		582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582A4AC11DD8AB2D008203BA /* Localizable.strings */; };
-		58A7C91E1E09641A0084C93C /* FlickrModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrModel.swift */; };
+		58A7C91E1E09641A0084C93C /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5809B37A1D247F980029136A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsResponse.swift; sourceTree = "<group>"; };
+		581FB78C2083B850009BF7B8 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		58279BBE1AF6AC5D0075D88A /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58279BC21AF6AC5D0075D88A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58279BC31AF6AC5D0075D88A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,14 +33,11 @@
 		58279BF01AF6ADA60075D88A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		58279BF21AF6ADCA0075D88A /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
-		58279BFA1AF6AF860075D88A /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
-		58279BFC1AF6B2730075D88A /* StoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryModel.swift; sourceTree = "<group>"; };
-		58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+NetworkIndicator.swift"; sourceTree = "<group>"; };
 		58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfiniteIndicator.swift; sourceTree = "<group>"; };
 		58279C061AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
 		582A4AC01DD8AB2D008203BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		58A7C91D1E09641A0084C93C /* FlickrModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrModel.swift; sourceTree = "<group>"; };
+		58A7C91D1E09641A0084C93C /* FlickrResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +75,8 @@
 				58279BC31AF6AC5D0075D88A /* AppDelegate.swift */,
 				58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */,
 				58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */,
-				58279BFA1AF6AF860075D88A /* PhotoCell.swift */,
+				581FB78C2083B850009BF7B8 /* Support.swift */,
 				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
-				58279BFE1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift */,
 				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
 				58279BEF1AF6AD2C0075D88A /* Classes */,
 				582A4AC11DD8AB2D008203BA /* Localizable.strings */,
@@ -110,8 +107,8 @@
 		58A7C9231E0969E80084C93C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				58279BFC1AF6B2730075D88A /* StoryModel.swift */,
-				58A7C91D1E09641A0084C93C /* FlickrModel.swift */,
+				58A7C91D1E09641A0084C93C /* FlickrResponse.swift */,
+				581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -144,7 +141,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = pronebird;
 				TargetAttributes = {
 					58279BBD1AF6AC5D0075D88A = {
@@ -191,14 +188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58A7C91E1E09641A0084C93C /* FlickrModel.swift in Sources */,
+				581FB78D2083B850009BF7B8 /* Support.swift in Sources */,
+				58A7C91E1E09641A0084C93C /* FlickrResponse.swift in Sources */,
 				58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */,
-				58279BFB1AF6AF860075D88A /* PhotoCell.swift in Sources */,
 				58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */,
-				58279BFF1AF6C4E50075D88A /* UIApplication+NetworkIndicator.swift in Sources */,
+				581FB78B2083B7E0009BF7B8 /* HackerNewsResponse.swift in Sources */,
 				58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */,
 				58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */,
-				58279BFD1AF6B2730075D88A /* StoryModel.swift in Sources */,
 				58279BC41AF6AC5D0075D88A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,12 +225,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -283,12 +281,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
