@@ -1,0 +1,16 @@
+author: Andrej Mihajlov
+copyright: Copyright (c) 2013-present Andrej Mihajlov
+author_url: http://codeispoetry.ru/
+github_url: https://github.com/pronebird/UIScrollView-InfiniteScroll
+github_file_prefix: https://github.com/pronebird/UIScrollView-InfiniteScroll/tree/9cddbf4d89
+
+module: UIScrollView_InfiniteScroll
+module_version: 1.1.0
+
+clean: true
+theme: fullwidth
+objc: true
+sdk: iphonesimulator
+
+framework_root: Classes
+umbrella_header: Classes/UIScrollView+InfiniteScroll.h
