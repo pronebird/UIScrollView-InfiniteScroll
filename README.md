@@ -27,7 +27,7 @@ Be aware that this category [swizzles](http://nshipster.com/method-swizzling/) `
 Just add the following line in your Podfile:
 
 ```ruby
-pod 'UIScrollView-InfiniteScroll', '~> 1.0.0'
+pod 'UIScrollView-InfiniteScroll', '~> 1.1.0'
 ```
 
 ### Examples
