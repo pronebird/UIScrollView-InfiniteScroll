@@ -8,6 +8,23 @@
 
 import Foundation
 
+struct FlickrMedia {
+    let medium: URL?
+}
+
+struct FlickrResponse: Decodable {
+    let link: URL?
+    private let rawMedia: [String: URL]
+    
+    var media: FlickrMedia {
+        return FlickrMedia(medium: rawMedia["m"])
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case link, rawMedia = "media"
+    }
+}
+
 private struct FlickModelAttributes {
     struct mediaAttributes {
         static let medium = "m"
