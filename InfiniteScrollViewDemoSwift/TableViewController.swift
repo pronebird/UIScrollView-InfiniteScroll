@@ -13,10 +13,9 @@ private let useAutosizingCells = true
 
 class TableViewController: UITableViewController {
     
-    fileprivate let cellIdentifier = "Cell"
     fileprivate var currentPage = 0
     fileprivate var numPages = 0
-    fileprivate var stories = [StoryModel]()
+    fileprivate var stories = [HackerNewsStory]()
     
     // MARK: - Lifecycle
     
@@ -57,29 +56,30 @@ class TableViewController: UITableViewController {
     }
     
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
-        fetchData { (fetchResult) in
-            do {
-                let (newStories, pageCount, nextPage) = try fetchResult()
-                
+        fetchData { (result) in
+            defer { completionHandler?() }
+            
+            switch result {
+            case .ok(let response):
                 // create new index paths
                 let storyCount = self.stories.count
-                let (start, end) = (storyCount, newStories.count + storyCount)
+                let (start, end) = (storyCount, response.hits.count + storyCount)
                 let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
                 
                 // update data source
-                self.stories.append(contentsOf: newStories)
-                self.numPages = pageCount
-                self.currentPage = nextPage
+                self.stories.append(contentsOf: response.hits)
+                self.numPages = response.nbPages
+                self.currentPage += 1
                 
                 // update table view
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
                 self.tableView.endUpdates()
-            } catch {
+                
+            case .error(let error):
                 self.showAlertWithError(error)
             }
             
-            completionHandler?()
         }
     }
     
@@ -96,7 +96,7 @@ class TableViewController: UITableViewController {
                                       style: .default,
                                       handler: { _ in self.performFetch(nil) }))
         
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 
 }
@@ -117,9 +117,10 @@ extension TableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let story = stories[indexPath.row]
+        let url = story.url ?? story.postUrl
         
         if #available(iOS 9.0, *) {
-            let safariController = SFSafariViewController(url: story.url)
+            let safariController = SFSafariViewController(url: url)
             safariController.delegate = self
             
             let safariNavigationController = UINavigationController(rootViewController: safariController)
@@ -127,21 +128,10 @@ extension TableViewController {
             
             present(safariNavigationController, animated: true)
         } else {
-            UIApplication.shared.openURL(story.url)
+            UIApplication.shared.openURL(url)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-}
-
-// MARK: - SFSafariViewControllerDelegate
-
-@available(iOS 9.0, *)
-extension TableViewController: SFSafariViewControllerDelegate {
-    
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        controller.dismiss(animated: true)
     }
     
 }
@@ -155,7 +145,7 @@ extension TableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let story = stories[indexPath.row]
         
         cell.textLabel?.text = story.title
@@ -171,56 +161,74 @@ extension TableViewController {
     
 }
 
+// MARK: - SFSafariViewControllerDelegate
+
+@available(iOS 9.0, *)
+extension TableViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true)
+    }
+    
+}
+
 // MARK: - API
 
-fileprivate enum ResponseError: Error {
-    case load
+enum ResponseError: Error {
+    case load(Error)
     case noData
-    case deserialization
+    case deserialization(Error)
 }
 
 extension ResponseError: LocalizedError {
-    
     var errorDescription: String? {
         switch self {
-        case .load:
+        case .load(_):
             return NSLocalizedString("responseError.load", comment: "")
-        case .deserialization:
+        case .deserialization(_):
             return NSLocalizedString("responseError.deserialization", comment: "")
         case .noData:
             return NSLocalizedString("responseError.noData", comment: "")
         }
     }
-    
 }
 
-typealias FetchResult = () throws -> ([StoryModel], Int, Int)
-
 extension TableViewController {
-    
-    fileprivate func apiURL(_ numHits: Int, page: Int) -> URL {
-        let string = "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)"
-        let url = URL(string: string)
-        
-        return url!
+    typealias FetchResult = Result<HackerNewsResponse, ResponseError>
+   
+    fileprivate func makeRequest(numHits: Int, page: Int) -> URLRequest {
+        let url = URL(string: "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)")!
+        return URLRequest(url: url)
     }
     
-    fileprivate func fetchData(_ handler: @escaping ((FetchResult) -> Void)) {
-        let hits = Int(tableView.bounds.height) / 44
-        let requestURL = apiURL(hits, page: currentPage)
+    fileprivate func handleResponse(data: Data?, error: Error?) -> FetchResult {
+        if let error = error {
+            return .error(ResponseError.load(error))
+        }
         
-        let task = URLSession.shared.dataTask(with: requestURL, completionHandler: {
-            (data, _, error) -> Void in
+        guard let data = data else {
+            return .error(ResponseError.noData)
+        }
+        
+        do {
+            let response = try JSONDecoder().decode(HackerNewsResponse.self, from: data)
+            
+            return .ok(response)
+        } catch {
+            return .error(ResponseError.deserialization(error))
+        }
+    }
+
+    fileprivate func fetchData(handler: @escaping ((FetchResult) -> Void)) {
+        let hits = Int(tableView.bounds.height) / 44
+        let request = makeRequest(numHits: hits, page: currentPage)
+        
+        let task = URLSession.shared.dataTask(with: request, completionHandler: {
+            (data, _, networkError) -> Void in
             DispatchQueue.main.async {
-                handler({ () -> ([StoryModel], Int, Int) in
-                    return try self.handleResponse(data, error: error)
-                })
-                
-                UIApplication.shared.stopNetworkActivity()
+                handler(self.handleResponse(data: data, error: networkError))
             }
         })
-        
-        UIApplication.shared.startNetworkActivity()
         
         // I run task.resume() with delay because my network is too fast
         let delay = (stories.count == 0 ? 0 : 5)
@@ -228,24 +236,6 @@ extension TableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
             task.resume()
         })
-    }
-    
-    fileprivate func handleResponse(_ data: Data?, error: Error?) throws -> ([StoryModel], Int, Int) {
-        let resultsKey = "hits"
-        let numPagesKey = "nbPages"
-        
-        if error != nil { throw ResponseError.load }
-        
-        guard let data = data else { throw ResponseError.noData }
-        let raw = try? JSONSerialization.jsonObject(with: data, options: [])
-        
-        guard let response = raw as? [String: AnyObject],
-              let pageCount = response[numPagesKey] as? Int,
-              let entries = response[resultsKey] as? [[String: AnyObject]] else { throw ResponseError.deserialization }
-        
-        let newStories = entries.flatMap { return StoryModel($0) }
-        
-        return (newStories, pageCount, currentPage + 1)
     }
     
 }

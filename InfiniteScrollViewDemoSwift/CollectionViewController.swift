@@ -82,12 +82,8 @@ class CollectionViewController: UICollectionViewController {
         let task = URLSession.shared.dataTask(with: requestURL, completionHandler: { (data, response, error) in
             DispatchQueue.main.async {
                 self.handleResponse(data, response: response, error: error, completion: handler)
-                
-                UIApplication.shared.stopNetworkActivity()
             }
         })
-        
-        UIApplication.shared.startNetworkActivity()
         
         // I run task.resume() with delay because my network is too fast
         let delay = (items.count == 0 ? 0 : 5) * Double(NSEC_PER_SEC)
