@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>UICollectionView(InfiniteScrollConvenienceInterface) Category Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/objc/Extension/UICollectionView(InfiniteScrollConvenienceInterface)" class="dashAnchor"></a>
+
+    <a title="UICollectionView(InfiniteScrollConvenienceInterface) Category Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          UIScrollView_InfiniteScroll Docs
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/pronebird/UIScrollView-InfiniteScroll">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">UIScrollView_InfiniteScroll Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      UICollectionView(InfiniteScrollConvenienceInterface) Category Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Categories.html">Categories</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Categories/UICollectionView(InfiniteScrollConvenienceInterface).html">UICollectionView(InfiniteScrollConvenienceInterface)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Categories/UIScrollView(InfiniteScroll).html">UIScrollView(InfiniteScroll)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Categories/UITableView(InfiniteScrollConvenienceInterface).html">UITableView(InfiniteScrollConvenienceInterface)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/InfiniteScrollDirection.html">InfiniteScrollDirection</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>UICollectionView(InfiniteScrollConvenienceInterface)</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">UICollectionView</span> <span class="p">(</span><span class="nl">InfiniteScrollConvenienceInterface</span><span class="p">)</span></code></pre>
+
+                </div>
+              </div>
+            <p>Convenience interface for UIScrollView+InfiniteScroll category.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UICollectionView(im)addInfiniteScrollWithHandler:"></a>
+                    <a name="//apple_ref/objc/Method/-addInfiniteScrollWithHandler:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UICollectionView(im)addInfiniteScrollWithHandler:">-addInfiniteScrollWithHandler:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Setup infinite scroll handler</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">addInfiniteScrollWithHandler</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UICollectionView</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">))</span><span class="nv">handler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addInfiniteScroll</span><span class="p">(</span><span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">UICollectionView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>handler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a handler block</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pronebird/UIScrollView-InfiniteScroll/tree/9cddbf4d89/Classes/UIScrollView+InfiniteScroll.h#L169">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UICollectionView(im)setShouldShowInfiniteScrollHandler:"></a>
+                    <a name="//apple_ref/objc/Method/-setShouldShowInfiniteScrollHandler:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UICollectionView(im)setShouldShowInfiniteScrollHandler:">-setShouldShowInfiniteScrollHandler:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set a handler to be called to check if the infinite scroll should be shown</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setShouldShowInfiniteScrollHandler</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">nonnull</span> <span class="n">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UICollectionView</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">))</span><span class="nv">handler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setShouldShowInfiniteScrollHandler</span><span class="p">(</span><span class="n">_</span> <span class="nv">handler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">UICollectionView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>handler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a handler block</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pronebird/UIScrollView-InfiniteScroll/tree/9cddbf4d89/Classes/UIScrollView+InfiniteScroll.h#L176">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UICollectionView(im)finishInfiniteScrollWithCompletion:"></a>
+                    <a name="//apple_ref/objc/Method/-finishInfiniteScrollWithCompletion:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UICollectionView(im)finishInfiniteScrollWithCompletion:">-finishInfiniteScrollWithCompletion:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Finish infinite scroll animations</p>
+
+<p>You must call this method from your infinite scroll handler to finish all
+  animations properly and reset infinite scroll state</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">finishInfiniteScrollWithCompletion</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UICollectionView</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">))</span><span class="nv">handler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">finishInfiniteScroll</span><span class="p">(</span><span class="n">completion</span> <span class="nv">handler</span><span class="p">:</span> <span class="p">((</span><span class="kt">UICollectionView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>handler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a completion block handler called when animation finished</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/pronebird/UIScrollView-InfiniteScroll/tree/9cddbf4d89/Classes/UIScrollView+InfiniteScroll.h#L186">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>Copyright (c) 2013-present Andrej Mihajlov</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

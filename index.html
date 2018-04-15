@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>UIScrollView_InfiniteScroll  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+
+    <a title="UIScrollView_InfiniteScroll  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          UIScrollView_InfiniteScroll Docs
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/pronebird/UIScrollView-InfiniteScroll">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">UIScrollView_InfiniteScroll Reference</a>
+      <img class="carat" src="img/carat.png" />
+      UIScrollView_InfiniteScroll  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Categories.html">Categories</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Categories/UICollectionView(InfiniteScrollConvenienceInterface).html">UICollectionView(InfiniteScrollConvenienceInterface)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Categories/UIScrollView(InfiniteScroll).html">UIScrollView(InfiniteScroll)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Categories/UITableView(InfiniteScrollConvenienceInterface).html">UITableView(InfiniteScrollConvenienceInterface)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/InfiniteScrollDirection.html">InfiniteScrollDirection</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            
+            <h2 id='uiscrollview-infinitescroll' class='heading'>UIScrollView+InfiniteScroll</h2>
+
+<p>Infinite scroll implementation as a category for UIScrollView.</p>
+
+<table>
+    <tr>
+        <td>
+            <img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll1.gif">
+        </td>
+        <td>
+            <img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll2.gif">
+        </td>
+        <td>
+            <img src="https://raw.githubusercontent.com/pronebird/UIScrollView-InfiniteScroll/master/README%20images/InfiniteScroll3.gif">
+        </td>
+    </tr>
+</table>
+
+<p>* The content used in demo app is publicly available and provided by hn.algolia.com and Flickr. Both can be inappropriate.</p>
+<h3 id='swizzling' class='heading'>Swizzling</h3>
+
+<p>Be aware that this category <a href="http://nshipster.com/method-swizzling/">swizzles</a> <code>setContentOffset</code> and <code>setContentSize</code> on <code>UIScrollView</code>.</p>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p>Just add the following line in your Podfile:</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'UIScrollView-InfiniteScroll'</span><span class="p">,</span> <span class="s1">'~&gt; 1.1.0'</span>
+</code></pre>
+<h3 id='examples' class='heading'>Examples</h3>
+
+<p>This component comes with example app written in Swift and Objective-C.</p>
+
+<p>If you use CocoaPods you can try it by running:</p>
+<pre class="highlight shell"><code>pod try UIScrollView-InfiniteScroll
+</code></pre>
+<h3 id='documentation' class='heading'>Documentation</h3>
+
+<p><a href="http://pronebird.github.io/UIScrollView-InfiniteScroll/">http://pronebird.github.io/UIScrollView-InfiniteScroll/</a></p>
+<h3 id='before-using-module' class='heading'>Before using module</h3>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+
+<p>Import header file in Objective-C:</p>
+<pre class="highlight objective_c"><code><span class="cp">#import &lt;UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.h&gt;
+</span></code></pre>
+<h4 id='swift' class='heading'>Swift</h4>
+
+<p>Add the following line in your bridging header file: </p>
+<pre class="highlight objective_c"><code><span class="cp">#import &lt;UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.h&gt;
+</span></code></pre>
+<h3 id='basics' class='heading'>Basics</h3>
+
+<p>In order to enable infinite scroll you have to provide a handler block using <code>addInfiniteScrollWithHandler</code>. The block you provide is executed each time infinite scroll component detects that more data needs to be provided.</p>
+
+<p>The purpose of the handler block is to perform asynchronous task, typically networking or database fetch, and update your scroll view or scroll view subclass. </p>
+
+<p>The block itself is called on main queue, therefore make sure you move any long-running tasks to background queue. Once you receive new data, update table view by adding new rows and sections, then call <code>finishInfiniteScroll</code> to complete infinite scroll animations and reset the state of infinite scroll components.</p>
+
+<p><code>viewDidLoad</code> is a good place to install handler block.</p>
+
+<p>Make sure that any interactions with UIKit or methods provided by Infinite Scroll happen on main queue. Use <code>dispatch_async(dispatch_get_main_queue, { ... })</code> in Objective-C or <code>DispatchQueue.main.async { ... }</code> in Swift to run UI related calls on main queue.</p>
+
+<p>Many people make mistake by using external reference to table view or collection view within the handler block. Don&rsquo;t do this. This creates a circular retention. Instead use the instance of scroll view or scroll view subclass passed as first argument to handler block.</p>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="c1">// setup infinite scroll
+</span><span class="p">[</span><span class="n">tableView</span> <span class="nf">addInfiniteScrollWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">UITableView</span><span class="o">*</span> <span class="n">tableView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// update table view
+</span>
+    <span class="c1">// finish infinite scroll animation
+</span>    <span class="p">[</span><span class="n">tableView</span> <span class="nf">finishInfiniteScroll</span><span class="p">];</span>
+<span class="p">}];</span>
+</code></pre>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="n">tableView</span><span class="o">.</span><span class="n">addInfiniteScroll</span> <span class="p">{</span> <span class="p">(</span><span class="n">tableView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+    <span class="c1">// update table view</span>
+
+    <span class="c1">// finish infinite scroll animation</span>
+    <span class="n">tableView</span><span class="o">.</span><span class="nf">finishInfiniteScroll</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='collection-view-quirks' class='heading'>Collection view quirks</h3>
+
+<p><code>UICollectionView.reloadData</code> causes contentOffset to reset. Instead use <code>UICollectionView.performBatchUpdates</code> when possible.</p>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">collectionView</span> <span class="nf">addInfiniteScrollWithHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">UICollectionView</span><span class="o">*</span> <span class="n">collectionView</span><span class="p">)</span> <span class="p">{</span>    
+    <span class="p">[</span><span class="n">collectionView</span> <span class="nf">performBatchUpdates</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+        <span class="c1">// update collection view
+</span>    <span class="p">}</span> <span class="nf">completion</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">BOOL</span> <span class="n">finished</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// finish infinite scroll animations
+</span>        <span class="p">[</span><span class="n">collectionView</span> <span class="nf">finishInfiniteScroll</span><span class="p">];</span>
+    <span class="p">}];</span>
+<span class="p">}];</span>
+</code></pre>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="n">collectionView</span><span class="o">.</span><span class="n">addInfiniteScroll</span> <span class="p">{</span> <span class="p">(</span><span class="n">collectionView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+    <span class="n">collectionView</span><span class="o">.</span><span class="nf">performBatchUpdates</span><span class="p">({</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+        <span class="c1">// update collection view</span>
+    <span class="p">},</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="n">finished</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span>
+        <span class="c1">// finish infinite scroll animations</span>
+        <span class="n">collectionView</span><span class="o">.</span><span class="nf">finishInfiniteScroll</span><span class="p">()</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='start-infinite-scroll-programmatically' class='heading'>Start infinite scroll programmatically</h3>
+
+<p>You can reuse infinite scroll flow to load initial data or fetch more using <code>beginInfiniteScroll(forceScroll)</code>. <code>viewDidLoad</code> is a good place for loading initial data, however absolutely up to you to decide.</p>
+
+<p>When <code>forceScroll</code> parameter is positive, Infinite Scroll component will attempt to scroll down to reveal indicator view. Keep in mind that scrolling will not happen if user is interacting with scroll view.</p>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="nf">beginInfiniteScroll</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+</code></pre>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="n">tableView</span><span class="o">.</span><span class="nf">beginInfiniteScroll</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+</code></pre>
+<h3 id='prevent-infinite-scroll' class='heading'>Prevent infinite scroll</h3>
+
+<p>Sometimes you need to prevent the infinite scroll from continuing. For example, if your search API has no more results, it does not make sense to keep making the requests or to show the spinner.</p>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="p">[</span><span class="n">tableView</span> <span class="nf">setShouldShowInfiniteScrollHandler</span><span class="p">:</span><span class="o">^</span><span class="n">BOOL</span> <span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="n">tableView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Only show up to 5 pages then prevent the infinite scroll
+</span>    <span class="k">return</span> <span class="p">(</span><span class="n">weakSelf</span><span class="p">.</span><span class="n">currentPage</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">);</span>
+<span class="p">}];</span>
+</code></pre>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="c1">// Provide a block to be called right before a infinite scroll event is triggered.  Return YES to allow or NO to prevent it from triggering.</span>
+<span class="n">tableView</span><span class="o">.</span><span class="n">setShouldShowInfiniteScrollHandler</span> <span class="p">{</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">in</span>
+    <span class="c1">// Only show up to 5 pages then prevent the infinite scroll</span>
+    <span class="k">return</span> <span class="n">currentPage</span> <span class="o">&lt;</span> <span class="mi">5</span> 
+<span class="p">}</span>
+</code></pre>
+<h3 id='seamlessly-preload-content' class='heading'>Seamlessly preload content</h3>
+
+<p>Ideally you want your content to flow seamlessly without ever showing a spinner. Infinite scroll offers an option to specify offset in points that will be used to start preloader before user reaches the bottom of scroll view. </p>
+
+<p>The proper balance between the number of results you load each time and large enough offset should give your users a decent experience. Most likely you will have to come up with your own formula for the combination of those based on kind of content and device dimensions.</p>
+<pre class="highlight objective_c"><code><span class="c1">// Preload more data 500pt before reaching the bottom of scroll view.
+</span><span class="n">tableView</span><span class="p">.</span><span class="n">infiniteScrollTriggerOffset</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+</code></pre>
+<h3 id='custom-indicator' class='heading'>Custom indicator</h3>
+
+<p>You can use custom indicator instead of default <code>UIActivityIndicatorView</code>.</p>
+
+<p>Custom indicator must be a subclass of <code>UIView</code> and implement the following methods:</p>
+<pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startAnimating</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">stopAnimating</span><span class="p">;</span>
+</code></pre>
+<h4 id='objective-c' class='heading'>Objective-C</h4>
+<pre class="highlight objective_c"><code><span class="n">CustomInfiniteIndicator</span> <span class="o">*</span><span class="n">infiniteIndicator</span> <span class="o">=</span> <span class="p">[[</span><span class="n">CustomInfiniteIndicator</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithFrame</span><span class="p">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">)];</span>
+<span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">infiniteScrollIndicatorView</span> <span class="o">=</span> <span class="n">indicator</span><span class="p">;</span>
+</code></pre>
+<h4 id='swift' class='heading'>Swift</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">frame</span> <span class="o">=</span> <span class="kt">CGRect</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">tableView</span><span class="o">.</span><span class="n">infiniteScrollIndicatorView</span> <span class="o">=</span> <span class="kt">CustomInfiniteIndicator</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="n">frame</span><span class="p">)</span>
+</code></pre>
+
+<p>Please see example implementation of custom indicator view:</p>
+
+<ul>
+<li><p>Objective-C: <a href="https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemo/CustomInfiniteIndicator.m">CustomInfiniteIndicator.m</a></p></li>
+<li><p>Swift: <a href="https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/InfiniteScrollViewDemoSwift/CustomInfiniteIndicator.swift">CustomInfiniteIndicator.swift</a></p></li>
+</ul>
+
+<p>At the moment InfiniteScroll uses indicator&rsquo;s frame directly so make sure you size custom indicator view beforehand. Such views as <code>UIImageView</code> or <code>UIActivityIndicatorView</code> will automatically resize themselves so no need to setup frame for them.</p>
+<h3 id='contributors' class='heading'>Contributors</h3>
+
+<p>Please see <a href="https://github.com/pronebird/UIScrollView-InfiniteScroll/blob/master/CHANGES">CHANGES</a></p>
+<h3 id='attributions' class='heading'>Attributions</h3>
+
+<p>Demo app icon by <a href="http://appicontemplate.com/ios8/">PixelResort</a>.</p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>Copyright (c) 2013-present Andrej Mihajlov</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
