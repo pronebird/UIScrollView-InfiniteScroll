@@ -9,12 +9,12 @@
 import Foundation
 
 struct HackerNewsStory: Decodable {
-    let objectId: String
+    let objectID: String
     let title: String
     let author: String
     let url: URL?
     var postUrl: URL {
-        return URL(string: "https://news.ycombinator.com/item?id=\(self.objectId)")!
+        return URL(string: "https://news.ycombinator.com/item?id=\(self.objectID)")!
     }
 }
 

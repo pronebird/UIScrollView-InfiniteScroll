@@ -145,9 +145,9 @@ extension TableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let story = stories[indexPath.row]
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = story.title
         cell.detailTextLabel?.text = story.author
         
@@ -174,49 +174,12 @@ extension TableViewController: SFSafariViewControllerDelegate {
 
 // MARK: - API
 
-enum ResponseError: Error {
-    case load(Error)
-    case noData
-    case deserialization(Error)
-}
-
-extension ResponseError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .load(_):
-            return NSLocalizedString("responseError.load", comment: "")
-        case .deserialization(_):
-            return NSLocalizedString("responseError.deserialization", comment: "")
-        case .noData:
-            return NSLocalizedString("responseError.noData", comment: "")
-        }
-    }
-}
-
 extension TableViewController {
-    typealias FetchResult = Result<HackerNewsResponse, ResponseError>
+    typealias FetchResult = Result<HackerNewsResponse, FetchError>
    
     fileprivate func makeRequest(numHits: Int, page: Int) -> URLRequest {
         let url = URL(string: "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)")!
         return URLRequest(url: url)
-    }
-    
-    fileprivate func handleResponse(data: Data?, error: Error?) -> FetchResult {
-        if let error = error {
-            return .error(ResponseError.load(error))
-        }
-        
-        guard let data = data else {
-            return .error(ResponseError.noData)
-        }
-        
-        do {
-            let response = try JSONDecoder().decode(HackerNewsResponse.self, from: data)
-            
-            return .ok(response)
-        } catch {
-            return .error(ResponseError.deserialization(error))
-        }
     }
 
     fileprivate func fetchData(handler: @escaping ((FetchResult) -> Void)) {
@@ -226,7 +189,7 @@ extension TableViewController {
         let task = URLSession.shared.dataTask(with: request, completionHandler: {
             (data, _, networkError) -> Void in
             DispatchQueue.main.async {
-                handler(self.handleResponse(data: data, error: networkError))
+                handler(handleFetchResponse(data: data, networkError: networkError))
             }
         })
         

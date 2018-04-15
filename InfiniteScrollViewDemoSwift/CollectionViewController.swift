@@ -11,12 +11,9 @@ import SafariServices
 
 class CollectionViewController: UICollectionViewController {
     
-    fileprivate let downloadQueue = DispatchQueue(label: "ru.codeispoetry.downloadQueue", qos: DispatchQoS.background)
+    fileprivate let downloadQueue = DispatchQueue(label: "Photo cache", qos: DispatchQoS.background)
     
-    fileprivate let cellIdentifier = "PhotoCell"
-    fileprivate let apiURL = "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json"
-    
-    fileprivate var items = [FlickrModel]()
+    fileprivate var items = [FlickrItem]()
     fileprivate var cache = NSCache<NSURL, UIImage>()
     
     // MARK: - Lifecycle
@@ -32,9 +29,9 @@ class CollectionViewController: UICollectionViewController {
         
         // Add infinite scroll handler
         collectionView?.addInfiniteScroll { [weak self] (scrollView) -> Void in
-            self?.fetchData() {
+            self?.performFetch({
                 scrollView.finishInfiniteScroll()
-            }
+            })
         }
         
         // load initial data
@@ -46,8 +43,6 @@ class CollectionViewController: UICollectionViewController {
         
         collectionViewLayout.invalidateLayout()
     }
-    
-    // MARK: - Private
     
     fileprivate func downloadPhoto(_ url: URL, completion: @escaping (_ url: URL, _ image: UIImage) -> Void) {
         downloadQueue.async(execute: { () -> Void in
@@ -76,69 +71,31 @@ class CollectionViewController: UICollectionViewController {
         })
     }
     
-    fileprivate func fetchData(_ handler: (() -> Void)?) {
-        let requestURL = URL(string: apiURL)!
-        
-        let task = URLSession.shared.dataTask(with: requestURL, completionHandler: { (data, response, error) in
-            DispatchQueue.main.async {
-                self.handleResponse(data, response: response, error: error, completion: handler)
+    fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
+        fetchData { (result) in
+            switch result {
+            case .ok(let response):
+                let newItems = response.items
+                
+                // create new index paths
+                let photoCount = self.items.count
+                let (start, end) = (photoCount, newItems.count + photoCount)
+                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
+                
+                // update data source
+                self.items.append(contentsOf: newItems)
+                
+                // update collection view
+                self.collectionView?.performBatchUpdates({ () -> Void in
+                    self.collectionView?.insertItems(at: indexPaths)
+                }, completion: { (finished) -> Void in
+                    completionHandler?()
+                });
+                
+            case .error(let error):
+                self.showAlertWithError(error)
             }
-        })
-        
-        // I run task.resume() with delay because my network is too fast
-        let delay = (items.count == 0 ? 0 : 5) * Double(NSEC_PER_SEC)
-        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
-        DispatchQueue.main.asyncAfter(deadline: time, execute: {
-            task.resume()
-        })
-    }
-    
-    fileprivate func handleResponse(_ data: Data?, response: URLResponse?, error: Error?, completion: (() -> Void)?) {
-        if let error = error {
-            showAlertWithError(error)
-            completion?()
-            return;
         }
-        
-        var jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-        
-        // Fix broken Flickr JSON
-        jsonString = jsonString?.replacingOccurrences(of: "\\'", with: "'") as NSString?
-        let fixedData = jsonString?.data(using: String.Encoding.utf8.rawValue)
-        
-        let responseDict: Any
-        do {
-            responseDict = try JSONSerialization.jsonObject(with: fixedData!, options: JSONSerialization.ReadingOptions())
-        } catch {
-            showAlertWithError(error)
-            completion?()
-            return
-        }
-        
-        // extract data
-        guard let payload = responseDict as? [String: Any],
-              let results = payload["items"] as? [[String: Any]] else {
-            completion?()
-            return
-        }
-        
-        // create new models
-        let newModels = results.flatMap { FlickrModel($0) }
-        
-        // create new index paths
-        let photoCount = items.count
-        let (start, end) = (photoCount, newModels.count + photoCount)
-        let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
-        
-        // update data source
-        items.append(contentsOf: newModels)
-        
-        // update collection view
-        collectionView?.performBatchUpdates({ () -> Void in
-            self.collectionView?.insertItems(at: indexPaths)
-        }, completion: { (finished) -> Void in
-            completion?()
-        });
     }
     
     fileprivate func showAlertWithError(_ error: Error) {
@@ -152,11 +109,21 @@ class CollectionViewController: UICollectionViewController {
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("collectionView.errorAlert.retry", comment: ""),
                                       style: .default,
-                                      handler: { _ in self.fetchData(nil) }))
+                                      handler: { _ in self.performFetch(nil) }))
         
         self.present(alert, animated: true, completion: nil)
     }
 
+}
+
+// MARK: - Actions
+
+extension CollectionViewController {
+    
+    @IBAction func handleRefresh() {
+        collectionView?.beginInfiniteScroll(true)
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -192,15 +159,16 @@ extension CollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PhotoCell
-        let model = items[indexPath.item]
-        let image = cache.object(forKey: model.media.medium as NSURL)
+        let item = items[indexPath.item]
+        let mediaUrl = item.mediumMediaUrl!
+        let image = cache.object(forKey: mediaUrl as NSURL)
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
         cell.imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         cell.imageView.image = image
         
         if image == nil {
-            downloadPhoto(model.media.medium, completion: { (url, image) -> Void in
+            downloadPhoto(mediaUrl, completion: { (url, image) -> Void in
                 collectionView.reloadItems(at: [indexPath])
             })
         }
@@ -244,12 +212,34 @@ extension CollectionViewController: SFSafariViewControllerDelegate {
     
 }
 
-// MARK: - Actions
+// MARK: - Cells
+
+class PhotoCell: UICollectionViewCell {
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+}
+
+// MARK: - API
 
 extension CollectionViewController {
+    typealias FetchResult = Result<FlickrResponse, FetchError>
     
-    @IBAction func handleRefresh() {
-        collectionView?.beginInfiniteScroll(true)
+    fileprivate func fetchData(handler: @escaping ((FetchResult) -> Void)) {
+        let requestUrl = URL(string: "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json")!
+        
+        let task = URLSession.shared.dataTask(with: requestUrl, completionHandler: { (data, _, networkError) in
+            DispatchQueue.main.async {
+                handler(handleFetchResponse(data: data, networkError: networkError))
+            }
+        })
+        
+        // I run task.resume() with delay because my network is too fast
+        let delay = items.count == 0 ? 0 : 5
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+            task.resume()
+        })
     }
     
 }
