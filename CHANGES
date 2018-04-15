@@ -1,30 +1,34 @@
+= 1.1.0 (2018-04-15)
+
+* Add support for horizontally scrolling views. (@Boerworz)
+
 = 1.0.2 (2017-07-22)
 
-* Fixed documentation warnings (@musbaalbaki, @pronebird)
+* Fix documentation warnings (@musbaalbaki, @pronebird)
 
 = 1.0.1 (2017-04-12)
 
-* Fixed bug when there was weird animation which shifts offset (@rr-dw)
+* Fix bug when there was weird animation which shifts offset (@rr-dw)
 * Retain contentOffset.x in scroll to top – based on @rr-dw's fix (@pronebird)
 
 = 1.0.0 (2016-12-20)
 
-* Added programmatic way of starting infinite scroll handler (@pronebird)
+* Add programmatic way of starting infinite scroll handler (@pronebird)
 
 = 0.9.1 (2016-07-03)
 
-* Fixed issue with activity indicator teleportation in table views
-* Fixed issue when bounce back animation wouldn't properly complete due to user interactions
-* Fixed nullability attribute for -setShouldShowInfiniteScrollHandler:
-* Added trigger offset, see -infiniteScrollTriggerOffset (@GorkaMM)
+* Fix issue with activity indicator teleportation in table views
+* Fix issue when bounce back animation wouldn't properly complete due to user interactions
+* Fix nullability attribute for -setShouldShowInfiniteScrollHandler:
+* Add trigger offset, see -infiniteScrollTriggerOffset (@GorkaMM)
 
 = 0.9.0 (2016-06-27)
 
-* Solved longstanding issue with dynamic updates in table views (@intrepidmatt)
+* Solve longstanding issue with dynamic updates in table views (@intrepidmatt)
 
 = 0.8.0 (2016-06-19)
 
-* Added a handler to conditionally prevent the infinite scroll from showing (@RyanBertrand)
+* Add a handler to conditionally prevent the infinite scroll from showing (@RyanBertrand)
 
 = 0.7.4 (2016-03-09)
 
