@@ -30,6 +30,14 @@ Just add the following line in your Podfile:
 pod 'UIScrollView-InfiniteScroll', '~> 1.1.0'
 ```
 
+### Carthage
+
+Just add the following line in your Cartfile:
+
+```ruby
+github "pronebird/UIScrollView-InfiniteScroll" ~> 1.1.0
+```
+
 ### Examples
 
 This component comes with example app written in Swift and Objective-C.
