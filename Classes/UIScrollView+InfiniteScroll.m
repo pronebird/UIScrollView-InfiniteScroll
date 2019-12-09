@@ -651,10 +651,6 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @param contentOffset content offset
  */
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
-    // is user initiated?
-    if(![self isDragging]) {
-        return;
-    }
 
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
 
