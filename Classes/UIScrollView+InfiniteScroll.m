@@ -56,6 +56,11 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 @interface _PBInfiniteScrollState : NSObject
 
 /**
+*  A flag that check scrollView dragging
+*/
+@property (nonatomic) BOOL shouldIgnoreScrollViewDragging;
+
+/**
  *  A flag that indicates whether scroll is initialized
  */
 @property (nonatomic) BOOL initialized;
@@ -138,9 +143,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
     // Default row height (44) minus activity indicator height (22) / 2
     _indicatorMargin = 11;
-
+    
     _direction = InfiniteScrollDirectionVertical;
-
+    _shouldIgnoreScrollViewDragging = false
+    
     return self;
 }
 
@@ -221,6 +227,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
 #pragma mark - Accessors
 #pragma mark -
+
+- (BOOL)shouldIgnoreScrollViewDragging {
+    return self.pb_infiniteScrollState.shouldIgnoreScrollViewDragging;
+}
+
+- (void)setShouldIgnoreScrollViewDragging:(BOOL)shouldIgnoreScrollViewDragging {
+    self.pb_infiniteScrollState.shouldIgnoreScrollViewDragging = shouldIgnoreScrollViewDragging;
+}
 
 - (InfiniteScrollDirection)infiniteScrollDirection {
     return self.pb_infiniteScrollState.direction;
