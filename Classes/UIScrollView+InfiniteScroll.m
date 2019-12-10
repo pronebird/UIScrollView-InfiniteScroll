@@ -143,7 +143,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 
     // Default row height (44) minus activity indicator height (22) / 2
     _indicatorMargin = 11;
-    
+
     _direction = InfiniteScrollDirectionVertical;
     _shouldIgnoreScrollViewDragging = false;
     
