@@ -145,7 +145,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     _indicatorMargin = 11;
     
     _direction = InfiniteScrollDirectionVertical;
-    _shouldIgnoreScrollViewDragging = false
+    _shouldIgnoreScrollViewDragging = false;
     
     return self;
 }
