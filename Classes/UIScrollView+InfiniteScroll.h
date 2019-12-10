@@ -34,6 +34,9 @@ typedef NS_ENUM(NSUInteger, InfiniteScrollDirection) {
  */
 @interface UIScrollView (InfiniteScroll)
 
+
+@property (nonatomic) BOOL shouldIgnoreScrollViewDragging;
+
 /**
  * The direction that the infinite scroll should work in (default: InfiniteScrollDirectionVertical).
  */

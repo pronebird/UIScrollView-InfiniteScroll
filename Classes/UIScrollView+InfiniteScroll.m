@@ -651,7 +651,10 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @param contentOffset content offset
  */
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
-
+    // is user initiated?
+    if(![self isDragging] && !self.shouldIgnoreScrollViewDragging) {
+        return;
+    }
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
 
     CGFloat contentSize = [self pb_clampContentSizeToFitVisibleBounds:self.contentSize];
