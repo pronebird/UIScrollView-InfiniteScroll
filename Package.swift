@@ -24,6 +24,6 @@ let package = Package(
         .target(
             name: "UIScrollView_InfiniteScroll",
             path: "Classes",
-            publicHeadersPath: nil),
+            publicHeadersPath: ""),
     ]
 )
