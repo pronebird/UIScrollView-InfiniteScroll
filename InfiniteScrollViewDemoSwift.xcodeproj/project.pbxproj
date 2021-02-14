@@ -18,6 +18,17 @@
 		58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		58279C081AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */; };
 		582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582A4AC11DD8AB2D008203BA /* Localizable.strings */; };
+		5869B32125D8EB0400550415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */; };
+		5869B32D25D8EB5200550415 /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */; };
+		5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
+		5869B33325D8EB9E00550415 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78C2083B850009BF7B8 /* Support.swift */; };
+		5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
+		5869B33925D8EBAB00550415 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
+		5869B33C25D8EBAE00550415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BC31AF6AC5D0075D88A /* AppDelegate.swift */; };
+		5869B33F25D8EC1E00550415 /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrResponse.swift */; };
+		5869B34025D8EC1E00550415 /* HackerNewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */; };
+		5869B34325D8EC7700550415 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */; };
+		5869B34A25D8EF4D00550415 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58279BCC1AF6AC5D0075D88A /* Images.xcassets */; };
 		58A7C91E1E09641A0084C93C /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrResponse.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,11 +48,22 @@
 		58279C061AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
 		58279C071AF6DC9C0075D88A /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
 		582A4AC01DD8AB2D008203BA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5869B31425D8EB0200550415 /* InfiniteScrollViewDemo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InfiniteScrollViewDemo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5869B32025D8EB0400550415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5869B32225D8EB0400550415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-tvOS.storyboard"; sourceTree = "<group>"; };
 		58A7C91D1E09641A0084C93C /* FlickrResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		58279BBB1AF6AC5D0075D88A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5869B31125D8EB0200550415 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -55,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				58279BC01AF6AC5D0075D88A /* InfiniteScrollViewDemoSwift */,
+				5869B31525D8EB0200550415 /* InfiniteScrollViewDemo-tvOS */,
 				58279BBF1AF6AC5D0075D88A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				58279BBE1AF6AC5D0075D88A /* Infinite Scroll.app */,
+				5869B31425D8EB0200550415 /* InfiniteScrollViewDemo-tvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,6 +128,16 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		5869B31525D8EB0200550415 /* InfiniteScrollViewDemo-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */,
+				5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */,
+				5869B32225D8EB0400550415 /* Info.plist */,
+			);
+			path = "InfiniteScrollViewDemo-tvOS";
+			sourceTree = "<group>";
+		};
 		58A7C9231E0969E80084C93C /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +167,23 @@
 			productReference = 58279BBE1AF6AC5D0075D88A /* Infinite Scroll.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5869B31325D8EB0200550415 /* InfiniteScrollViewDemo-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5869B32325D8EB0400550415 /* Build configuration list for PBXNativeTarget "InfiniteScrollViewDemo-tvOS" */;
+			buildPhases = (
+				5869B31025D8EB0200550415 /* Sources */,
+				5869B31125D8EB0200550415 /* Frameworks */,
+				5869B31225D8EB0200550415 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "InfiniteScrollViewDemo-tvOS";
+			productName = "InfiniteScrollViewDemo-tvOS";
+			productReference = 5869B31425D8EB0200550415 /* InfiniteScrollViewDemo-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -140,7 +191,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = pronebird;
 				TargetAttributes = {
@@ -148,6 +199,11 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = ZXGXFAG6WF;
 						LastSwiftMigration = 1200;
+					};
+					5869B31325D8EB0200550415 = {
+						CreatedOnToolsVersion = 12.0;
+						DevelopmentTeam = ZXGXFAG6WF;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -166,6 +222,7 @@
 			projectRoot = "";
 			targets = (
 				58279BBD1AF6AC5D0075D88A /* InfiniteScrollViewDemoSwift */,
+				5869B31325D8EB0200550415 /* InfiniteScrollViewDemo-tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -179,6 +236,16 @@
 				582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */,
 				58279BCD1AF6AC5D0075D88A /* Images.xcassets in Resources */,
 				58279BF11AF6ADA60075D88A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5869B31225D8EB0200550415 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5869B34A25D8EF4D00550415 /* Images.xcassets in Resources */,
+				5869B32125D8EB0400550415 /* LaunchScreen.storyboard in Resources */,
+				5869B32D25D8EB5200550415 /* Main-tvOS.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +267,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5869B31025D8EB0200550415 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5869B34325D8EC7700550415 /* UIScrollView+InfiniteScroll.m in Sources */,
+				5869B33925D8EBAB00550415 /* CollectionViewController.swift in Sources */,
+				5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */,
+				5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */,
+				5869B34025D8EC1E00550415 /* HackerNewsResponse.swift in Sources */,
+				5869B33C25D8EBAE00550415 /* AppDelegate.swift in Sources */,
+				5869B33325D8EB9E00550415 /* Support.swift in Sources */,
+				5869B33F25D8EC1E00550415 /* FlickrResponse.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -209,6 +291,14 @@
 				582A4AC01DD8AB2D008203BA /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5869B32025D8EB0400550415 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -352,6 +442,65 @@
 			};
 			name = Release;
 		};
+		5869B32425D8EB0400550415 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ZXGXFAG6WF;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "InfiniteScrollViewDemo-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.pronebird.InfiniteScrollViewDemo-tvOS.InfiniteScrollViewDemo-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		5869B32525D8EB0400550415 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZXGXFAG6WF;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "InfiniteScrollViewDemo-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.pronebird.InfiniteScrollViewDemo-tvOS.InfiniteScrollViewDemo-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -369,6 +518,15 @@
 			buildConfigurations = (
 				58279BE01AF6AC5D0075D88A /* Debug */,
 				58279BE11AF6AC5D0075D88A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5869B32325D8EB0400550415 /* Build configuration list for PBXNativeTarget "InfiniteScrollViewDemo-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5869B32425D8EB0400550415 /* Debug */,
+				5869B32525D8EB0400550415 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

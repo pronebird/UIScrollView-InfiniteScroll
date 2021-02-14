@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="9058" systemVersion="15A284" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+    <device id="appleTV" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -12,8 +14,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="120"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="Fme-ix-oW0" kind="relationship" relationship="viewControllers" id="5wy-kF-4o0"/>
@@ -27,39 +28,34 @@
         <!--Table Demo-->
         <scene sceneID="NR3-qg-lON">
             <objects>
-                <tableViewController id="G8E-qf-6J7" customClass="TableViewController" sceneMemberID="viewController">
+                <tableViewController id="G8E-qf-6J7" customClass="TableViewController" customModule="InfiniteScrollViewDemo_tvOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="40" sectionFooterHeight="40" id="PMZ-db-j07">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="dpR-gd-Xxj" detailTextLabel="b5e-vv-5Yf" style="IBUITableViewCellStyleSubtitle" id="Ca7-AZ-Ygn">
-                                <rect key="frame" x="0.0" y="199" width="1880" height="100"/>
+                                <rect key="frame" x="96" y="40" width="1728" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ca7-AZ-Ygn" id="vyd-X0-8Dd">
-                                    <rect key="frame" x="0.0" y="0.0" width="1904" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1728" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dpR-gd-Xxj">
-                                            <rect key="frame" x="20" y="4" width="72" height="46"/>
+                                            <rect key="frame" x="20" y="4" width="70" height="46"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b5e-vv-5Yf">
-                                            <rect key="frame" x="20" y="50" width="128" height="46"/>
+                                            <rect key="frame" x="20" y="50" width="125" height="46"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <animations/>
                                 </tableViewCellContentView>
-                                <animations/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -76,11 +72,10 @@
         <!--Collection View Controller-->
         <scene sceneID="XhO-bN-0ZE">
             <objects>
-                <collectionViewController id="yKh-hL-65x" customClass="CollectionViewController" sceneMemberID="viewController">
+                <collectionViewController id="yKh-hL-65x" customClass="CollectionViewController" customModule="InfiniteScrollViewDemo_tvOS" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="uCE-SI-MkW">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2xO-bw-5Mh">
                             <size key="itemSize" width="200" height="200"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -88,8 +83,8 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="ojR-D0-jsO" customClass="PhotoCell">
-                                <rect key="frame" x="0.0" y="145" width="200" height="200"/>
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="ojR-D0-jsO" customClass="PhotoCell" customModule="InfiniteScrollViewDemo_tvOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -100,11 +95,9 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3La-hU-bRD">
                                                     <rect key="frame" x="0.0" y="0.0" width="190" height="190"/>
-                                                    <animations/>
                                                 </imageView>
                                             </subviews>
-                                            <animations/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="3La-hU-bRD" secondAttribute="trailing" id="8LJ-lH-W41"/>
                                                 <constraint firstAttribute="bottom" secondItem="3La-hU-bRD" secondAttribute="bottom" id="CtC-ak-lU9"/>
@@ -113,11 +106,8 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <animations/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="OKR-FU-HX1" firstAttribute="top" secondItem="ojR-D0-jsO" secondAttribute="top" constant="5" id="3YB-Me-1Fi"/>
                                     <constraint firstAttribute="trailing" secondItem="OKR-FU-HX1" secondAttribute="trailing" constant="5" id="PiI-Kt-BpM"/>
@@ -146,9 +136,8 @@
                 <navigationController id="Fme-ix-oW0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Table" image="first" id="CgQ-nJ-h3Z"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nwy-fp-y2r">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
+                        <rect key="frame" x="0.0" y="157" width="1920" height="145"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <connections>
                         <segue destination="G8E-qf-6J7" kind="relationship" relationship="rootViewController" id="JDJ-oG-hsS"/>
@@ -164,9 +153,8 @@
                 <navigationController id="MsC-IX-DnB" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Collection" image="second" id="Otm-2j-ZP5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ape-u8-xRi">
-                        <rect key="frame" x="0.0" y="0.0" width="1920" height="145"/>
+                        <rect key="frame" x="0.0" y="157" width="1920" height="145"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <connections>
                         <segue destination="yKh-hL-65x" kind="relationship" relationship="rootViewController" id="GM2-c3-Fjf"/>

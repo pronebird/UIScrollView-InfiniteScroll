@@ -7,7 +7,9 @@
 //
 
 import UIKit
+#if !os(tvOS)
 import SafariServices
+#endif
 
 private let useAutosizingCells = true
 
@@ -119,7 +121,7 @@ extension TableViewController {
         let story = stories[indexPath.row]
         let url = story.url ?? story.postUrl
         
-        if #available(iOS 9.0, *) {
+        #if !os(tvOS)
             let safariController = SFSafariViewController(url: url)
             safariController.delegate = self
             
@@ -127,9 +129,7 @@ extension TableViewController {
             safariNavigationController.setNavigationBarHidden(true, animated: false)
             
             present(safariNavigationController, animated: true)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+        #endif
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -162,8 +162,7 @@ extension TableViewController {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-
-@available(iOS 9.0, *)
+#if !os(tvOS)
 extension TableViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
@@ -171,6 +170,7 @@ extension TableViewController: SFSafariViewControllerDelegate {
     }
     
 }
+#endif
 
 // MARK: - API
 

@@ -7,7 +7,9 @@
 //
 
 import UIKit
+#if !os(tvOS)
 import SafariServices
+#endif
 
 class CollectionViewController: UICollectionViewController {
     
@@ -132,10 +134,18 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionWidth = collectionView.bounds.width;
-        var itemWidth = collectionWidth / 3 - 1;
-        
-        if(UI_USER_INTERFACE_IDIOM() == .pad) {
-            itemWidth = collectionWidth / 4 - 1;
+        let itemWidth: CGFloat
+
+        switch self.traitCollection.userInterfaceIdiom  {
+        case .pad:
+            itemWidth = collectionWidth / 4 - 1
+        case .tv:
+            let spacing = self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)
+
+            itemWidth = collectionWidth / 8 - spacing
+        default:
+            itemWidth = collectionWidth / 3 - 1
+
         }
         
         return CGSize(width: itemWidth, height: itemWidth);
@@ -182,18 +192,16 @@ extension CollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let model = items[indexPath.row]
+
+        #if !os(tvOS)
+        let safariController = SFSafariViewController(url: model.link)
+        safariController.delegate = self
         
-        if #available(iOS 9.0, *) {
-            let safariController = SFSafariViewController(url: model.link)
-            safariController.delegate = self
-            
-            let safariNavigationController = UINavigationController(rootViewController: safariController)
-            safariNavigationController.setNavigationBarHidden(true, animated: false)
-            
-            present(safariNavigationController, animated: true)
-        } else {
-            UIApplication.shared.openURL(model.link)
-        }
+        let safariNavigationController = UINavigationController(rootViewController: safariController)
+        safariNavigationController.setNavigationBarHidden(true, animated: false)
+        
+        present(safariNavigationController, animated: true)
+        #endif
         
         collectionView.deselectItem(at: indexPath, animated: true)
     }
@@ -202,7 +210,7 @@ extension CollectionViewController {
 
 // MARK: - SFSafariViewControllerDelegate
 
-@available(iOS 9.0, *)
+#if !os(tvOS)
 extension CollectionViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
@@ -210,6 +218,7 @@ extension CollectionViewController: SFSafariViewControllerDelegate {
     }
     
 }
+#endif
 
 // MARK: - Cells
 
@@ -219,7 +228,11 @@ class PhotoCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         if #available(iOS 13.0, *) {
+            #if os(tvOS)
+            imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+            #else
             imageView.backgroundColor = .tertiarySystemFill
+            #endif
         } else {
             imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         }
