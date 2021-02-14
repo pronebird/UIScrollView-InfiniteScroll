@@ -131,9 +131,17 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     }
 
 #if TARGET_OS_TV
-    _indicatorStyle = UIActivityIndicatorViewStyleWhite;
+    if (@available(tvOS 13, *)) {
+        _indicatorStyle = UIActivityIndicatorViewStyleLarge;
+    } else {
+        _indicatorStyle = UIActivityIndicatorViewStyleWhite;
+    }
 #else
-    _indicatorStyle = UIActivityIndicatorViewStyleGray;
+    if (@available(iOS 13, *)) {
+        _indicatorStyle = UIActivityIndicatorViewStyleMedium;
+    } else {
+        _indicatorStyle = UIActivityIndicatorViewStyleGray;
+    }
 #endif
 
     // Default row height (44) minus activity indicator height (22) / 2
