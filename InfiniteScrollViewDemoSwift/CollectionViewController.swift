@@ -24,7 +24,13 @@ class CollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         // Set custom indicator
-        collectionView?.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let indicatorRect: CGRect
+        #if os(tvOS)
+        indicatorRect = CGRect(x: 0, y: 0, width: 64, height: 64)
+        #else
+        indicatorRect = CGRect(x: 0, y: 0, width: 24, height: 24)
+        #endif
+        collectionView?.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: indicatorRect)
         
         // Set custom indicator margin
         collectionView?.infiniteScrollIndicatorMargin = 40
