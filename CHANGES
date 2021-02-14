@@ -1,3 +1,8 @@
+= 1.2.0 (2021-02-14)
+
+* Fix various scroll issues on iOS 11+ where `adjustedContentInset` was introduced. (@pronebird)
+* Add support for Swift PM. (@ksloginov)
+
 = 1.1.0 (2018-04-15)
 
 * Add support for horizontally scrolling views. (@Boerworz)
