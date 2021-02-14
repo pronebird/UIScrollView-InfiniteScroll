@@ -27,7 +27,7 @@ Be aware that this category [swizzles](http://nshipster.com/method-swizzling/) `
 Just add the following line in your Podfile:
 
 ```ruby
-pod 'UIScrollView-InfiniteScroll', '~> 1.1.0'
+pod 'UIScrollView-InfiniteScroll', '~> 1.2.0'
 ```
 
 ### Carthage
@@ -35,7 +35,7 @@ pod 'UIScrollView-InfiniteScroll', '~> 1.1.0'
 Just add the following line in your Cartfile:
 
 ```ruby
-github "pronebird/UIScrollView-InfiniteScroll" ~> 1.1.0
+github "pronebird/UIScrollView-InfiniteScroll" ~> 1.2.0
 ```
 
 ### Examples
