@@ -418,7 +418,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  Returns `adjustedContentInset` on iOS 11+, or `contentInset` on earlier iOS
  */
 - (UIEdgeInsets)pb_adjustedContentInset {
-    if (@available(iOS 11, *)) {
+    if (@available(iOS 11, tvOS 11, *)) {
         return self.adjustedContentInset;
     } else {
         return self.contentInset;
