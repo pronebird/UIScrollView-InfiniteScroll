@@ -164,7 +164,6 @@ extension CollectionViewController {
         let image = cache.object(forKey: mediaUrl as NSURL)
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-        cell.imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         cell.imageView.image = image
         
         if image == nil {
@@ -217,6 +216,14 @@ extension CollectionViewController: SFSafariViewControllerDelegate {
 class PhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+
+    override func awakeFromNib() {
+        if #available(iOS 13.0, *) {
+            imageView.backgroundColor = .tertiarySystemFill
+        } else {
+            imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        }
+    }
     
 }
 
