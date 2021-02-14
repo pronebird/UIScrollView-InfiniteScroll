@@ -11,7 +11,7 @@ import SafariServices
 
 class CollectionViewController: UICollectionViewController {
     
-    fileprivate let downloadQueue = DispatchQueue(label: "Photo cache", qos: DispatchQoS.background)
+    fileprivate let downloadQueue = DispatchQueue(label: "Photo cache", qos: .background)
     
     fileprivate var items = [FlickrItem]()
     fileprivate var cache = NSCache<NSURL, UIImage>()
