@@ -24,7 +24,7 @@ class TableViewController: UITableViewController {
         
         if useAutosizingCells && tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
             tableView.estimatedRowHeight = 88
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
         }
         
         // Set custom indicator

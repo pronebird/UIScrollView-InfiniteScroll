@@ -144,7 +144,7 @@ class CustomInfiniteIndicator: UIView {
     }
     
     private func registerForAppStateNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     private func unregisterFromAppStateNotifications() {
@@ -156,7 +156,7 @@ class CustomInfiniteIndicator: UIView {
         animation.toValue = NSNumber(value: Double.pi * 2)
         animation.duration = 1
         animation.repeatCount = Float.infinity
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         
         return animation
     }

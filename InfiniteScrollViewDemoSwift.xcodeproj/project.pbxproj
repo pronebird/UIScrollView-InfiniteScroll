@@ -147,7 +147,7 @@
 					58279BBD1AF6AC5D0075D88A = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = ZXGXFAG6WF;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1200;
 					};
 				};
 			};
@@ -331,7 +331,7 @@
 				PRODUCT_NAME = "Infinite Scroll";
 				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -347,7 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.pronebird.InfiniteScrollViewDemo;
 				PRODUCT_NAME = "Infinite Scroll";
 				SWIFT_OBJC_BRIDGING_HEADER = "InfiniteScrollViewDemoSwift/InfiniteScrollViewDemoSwift-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
