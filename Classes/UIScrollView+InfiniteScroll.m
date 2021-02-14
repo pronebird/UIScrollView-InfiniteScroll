@@ -404,6 +404,17 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
 }
 
 /**
+ *  Returns `adjustedContentInset` on iOS 11+, or `contentInset` on earlier iOS
+ */
+- (UIEdgeInsets)pb_adjustedContentInset {
+    if (@available(iOS 11, *)) {
+        return self.adjustedContentInset;
+    } else {
+        return self.contentInset;
+    }
+}
+
+/**
  *  Call infinite scroll handler block, primarily here because we use performSelector to call this method.
  */
 - (void)pb_callInfiniteScrollHandler {
@@ -691,13 +702,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  Scrolls view to start
  */
 - (void)pb_scrollToStart {
+    UIEdgeInsets adjustedContentInset = [self pb_adjustedContentInset];
     CGPoint pt = CGPointZero;
 
     if (self.pb_infiniteScrollState.direction == InfiniteScrollDirectionVertical) {
         pt.x = self.contentOffset.x;
-        pt.y = self.contentInset.top * -1;
+        pt.y = adjustedContentInset.top * -1;
     } else {
-        pt.x = self.contentInset.left * -1;
+        pt.x = adjustedContentInset.left * -1;
         pt.y = self.contentOffset.y;
     }
 
