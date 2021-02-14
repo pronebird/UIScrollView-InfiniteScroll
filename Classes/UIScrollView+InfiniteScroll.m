@@ -358,12 +358,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @return CGFloat
  */
 - (CGFloat)pb_clampContentSizeToFitVisibleBounds:(CGSize)contentSize {
+    UIEdgeInsets adjustedContentInset = [self pb_adjustedContentInset];
+
     // Find minimum content height. Only original insets are used in calculation.
     if (self.pb_infiniteScrollState.direction == InfiniteScrollDirectionVertical) {
-        CGFloat minHeight = self.bounds.size.height - self.contentInset.top - [self pb_originalEndInset];
+        CGFloat minHeight = self.bounds.size.height - adjustedContentInset.top - [self pb_originalEndInset];
         return MAX(contentSize.height, minHeight);
     } else {
-        CGFloat minWidth = self.bounds.size.width - self.contentInset.left - [self pb_originalEndInset];
+        CGFloat minWidth = self.bounds.size.width - adjustedContentInset.left - [self pb_originalEndInset];
         return MAX(contentSize.width, minWidth);
     }
 }
@@ -394,12 +396,13 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @return CGFloat
  */
 - (CGFloat)pb_originalEndInset {
+    UIEdgeInsets adjustedContentInset = [self pb_adjustedContentInset];
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
 
     if (state.direction == InfiniteScrollDirectionVertical) {
-        return self.contentInset.bottom - state.extraEndInset - state.indicatorInset;
+        return adjustedContentInset.bottom - state.extraEndInset - state.indicatorInset;
     } else {
-        return self.contentInset.right - state.extraEndInset - state.indicatorInset;
+        return adjustedContentInset.right - state.extraEndInset - state.indicatorInset;
     }
 }
 
