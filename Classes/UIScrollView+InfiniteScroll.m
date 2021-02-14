@@ -131,9 +131,17 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
     }
 
 #if TARGET_OS_TV
-    _indicatorStyle = UIActivityIndicatorViewStyleWhite;
+    if (@available(tvOS 13, *)) {
+        _indicatorStyle = UIActivityIndicatorViewStyleLarge;
+    } else {
+        _indicatorStyle = UIActivityIndicatorViewStyleWhite;
+    }
 #else
-    _indicatorStyle = UIActivityIndicatorViewStyleGray;
+    if (@available(iOS 13, *)) {
+        _indicatorStyle = UIActivityIndicatorViewStyleMedium;
+    } else {
+        _indicatorStyle = UIActivityIndicatorViewStyleGray;
+    }
 #endif
 
     // Default row height (44) minus activity indicator height (22) / 2
@@ -358,12 +366,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @return CGFloat
  */
 - (CGFloat)pb_clampContentSizeToFitVisibleBounds:(CGSize)contentSize {
+    UIEdgeInsets adjustedContentInset = [self pb_adjustedContentInset];
+
     // Find minimum content height. Only original insets are used in calculation.
     if (self.pb_infiniteScrollState.direction == InfiniteScrollDirectionVertical) {
-        CGFloat minHeight = self.bounds.size.height - self.contentInset.top - [self pb_originalEndInset];
+        CGFloat minHeight = self.bounds.size.height - adjustedContentInset.top - [self pb_originalEndInset];
         return MAX(contentSize.height, minHeight);
     } else {
-        CGFloat minWidth = self.bounds.size.width - self.contentInset.left - [self pb_originalEndInset];
+        CGFloat minWidth = self.bounds.size.width - adjustedContentInset.left - [self pb_originalEndInset];
         return MAX(contentSize.width, minWidth);
     }
 }
@@ -394,12 +404,24 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  @return CGFloat
  */
 - (CGFloat)pb_originalEndInset {
+    UIEdgeInsets adjustedContentInset = [self pb_adjustedContentInset];
     _PBInfiniteScrollState *state = self.pb_infiniteScrollState;
 
     if (state.direction == InfiniteScrollDirectionVertical) {
-        return self.contentInset.bottom - state.extraEndInset - state.indicatorInset;
+        return adjustedContentInset.bottom - state.extraEndInset - state.indicatorInset;
     } else {
-        return self.contentInset.right - state.extraEndInset - state.indicatorInset;
+        return adjustedContentInset.right - state.extraEndInset - state.indicatorInset;
+    }
+}
+
+/**
+ *  Returns `adjustedContentInset` on iOS 11+, or `contentInset` on earlier iOS
+ */
+- (UIEdgeInsets)pb_adjustedContentInset {
+    if (@available(iOS 11, tvOS 11, *)) {
+        return self.adjustedContentInset;
+    } else {
+        return self.contentInset;
     }
 }
 
@@ -691,13 +713,14 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  *  Scrolls view to start
  */
 - (void)pb_scrollToStart {
+    UIEdgeInsets adjustedContentInset = [self pb_adjustedContentInset];
     CGPoint pt = CGPointZero;
 
     if (self.pb_infiniteScrollState.direction == InfiniteScrollDirectionVertical) {
         pt.x = self.contentOffset.x;
-        pt.y = self.contentInset.top * -1;
+        pt.y = adjustedContentInset.top * -1;
     } else {
-        pt.x = self.contentInset.left * -1;
+        pt.x = adjustedContentInset.left * -1;
         pt.y = self.contentOffset.y;
     }
 

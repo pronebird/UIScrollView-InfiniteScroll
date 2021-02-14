@@ -7,7 +7,9 @@
 //
 
 import UIKit
+#if !os(tvOS)
 import SafariServices
+#endif
 
 private let useAutosizingCells = true
 
@@ -24,11 +26,17 @@ class TableViewController: UITableViewController {
         
         if useAutosizingCells && tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
             tableView.estimatedRowHeight = 88
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
         }
         
         // Set custom indicator
-        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let indicatorRect: CGRect
+        #if os(tvOS)
+        indicatorRect = CGRect(x: 0, y: 0, width: 64, height: 64)
+        #else
+        indicatorRect = CGRect(x: 0, y: 0, width: 24, height: 24)
+        #endif
+        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: indicatorRect)
         
         // Set custom indicator margin
         tableView.infiniteScrollIndicatorMargin = 40
@@ -46,8 +54,10 @@ class TableViewController: UITableViewController {
         // Uncomment this to provide conditionally prevent the infinite scroll from triggering
         /*
         tableView.setShouldShowInfiniteScrollHandler { [weak self] (tableView) -> Bool in
+            guard let self = self else { return false }
+
             // Only show up to 5 pages then prevent the infinite scroll
-            return (self?.currentPage < 5);
+            return self.currentPage < 5
         }
         */
         
@@ -119,7 +129,7 @@ extension TableViewController {
         let story = stories[indexPath.row]
         let url = story.url ?? story.postUrl
         
-        if #available(iOS 9.0, *) {
+        #if !os(tvOS)
             let safariController = SFSafariViewController(url: url)
             safariController.delegate = self
             
@@ -127,9 +137,7 @@ extension TableViewController {
             safariNavigationController.setNavigationBarHidden(true, animated: false)
             
             present(safariNavigationController, animated: true)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+        #endif
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -162,8 +170,7 @@ extension TableViewController {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-
-@available(iOS 9.0, *)
+#if !os(tvOS)
 extension TableViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
@@ -171,6 +178,7 @@ extension TableViewController: SFSafariViewControllerDelegate {
     }
     
 }
+#endif
 
 // MARK: - API
 

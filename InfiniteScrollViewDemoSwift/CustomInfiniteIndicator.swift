@@ -13,17 +13,24 @@ private let rotationAnimationKey = "rotation"
 class CustomInfiniteIndicator: UIView {
     
     var thickness: CGFloat = 2
-    var outerColor = UIColor.gray.withAlphaComponent(0.2)
-    
-    lazy var innerColor: UIColor = {
-        return self.tintColor
-    }()
+    var outerColor: UIColor? {
+        didSet {
+            updateColors()
+        }
+    }
+    var innerColor: UIColor? {
+        didSet {
+            updateColors()
+        }
+    }
 
-    fileprivate var animating = false
-    fileprivate let innerCircle = CAShapeLayer()
-    fileprivate let outerCircle = CAShapeLayer()
-    fileprivate var startTime = CFTimeInterval(0)
-    fileprivate var stopTime = CFTimeInterval(0)
+    private var animating = false
+    private let innerCircle = CAShapeLayer()
+    private let outerCircle = CAShapeLayer()
+    private var startTime = CFTimeInterval(0)
+    private var stopTime = CFTimeInterval(0)
+
+    // MARK: - Public
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,28 +58,68 @@ class CustomInfiniteIndicator: UIView {
             restartAnimationIfNeeded()
         }
     }
+
+    override func tintColorDidChange() {
+        if innerColor == nil {
+            updateColors()
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13.0, tvOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateColors()
+            }
+        }
+    }
+
+    func isAnimating() -> Bool {
+        return animating
+    }
+
+    @objc func startAnimating() {
+        guard !animating else { return }
+        animating = true
+        isHidden = false
+        addAnimation()
+    }
+
+    @objc func stopAnimating() {
+        guard animating else { return }
+        animating = false
+        isHidden = true
+        removeAnimation()
+    }
     
     // MARK: - Private
     
-    fileprivate func commonInit() {
+    private func commonInit() {
         registerForAppStateNotifications()
         
         isHidden = true
         backgroundColor = UIColor.clear
-        
-        outerCircle.strokeColor = outerColor.cgColor
+
         outerCircle.fillColor = UIColor.clear.cgColor
         outerCircle.lineWidth = thickness
-        
-        innerCircle.strokeColor = innerColor.cgColor
+
         innerCircle.fillColor = UIColor.clear.cgColor
         innerCircle.lineWidth = thickness
+
+        updateColors()
         
         layer.addSublayer(outerCircle)
         layer.addSublayer(innerCircle)
     }
+
+    private func updateColors() {
+        let outerColor = self.outerColor ?? self.defaultOuterColor()
+        let innerColor = self.innerColor ?? self.tintColor
+
+        outerCircle.strokeColor = outerColor.cgColor
+        innerCircle.strokeColor = innerColor?.cgColor
+    }
     
-    fileprivate func addAnimation() {
+    private func addAnimation() {
         let anim = animation()
         anim.timeOffset = stopTime - startTime
         
@@ -81,7 +128,7 @@ class CustomInfiniteIndicator: UIView {
         startTime = layer.convertTime(CACurrentMediaTime(), from: nil)
     }
     
-    fileprivate func removeAnimation() {
+    private func removeAnimation() {
         layer.removeAnimation(forKey: rotationAnimationKey)
         
         stopTime = layer.convertTime(CACurrentMediaTime(), from: nil)
@@ -96,25 +143,25 @@ class CustomInfiniteIndicator: UIView {
         }
     }
     
-    fileprivate func registerForAppStateNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+    private func registerForAppStateNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(CustomInfiniteIndicator.restartAnimationIfNeeded), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
-    fileprivate func unregisterFromAppStateNotifications() {
+    private func unregisterFromAppStateNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
     
-    fileprivate func animation() -> CABasicAnimation {
+    private func animation() -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.toValue = NSNumber(value: Double.pi * 2)
         animation.duration = 1
         animation.repeatCount = Float.infinity
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         
         return animation
     }
     
-    fileprivate func setupBezierPaths() {
+    private func setupBezierPaths() {
         let center = CGPoint(x: bounds.size.width * 0.5, y: bounds.size.height * 0.5)
         let radius = bounds.size.width * 0.5 - thickness
         let ringPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat.pi * 2, clockwise: true)
@@ -123,29 +170,24 @@ class CustomInfiniteIndicator: UIView {
         outerCircle.path = ringPath.cgPath
         innerCircle.path = quarterRingPath.cgPath
     }
-    
-    // MARK: - Public
-    
-    func isAnimating() -> Bool {
-        return animating
-    }
-    
-    @objc func startAnimating() {
-        if animating {
-            return
+
+    private func defaultOuterColor() -> UIColor {
+        let defaultLightColor = UIColor.gray.withAlphaComponent(0.2)
+
+        if #available(iOS 13.0, tvOS 13, *) {
+            return UIColor { (traitCollection) -> UIColor in
+                switch traitCollection.userInterfaceStyle {
+                case .light, .unspecified:
+                    return defaultLightColor
+                case .dark:
+                    return UIColor.white.withAlphaComponent(0.5)
+                @unknown default:
+                    fatalError()
+                }
+            }
+        } else {
+            return defaultLightColor
         }
-        animating = true
-        isHidden = false
-        addAnimation()
-    }
-    
-    @objc func stopAnimationg() {
-        if !animating {
-            return
-        }
-        animating = false
-        isHidden = true
-        removeAnimation()
     }
 
 }
