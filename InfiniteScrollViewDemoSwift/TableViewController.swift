@@ -48,8 +48,10 @@ class TableViewController: UITableViewController {
         // Uncomment this to provide conditionally prevent the infinite scroll from triggering
         /*
         tableView.setShouldShowInfiniteScrollHandler { [weak self] (tableView) -> Bool in
+            guard let self = self else { return false }
+
             // Only show up to 5 pages then prevent the infinite scroll
-            return (self?.currentPage < 5);
+            return self.currentPage < 5
         }
         */
         
