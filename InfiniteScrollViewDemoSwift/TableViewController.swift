@@ -91,15 +91,15 @@ class TableViewController: UITableViewController {
     }
     
     fileprivate func showAlertWithError(_ error: Error) {
-        let alert = UIAlertController(title: NSLocalizedString("tableView.errorAlert.title", comment: ""),
+        let alert = UIAlertController(title: NSLocalizedString("tableView.errorAlert.title", value: "Failed to fetch data", comment: ""),
                                       message: error.localizedDescription,
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.dismiss", comment: ""),
+        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.dismiss", value: "Dismiss", comment: ""),
                                       style: .cancel,
                                       handler: nil))
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.retry", comment: ""),
+        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.retry", value: "Retry", comment: ""),
                                       style: .default,
                                       handler: { _ in self.performFetch(nil) }))
         

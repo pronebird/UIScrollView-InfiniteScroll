@@ -14,12 +14,10 @@
 		58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
 		58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
 		58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
-		582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582A4AC11DD8AB2D008203BA /* Localizable.strings */; };
 		583826A2289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 583826A0289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m */; };
 		583826A3289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 583826A0289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m */; };
 		583826CF289FD02500EEF6A1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583826CE289FD02500EEF6A1 /* Models.swift */; };
 		583826D0289FD02500EEF6A1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583826CE289FD02500EEF6A1 /* Models.swift */; };
-		5869B32125D8EB0400550415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */; };
 		5869B32D25D8EB5200550415 /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */; };
 		5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
 		5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
@@ -39,12 +37,10 @@
 		58279BF21AF6ADCA0075D88A /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfiniteIndicator.swift; sourceTree = "<group>"; };
-		582A4AC01DD8AB2D008203BA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		583826A0289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		583826A1289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		583826CE289FD02500EEF6A1 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5869B31425D8EB0200550415 /* InfiniteScrollViewDemo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InfiniteScrollViewDemo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5869B32025D8EB0400550415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5869B32225D8EB0400550415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-tvOS.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,7 +93,6 @@
 				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
 				583826CE289FD02500EEF6A1 /* Models.swift */,
 				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
-				582A4AC11DD8AB2D008203BA /* Localizable.strings */,
 				58279BC11AF6AC5D0075D88A /* Supporting Files */,
 			);
 			path = InfiniteScrollViewDemoSwift;
@@ -126,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */,
-				5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */,
 				5869B32225D8EB0400550415 /* Info.plist */,
 			);
 			path = "InfiniteScrollViewDemo-tvOS";
@@ -194,10 +188,9 @@
 			};
 			buildConfigurationList = 58279BB91AF6AC5D0075D88A /* Build configuration list for PBXProject "InfiniteScrollViewDemoSwift" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -218,7 +211,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5809B37B1D247F980029136A /* Launch Screen.storyboard in Resources */,
-				582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */,
 				58279BCD1AF6AC5D0075D88A /* Images.xcassets in Resources */,
 				58279BF11AF6ADA60075D88A /* Main.storyboard in Resources */,
 			);
@@ -229,7 +221,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5869B34A25D8EF4D00550415 /* Images.xcassets in Resources */,
-				5869B32125D8EB0400550415 /* LaunchScreen.storyboard in Resources */,
 				5869B32D25D8EB5200550415 /* Main-tvOS.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,25 +255,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		582A4AC11DD8AB2D008203BA /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				582A4AC01DD8AB2D008203BA /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5869B32025D8EB0400550415 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		58279BDD1AF6AC5D0075D88A /* Debug */ = {
