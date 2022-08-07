@@ -8,16 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		39FC9E151C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 39FC9E141C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		39FC9E1E1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 39FC9E1C1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		39FC9E1F1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 39FC9E1D1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.m */; };
+		58382696289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 58382694289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58382697289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 58382695289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		39FC9E111C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UIScrollView_InfiniteScroll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39FC9E141C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIScrollView_InfiniteScroll.h; sourceTree = "<group>"; };
 		39FC9E161C5C7CEE00D130E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39FC9E1C1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
-		39FC9E1D1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Classes/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
+		58382694289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Sources/UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.h"; sourceTree = SOURCE_ROOT; };
+		58382695289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+InfiniteScroll.m"; path = "Sources/UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,8 +50,8 @@
 		39FC9E131C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll */ = {
 			isa = PBXGroup;
 			children = (
-				39FC9E1C1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.h */,
-				39FC9E1D1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.m */,
+				58382694289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.h */,
+				58382695289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.m */,
 				39FC9E141C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll.h */,
 				39FC9E161C5C7CEE00D130E5 /* Info.plist */,
 			);
@@ -66,7 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39FC9E151C5C7CEE00D130E5 /* UIScrollView_InfiniteScroll.h in Headers */,
-				39FC9E1E1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.h in Headers */,
+				58382696289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,7 +132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39FC9E1F1C5C7D3F00D130E5 /* UIScrollView+InfiniteScroll.m in Sources */,
+				58382697289FC20C00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,9 +236,9 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = UIScrollView_InfiniteScroll/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.Infinite-Scroll";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.pronebird.InfiniteScroll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -253,9 +253,9 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = UIScrollView_InfiniteScroll/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.codeispoetry.Infinite-Scroll";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.pronebird.InfiniteScroll;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
