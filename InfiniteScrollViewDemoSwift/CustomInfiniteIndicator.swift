@@ -185,21 +185,10 @@ class CustomInfiniteIndicator: UIView {
     }
 
     private func defaultOuterColor() -> UIColor {
-        let defaultLightColor = UIColor.gray.withAlphaComponent(0.2)
-
         if #available(iOS 13.0, tvOS 13, *) {
-            return UIColor { traitCollection -> UIColor in
-                switch traitCollection.userInterfaceStyle {
-                case .light, .unspecified:
-                    return defaultLightColor
-                case .dark:
-                    return UIColor.white.withAlphaComponent(0.5)
-                @unknown default:
-                    fatalError()
-                }
-            }
+            return .systemGray4
         } else {
-            return defaultLightColor
+            return .gray.withAlphaComponent(0.2)
         }
     }
 }
