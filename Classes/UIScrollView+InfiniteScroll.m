@@ -674,7 +674,7 @@ static const void *kPBInfiniteScrollStateKey = &kPBInfiniteScrollStateKey;
  */
 - (void)pb_scrollViewDidScroll:(CGPoint)contentOffset {
     // is user initiated?
-    if(![self isDragging]) {
+    if(![self isDragging] && !UIAccessibilityIsVoiceOverRunning()) {
         return;
     }
 
