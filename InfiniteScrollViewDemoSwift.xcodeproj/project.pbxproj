@@ -22,7 +22,6 @@
 		5869B32125D8EB0400550415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */; };
 		5869B32D25D8EB5200550415 /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */; };
 		5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
-		5869B33325D8EB9E00550415 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78C2083B850009BF7B8 /* Support.swift */; };
 		5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		5869B33925D8EBAB00550415 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
 		5869B33C25D8EBAE00550415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BC31AF6AC5D0075D88A /* AppDelegate.swift */; };
@@ -31,7 +30,6 @@
 
 /* Begin PBXFileReference section */
 		5809B37A1D247F980029136A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		581FB78C2083B850009BF7B8 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		58279BBE1AF6AC5D0075D88A /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58279BC21AF6AC5D0075D88A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58279BC31AF6AC5D0075D88A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				58279BC31AF6AC5D0075D88A /* AppDelegate.swift */,
 				58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */,
 				58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */,
-				581FB78C2083B850009BF7B8 /* Support.swift */,
 				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
 				583826CE289FD02500EEF6A1 /* Models.swift */,
 				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
@@ -244,7 +241,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				581FB78D2083B850009BF7B8 /* Support.swift in Sources */,
 				583826A2289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */,
 				58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */,
 				58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */,
@@ -263,7 +259,6 @@
 				5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */,
 				5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */,
 				5869B33C25D8EBAE00550415 /* AppDelegate.swift in Sources */,
-				5869B33325D8EB9E00550415 /* Support.swift in Sources */,
 				583826D0289FD02500EEF6A1 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

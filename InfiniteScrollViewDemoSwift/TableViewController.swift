@@ -53,43 +53,40 @@ class TableViewController: UITableViewController {
         
         // Uncomment this to provide conditionally prevent the infinite scroll from triggering
         /*
-        tableView.setShouldShowInfiniteScrollHandler { [weak self] (tableView) -> Bool in
-            guard let self = self else { return false }
+         tableView.setShouldShowInfiniteScrollHandler { [weak self] (tableView) -> Bool in
+             guard let self = self else { return false }
 
-            // Only show up to 5 pages then prevent the infinite scroll
-            return self.currentPage < 5
-        }
-        */
-        
+             // Only show up to 5 pages then prevent the infinite scroll
+             return self.currentPage < 5
+         }
+         */
+
         // load initial data
         tableView.beginInfiniteScroll(true)
     }
     
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
-        fetchData { (result) in
-            defer { completionHandler?() }
-            
-            switch result {
-            case .ok(let response):
+        fetchData { response, error in
+            if let error = error {
+                self.showAlertWithError(error)
+            } else if let response = response {
                 // create new index paths
                 let storyCount = self.stories.count
                 let (start, end) = (storyCount, response.hits.count + storyCount)
-                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
-                
+                let indexPaths = (start ..< end).map { IndexPath(row: $0, section: 0) }
+
                 // update data source
                 self.stories.append(contentsOf: response.hits)
                 self.numPages = response.nbPages
                 self.currentPage += 1
-                
+
                 // update table view
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
                 self.tableView.endUpdates()
-                
-            case .error(let error):
-                self.showAlertWithError(error)
             }
-            
+
+            completionHandler?()
         }
     }
     
@@ -182,31 +179,42 @@ extension TableViewController: SFSafariViewControllerDelegate {
 
 // MARK: - API
 
-extension TableViewController {
-    typealias FetchResult = Result<HackerNewsResponse, FetchError>
-   
-    fileprivate func makeRequest(numHits: Int, page: Int) -> URLRequest {
-        let url = URL(string: "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)")!
+private extension TableViewController {
+    func makeRequest(numHits: Int, page: Int) -> URLRequest {
+        let url =
+            URL(
+                string: "https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=\(numHits)&page=\(page)"
+            )!
         return URLRequest(url: url)
     }
 
-    fileprivate func fetchData(handler: @escaping ((FetchResult) -> Void)) {
+    func fetchData(completion: @escaping ((HackerNewsResponse?, Error?) -> Void)) {
         let hits = Int(tableView.bounds.height) / 44
         let request = makeRequest(numHits: hits, page: currentPage)
-        
-        let task = URLSession.shared.dataTask(with: request, completionHandler: {
-            (data, _, networkError) -> Void in
+
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { data, _, error in
             DispatchQueue.main.async {
-                handler(handleFetchResponse(data: data, networkError: networkError))
+                if let error = error {
+                    completion(nil, error)
+                    return
+                }
+
+                do {
+                    let response = try JSONDecoder()
+                        .decode(HackerNewsResponse.self, from: data ?? Data())
+
+                    completion(response, nil)
+                } catch {
+                    completion(nil, error)
+                }
             }
         })
-        
+
         // I run task.resume() with delay because my network is too fast
         let delay = (stories.count == 0 ? 0 : 5)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
             task.resume()
-        })
+        }
     }
-    
 }

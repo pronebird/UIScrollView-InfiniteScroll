@@ -51,23 +51,26 @@ class CollectionViewController: UICollectionViewController {
         
         collectionViewLayout.invalidateLayout()
     }
-    
-    fileprivate func downloadPhoto(_ url: URL, completion: @escaping (_ url: URL, _ image: UIImage) -> Void) {
-        downloadQueue.async(execute: { () -> Void in
+
+    fileprivate func downloadPhoto(
+        _ url: URL,
+        completion: @escaping (URL, UIImage) -> Void
+    ) {
+        downloadQueue.async {
             if let image = self.cache.object(forKey: url as NSURL) {
                 DispatchQueue.main.async {
                     completion(url, image)
                 }
-                
                 return
             }
-            
+
             do {
                 let data = try Data(contentsOf: url)
-                
+
                 if let image = UIImage(data: data) {
+                    self.cache.setObject(image, forKey: url as NSURL)
+
                     DispatchQueue.main.async {
-                        self.cache.setObject(image, forKey: url as NSURL)
                         completion(url, image)
                     }
                 } else {
@@ -76,32 +79,30 @@ class CollectionViewController: UICollectionViewController {
             } catch {
                 print("Could not load URL: \(url): \(error)")
             }
-        })
+        }
     }
     
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
-        fetchData { (result) in
-            switch result {
-            case .ok(let response):
+        fetchData { response, error in
+            if let error = error {
+                self.showAlertWithError(error)
+            } else if let response = response {
                 let newItems = response.items
-                
+
                 // create new index paths
                 let photoCount = self.items.count
                 let (start, end) = (photoCount, newItems.count + photoCount)
-                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
-                
+                let indexPaths = (start ..< end).map { IndexPath(row: $0, section: 0) }
+
                 // update data source
                 self.items.append(contentsOf: newItems)
-                
+
                 // update collection view
-                self.collectionView?.performBatchUpdates({ () -> Void in
+                self.collectionView?.performBatchUpdates({ () in
                     self.collectionView?.insertItems(at: indexPaths)
-                }, completion: { (finished) -> Void in
+                }, completion: { _ in
                     completionHandler?()
-                });
-                
-            case .error(let error):
-                self.showAlertWithError(error)
+                })
             }
         }
     }
@@ -248,24 +249,39 @@ class PhotoCell: UICollectionViewCell {
 
 // MARK: - API
 
-extension CollectionViewController {
-    typealias FetchResult = Result<FlickrResponse, FetchError>
-    
-    fileprivate func fetchData(handler: @escaping ((FetchResult) -> Void)) {
-        let requestUrl = URL(string: "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json")!
-        
-        let task = URLSession.shared.dataTask(with: requestUrl, completionHandler: { (data, _, networkError) in
-            DispatchQueue.main.async {
-                handler(handleFetchResponse(data: data, networkError: networkError))
+private extension CollectionViewController {
+    func fetchData(completion: @escaping ((FlickrResponse?, Error?) -> Void)) {
+        let requestURL =
+            URL(
+                string: "https://api.flickr.com/services/feeds/photos_public.gne?nojsoncallback=1&format=json"
+            )!
+
+        let task = URLSession.shared.dataTask(
+            with: requestURL,
+            completionHandler: { data, _, error in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        completion(nil, error)
+                        return
+                    }
+
+                    do {
+                        let response = try JSONDecoder()
+                            .decode(FlickrResponse.self, from: data ?? Data())
+
+                        completion(response, nil)
+                    } catch {
+                        completion(nil, error)
+                    }
+                }
             }
-        })
-        
+        )
+
         // I run task.resume() with delay because my network is too fast
         let delay = items.count == 0 ? 0 : 5
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
             task.resume()
-        })
+        }
     }
-    
 }
