@@ -1,3 +1,7 @@
+= Unreleased
+
+* Handle scrolling when voiceOver is running (@r-dent)
+
 = 1.2.0 (2021-02-14)
 
 * Fix various scroll issues on iOS 11+ where `adjustedContentInset` was introduced. (@pronebird)
