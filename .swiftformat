@@ -1,0 +1,12 @@
+# general options
+--swiftversion 5.5
+
+# format options
+--indent 4
+--maxwidth 100
+--wraparguments before-first
+--wrapparameters before-first
+--wrapternary before-operators
+--redundanttype inferred
+--ifdef no-indent
+--disable initCoderUnavailable, redundantReturn, unusedArguments, trailingCommas, redundantRawValues, preferKeyPath
