@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5809B37B1D247F980029136A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5809B37A1D247F980029136A /* Launch Screen.storyboard */; };
-		581FB78B2083B7E0009BF7B8 /* HackerNewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */; };
-		581FB78D2083B850009BF7B8 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78C2083B850009BF7B8 /* Support.swift */; };
 		58279BC41AF6AC5D0075D88A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BC31AF6AC5D0075D88A /* AppDelegate.swift */; };
 		58279BCD1AF6AC5D0075D88A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58279BCC1AF6AC5D0075D88A /* Images.xcassets */; };
 		58279BF11AF6ADA60075D88A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58279BF01AF6ADA60075D88A /* Main.storyboard */; };
@@ -19,6 +17,8 @@
 		582A4ABF1DD8AB2D008203BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582A4AC11DD8AB2D008203BA /* Localizable.strings */; };
 		583826A2289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 583826A0289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m */; };
 		583826A3289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 583826A0289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m */; };
+		583826CF289FD02500EEF6A1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583826CE289FD02500EEF6A1 /* Models.swift */; };
+		583826D0289FD02500EEF6A1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583826CE289FD02500EEF6A1 /* Models.swift */; };
 		5869B32125D8EB0400550415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B31F25D8EB0400550415 /* LaunchScreen.storyboard */; };
 		5869B32D25D8EB5200550415 /* Main-tvOS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */; };
 		5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF21AF6ADCA0075D88A /* TableViewController.swift */; };
@@ -26,15 +26,11 @@
 		5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */; };
 		5869B33925D8EBAB00550415 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BF41AF6AEDA0075D88A /* CollectionViewController.swift */; };
 		5869B33C25D8EBAE00550415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58279BC31AF6AC5D0075D88A /* AppDelegate.swift */; };
-		5869B33F25D8EC1E00550415 /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrResponse.swift */; };
-		5869B34025D8EC1E00550415 /* HackerNewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */; };
 		5869B34A25D8EF4D00550415 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58279BCC1AF6AC5D0075D88A /* Images.xcassets */; };
-		58A7C91E1E09641A0084C93C /* FlickrResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A7C91D1E09641A0084C93C /* FlickrResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5809B37A1D247F980029136A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsResponse.swift; sourceTree = "<group>"; };
 		581FB78C2083B850009BF7B8 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		58279BBE1AF6AC5D0075D88A /* Infinite Scroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Infinite Scroll.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58279BC21AF6AC5D0075D88A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,11 +44,11 @@
 		582A4AC01DD8AB2D008203BA /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		583826A0289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		583826A1289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
+		583826CE289FD02500EEF6A1 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		5869B31425D8EB0200550415 /* InfiniteScrollViewDemo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "InfiniteScrollViewDemo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5869B32025D8EB0400550415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5869B32225D8EB0400550415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5869B32C25D8EB5200550415 /* Main-tvOS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main-tvOS.storyboard"; sourceTree = "<group>"; };
-		58A7C91D1E09641A0084C93C /* FlickrResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +98,9 @@
 				58279C001AF6C8650075D88A /* CustomInfiniteIndicator.swift */,
 				581FB78C2083B850009BF7B8 /* Support.swift */,
 				58279BF21AF6ADCA0075D88A /* TableViewController.swift */,
+				583826CE289FD02500EEF6A1 /* Models.swift */,
 				58279BCC1AF6AC5D0075D88A /* Images.xcassets */,
 				582A4AC11DD8AB2D008203BA /* Localizable.strings */,
-				58A7C9231E0969E80084C93C /* Models */,
 				58279BC11AF6AC5D0075D88A /* Supporting Files */,
 			);
 			path = InfiniteScrollViewDemoSwift;
@@ -137,15 +133,6 @@
 				5869B32225D8EB0400550415 /* Info.plist */,
 			);
 			path = "InfiniteScrollViewDemo-tvOS";
-			sourceTree = "<group>";
-		};
-		58A7C9231E0969E80084C93C /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				58A7C91D1E09641A0084C93C /* FlickrResponse.swift */,
-				581FB78A2083B7E0009BF7B8 /* HackerNewsResponse.swift */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,11 +245,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				581FB78D2083B850009BF7B8 /* Support.swift in Sources */,
-				58A7C91E1E09641A0084C93C /* FlickrResponse.swift in Sources */,
 				583826A2289FC76B00EEF6A1 /* UIScrollView+InfiniteScroll.m in Sources */,
 				58279C011AF6C8650075D88A /* CustomInfiniteIndicator.swift in Sources */,
 				58279BF51AF6AEDA0075D88A /* CollectionViewController.swift in Sources */,
-				581FB78B2083B7E0009BF7B8 /* HackerNewsResponse.swift in Sources */,
+				583826CF289FD02500EEF6A1 /* Models.swift in Sources */,
 				58279BF31AF6ADCA0075D88A /* TableViewController.swift in Sources */,
 				58279BC41AF6AC5D0075D88A /* AppDelegate.swift in Sources */,
 			);
@@ -276,10 +262,9 @@
 				5869B33925D8EBAB00550415 /* CollectionViewController.swift in Sources */,
 				5869B33025D8EB9A00550415 /* TableViewController.swift in Sources */,
 				5869B33625D8EBA900550415 /* CustomInfiniteIndicator.swift in Sources */,
-				5869B34025D8EC1E00550415 /* HackerNewsResponse.swift in Sources */,
 				5869B33C25D8EBAE00550415 /* AppDelegate.swift in Sources */,
 				5869B33325D8EB9E00550415 /* Support.swift in Sources */,
-				5869B33F25D8EC1E00550415 /* FlickrResponse.swift in Sources */,
+				583826D0289FD02500EEF6A1 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
