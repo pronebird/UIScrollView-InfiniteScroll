@@ -6,21 +6,20 @@ import PackageDescription
 let package = Package(
     name: "UIScrollView_InfiniteScroll",
     platforms: [
-        .iOS(.v9)
+        .iOS(.v9),
+        .tvOS(.v9),
     ],
     products: [
         .library(
             name: "UIScrollView_InfiniteScroll",
             targets: ["UIScrollView_InfiniteScroll"]
-        )
+        ),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "UIScrollView_InfiniteScroll",
-            dependencies: [],
-            path: "Classes",
-            publicHeadersPath: ""
+            publicHeadersPath: "."
         ),
     ]
 )

@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     :git => 'https://github.com/pronebird/UIScrollView-InfiniteScroll.git',
     :tag => s.version.to_s
   }
-  s.source_files = 'Classes/*.{h,m}'
+  s.source_files = 'Sources/UIScrollView_InfiniteScroll/*.{h,m}'
   s.requires_arc = true
   s.ios.deployment_target = '9.0'
 end

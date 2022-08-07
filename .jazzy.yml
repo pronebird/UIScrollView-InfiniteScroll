@@ -12,5 +12,5 @@ theme: fullwidth
 objc: true
 sdk: iphonesimulator
 
-framework_root: Classes
-umbrella_header: Classes/UIScrollView+InfiniteScroll.h
+framework_root: Sources/UIScrollView_InfiniteScroll
+umbrella_header: Sources/UIScrollView_InfiniteScroll/UIScrollView+InfiniteScroll.h
