@@ -14,21 +14,20 @@ import SafariServices
 private let useAutosizingCells = true
 
 class TableViewController: UITableViewController {
-    
     fileprivate var currentPage = 0
     fileprivate var numPages = 0
     fileprivate var stories = [HackerNewsStory]()
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if useAutosizingCells && tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
+
+        if useAutosizingCells, tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
             tableView.estimatedRowHeight = 88
             tableView.rowHeight = UITableView.automaticDimension
         }
-        
+
         // Set custom indicator
         let indicatorRect: CGRect
         #if os(tvOS)
@@ -37,20 +36,20 @@ class TableViewController: UITableViewController {
         indicatorRect = CGRect(x: 0, y: 0, width: 24, height: 24)
         #endif
         tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: indicatorRect)
-        
+
         // Set custom indicator margin
         tableView.infiniteScrollIndicatorMargin = 40
-        
+
         // Set custom trigger offset
         tableView.infiniteScrollTriggerOffset = 500
-        
+
         // Add infinite scroll handler
-        tableView.addInfiniteScroll { [weak self] (tableView) -> Void in
+        tableView.addInfiniteScroll { [weak self] tableView in
             self?.performFetch {
                 tableView.finishInfiniteScroll()
             }
         }
-        
+
         // Uncomment this to provide conditionally prevent the infinite scroll from triggering
         /*
          tableView.setShouldShowInfiniteScrollHandler { [weak self] (tableView) -> Bool in
@@ -64,7 +63,7 @@ class TableViewController: UITableViewController {
         // load initial data
         tableView.beginInfiniteScroll(true)
     }
-    
+
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
         fetchData { response, error in
             if let error = error {
@@ -89,91 +88,101 @@ class TableViewController: UITableViewController {
             completionHandler?()
         }
     }
-    
-    fileprivate func showAlertWithError(_ error: Error) {
-        let alert = UIAlertController(title: NSLocalizedString("tableView.errorAlert.title", value: "Failed to fetch data", comment: ""),
-                                      message: error.localizedDescription,
-                                      preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.dismiss", value: "Dismiss", comment: ""),
-                                      style: .cancel,
-                                      handler: nil))
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("tableView.errorAlert.retry", value: "Retry", comment: ""),
-                                      style: .default,
-                                      handler: { _ in self.performFetch(nil) }))
-        
-        present(alert, animated: true, completion: nil)
-    }
 
+    fileprivate func showAlertWithError(_ error: Error) {
+        let alertController = UIAlertController(
+            title: NSLocalizedString(
+                "tableView.errorAlert.title",
+                value: "Failed to fetch data",
+                comment: ""
+            ),
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("tableView.errorAlert.dismiss", value: "Dismiss", comment: ""),
+            style: .cancel,
+            handler: nil
+        ))
+
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString(
+                "tableView.errorAlert.retry",
+                value: "Retry",
+                comment: ""
+            ),
+            style: .default,
+            handler: { _ in self.performFetch(nil) }
+        ))
+
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Actions
 
 extension TableViewController {
-    
     @IBAction func handleRefresh() {
         tableView.beginInfiniteScroll(true)
     }
-    
 }
 
 // MARK: - UITableViewDelegate
 
 extension TableViewController {
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let story = stories[indexPath.row]
         let url = story.url ?? story.postUrl
-        
+
         #if !os(tvOS)
-            let safariController = SFSafariViewController(url: url)
-            safariController.delegate = self
-            
-            let safariNavigationController = UINavigationController(rootViewController: safariController)
-            safariNavigationController.setNavigationBarHidden(true, animated: false)
-            
-            present(safariNavigationController, animated: true)
+        let safariController = SFSafariViewController(url: url)
+        safariController.delegate = self
+
+        let safariNavigationController =
+            UINavigationController(rootViewController: safariController)
+        safariNavigationController.setNavigationBarHidden(true, animated: false)
+
+        present(safariNavigationController, animated: true)
         #endif
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }
 
 // MARK: - UITableViewDataSource
 
 extension TableViewController {
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stories.count
     }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let story = stories[indexPath.row]
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = story.title
         cell.detailTextLabel?.text = story.author
-        
-        if useAutosizingCells && tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
+
+        if useAutosizingCells, tableView.responds(to: #selector(getter: UIView.layoutMargins)) {
             cell.textLabel?.numberOfLines = 0
             cell.detailTextLabel?.numberOfLines = 0
         }
-        
+
         return cell
     }
-    
 }
 
 // MARK: - SFSafariViewControllerDelegate
+
 #if !os(tvOS)
 extension TableViewController: SFSafariViewControllerDelegate {
-    
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         controller.dismiss(animated: true)
     }
-    
 }
 #endif
 

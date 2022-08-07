@@ -12,17 +12,16 @@ import SafariServices
 #endif
 
 class CollectionViewController: UICollectionViewController {
-    
     fileprivate let downloadQueue = DispatchQueue(label: "Photo cache", qos: .background)
-    
+
     fileprivate var items = [FlickrItem]()
     fileprivate var cache = NSCache<NSURL, UIImage>()
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Set custom indicator
         let indicatorRect: CGRect
         #if os(tvOS)
@@ -31,24 +30,27 @@ class CollectionViewController: UICollectionViewController {
         indicatorRect = CGRect(x: 0, y: 0, width: 24, height: 24)
         #endif
         collectionView?.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: indicatorRect)
-        
+
         // Set custom indicator margin
         collectionView?.infiniteScrollIndicatorMargin = 40
-        
+
         // Add infinite scroll handler
-        collectionView?.addInfiniteScroll { [weak self] (scrollView) -> Void in
-            self?.performFetch({
+        collectionView?.addInfiniteScroll { [weak self] scrollView in
+            self?.performFetch {
                 scrollView.finishInfiniteScroll()
-            })
+            }
         }
-        
+
         // load initial data
         collectionView?.beginInfiniteScroll(true)
     }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+
+    override func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator
+    ) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         collectionViewLayout.invalidateLayout()
     }
 
@@ -81,7 +83,7 @@ class CollectionViewController: UICollectionViewController {
             }
         }
     }
-    
+
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
         fetchData { response, error in
             if let error = error {
@@ -106,63 +108,92 @@ class CollectionViewController: UICollectionViewController {
             }
         }
     }
-    
+
     fileprivate func showAlertWithError(_ error: Error) {
-        let alert = UIAlertController(title: NSLocalizedString("collectionView.errorAlert.title", value: "Failed to fetch data", comment: ""),
-                                      message: error.localizedDescription,
-                                      preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: NSLocalizedString(
+                "collectionView.errorAlert.title",
+                value: "Failed to fetch data",
+                comment: ""
+            ),
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("collectionView.errorAlert.dismiss", value: "Dismiss", comment: ""),
-                                      style: .cancel,
-                                      handler: nil))
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("collectionView.errorAlert.retry", value: "Retry", comment: ""),
-                                      style: .default,
-                                      handler: { _ in self.performFetch(nil) }))
-        
-        self.present(alert, animated: true, completion: nil)
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString(
+                "collectionView.errorAlert.dismiss",
+                value: "Dismiss",
+                comment: ""
+            ),
+            style: .cancel,
+            handler: nil
+        ))
+
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString(
+                "collectionView.errorAlert.retry",
+                value: "Retry",
+                comment: ""
+            ),
+            style: .default,
+            handler: { _ in self.performFetch(nil) }
+        ))
+
+        present(alertController, animated: true, completion: nil)
     }
-
 }
 
 // MARK: - Actions
 
 extension CollectionViewController {
-    
     @IBAction func handleRefresh() {
         collectionView?.beginInfiniteScroll(true)
     }
-    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension CollectionViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let collectionWidth = collectionView.bounds.width;
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let collectionWidth = collectionView.bounds.width
         let itemWidth: CGFloat
 
-        switch self.traitCollection.userInterfaceIdiom  {
+        switch traitCollection.userInterfaceIdiom {
         case .pad:
             itemWidth = collectionWidth / 4 - 1
         case .tv:
-            let spacing = self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)
+            let spacing = self.collectionView(
+                collectionView,
+                layout: collectionViewLayout,
+                minimumInteritemSpacingForSectionAt: indexPath.section
+            )
 
             itemWidth = collectionWidth / 8 - spacing
         default:
             itemWidth = collectionWidth / 3 - 1
-
         }
-        
-        return CGSize(width: itemWidth, height: itemWidth);
+
+        return CGSize(width: itemWidth, height: itemWidth)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
         return 1
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
         return 1
     }
 }
@@ -170,25 +201,33 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDataSource
 
 extension CollectionViewController {
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return items.count
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let item = items[indexPath.item]
         let mediaUrl = item.mediumMediaUrl!
         let image = cache.object(forKey: mediaUrl as NSURL)
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
+
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "PhotoCell",
+            for: indexPath
+        ) as! PhotoCell
         cell.imageView.image = image
-        
+
         if image == nil {
-            downloadPhoto(mediaUrl, completion: { (url, image) -> Void in
+            downloadPhoto(mediaUrl, completion: { url, image in
                 collectionView.reloadItems(at: [indexPath])
             })
         }
-        
+
         return cell
     }
 }
@@ -196,42 +235,41 @@ extension CollectionViewController {
 // MARK: - UICollectionViewDelegate
 
 extension CollectionViewController {
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         let model = items[indexPath.row]
 
         #if !os(tvOS)
         let safariController = SFSafariViewController(url: model.link)
         safariController.delegate = self
-        
-        let safariNavigationController = UINavigationController(rootViewController: safariController)
+
+        let safariNavigationController =
+            UINavigationController(rootViewController: safariController)
         safariNavigationController.setNavigationBarHidden(true, animated: false)
-        
+
         present(safariNavigationController, animated: true)
         #endif
-        
+
         collectionView.deselectItem(at: indexPath, animated: true)
     }
-    
 }
 
 // MARK: - SFSafariViewControllerDelegate
 
 #if !os(tvOS)
 extension CollectionViewController: SFSafariViewControllerDelegate {
-    
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         controller.dismiss(animated: true)
     }
-    
 }
 #endif
 
 // MARK: - Cells
 
 class PhotoCell: UICollectionViewCell {
-    
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet var imageView: UIImageView!
 
     override func awakeFromNib() {
         if #available(iOS 13.0, *) {
@@ -244,7 +282,6 @@ class PhotoCell: UICollectionViewCell {
             imageView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         }
     }
-    
 }
 
 // MARK: - API
